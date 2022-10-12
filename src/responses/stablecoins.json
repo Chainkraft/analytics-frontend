@@ -1,0 +1,152 @@
+[
+    {
+        "name": "Tether",
+        "symbol": "usdt",
+        "description": "Tether (USDT) is a cryptocurrency with a value meant to mirror the value of the U.S. dollar. The idea was to create a stable cryptocurrency that can be used like digital dollars. Coins that serve this purpose of being a stable dollar substitute are called “stable coins.” Tether is the most popular stable coin and even acts as a dollar replacement on many popular exchanges! According to their site, Tether converts cash into digital currency, to anchor or “tether” the value of the coin to the price of national currencies like the US dollar, the Euro, and the Yen. Like other cryptos it uses blockchain. Unlike other cryptos, it is [according to the official Tether site] “100% backed by USD” (USD is held in reserve). The primary use of Tether is that it offers some stability to the otherwise volatile crypto space and offers liquidity to exchanges who can’t deal in dollars and with banks (for example to the sometimes controversial but leading exchange <a href=\"https://www.coingecko.com/en/exchanges/bitfinex\">Bitfinex</a>).\r\n\r\nThe digital coins are issued by a company called Tether Limited that is governed by the laws of the British Virgin Islands, according to the legal part of its website. It is incorporated in Hong Kong. It has emerged that Jan Ludovicus van der Velde is the CEO of cryptocurrency exchange Bitfinex, which has been accused of being involved in the price manipulation of bitcoin, as well as tether. Many people trading on exchanges, including Bitfinex, will use tether to buy other cryptocurrencies like bitcoin. Tether Limited argues that using this method to buy virtual currencies allows users to move fiat in and out of an exchange more quickly and cheaply. Also, exchanges typically have rocky relationships with banks, and using Tether is a way to circumvent that.\r\n\r\nUSDT is fairly simple to use. Once on exchanges like <a href=\"https://www.coingecko.com/en/exchanges/poloniex\">Poloniex</a> or Bittrex, it can be used to purchase Bitcoin and other cryptocurrencies. It can be easily transferred from an exchange to any Omni Layer enabled wallet. Tether has no transaction fees, although external wallets and exchanges may charge one. In order to convert USDT to USD and vise versa through the Tether.to Platform, users must pay a small fee. Buying and selling Tether for Bitcoin can be done through a variety of exchanges like the ones mentioned previously or through the Tether.to platform, which also allows the conversion between USD to and from your bank account.",
+        "price_change_24h_usd": -0.001089615441906444,
+        "current_price": 1.001,
+        "market_cap": 65725163597,
+        "atl": 0.572521,
+        "ath": 1.32,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/325/thumb/Tether-logo.png?1598003707",
+            "small": "https://assets.coingecko.com/coins/images/325/small/Tether-logo.png?1598003707",
+            "large": "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707"
+        }
+    },
+    {
+        "name": "USD Coin",
+        "symbol": "usdc",
+        "description": "USDC is a fully collateralized US dollar stablecoin. USDC is the bridge between dollars and trading on cryptocurrency exchanges. The technology behind CENTRE makes it possible to exchange value between people, businesses and financial institutions just like email between mail services and texts between SMS providers. We believe by removing artificial economic borders, we can create a more inclusive global economy.",
+        "price_change_24h_usd": -0.001460897928405647,
+        "current_price": 0.999865,
+        "market_cap": 54546562036,
+        "atl": 0.891848,
+        "ath": 1.17,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png?1547042389",
+            "small": "https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389",
+            "large": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389"
+        }
+    },
+    {
+        "name": "Binance USD",
+        "symbol": "busd",
+        "description": "Binance USD (BUSD) is a stable coin pegged to USD that has received approval from the New York State Department of Financial Services (NYDFS). BUSD will be available for direct purchase and redemption at a rate of 1 BUSD = 1 USD. ",
+        "price_change_24h_usd": 0.00125628,
+        "current_price": 1.002,
+        "market_cap": 17961522996,
+        "atl": 0.901127,
+        "ath": 1.15,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/9576/thumb/BUSD.png?1568947766",
+            "small": "https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766",
+            "large": "https://assets.coingecko.com/coins/images/9576/large/BUSD.png?1568947766"
+        }
+    },
+    {
+        "name": "Dai",
+        "symbol": "dai",
+        "description": "MakerDAO has launched Multi-collateral DAI (MCD). This token refers to the new DAI that is collaterized by multiple assets.\r\n",
+        "price_change_24h_usd": 0.00021986,
+        "current_price": 1.001,
+        "market_cap": 6953083714,
+        "atl": 0.903243,
+        "ath": 1.22,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png?1636636734",
+            "small": "https://assets.coingecko.com/coins/images/9956/small/4943.png?1636636734",
+            "large": "https://assets.coingecko.com/coins/images/9956/large/4943.png?1636636734"
+        }
+    },
+    {
+        "name": "Frax",
+        "symbol": "frax",
+        "description": "The first fractional-algorithmic stablecoin",
+        "price_change_24h_usd": 0.00241003,
+        "current_price": 1.002,
+        "market_cap": 1468518945,
+        "atl": 0.891635,
+        "ath": 1.14,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/13422/thumb/frax_logo.png?1608476506",
+            "small": "https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506",
+            "large": "https://assets.coingecko.com/coins/images/13422/large/frax_logo.png?1608476506"
+        }
+    },
+    {
+        "name": "TrueUSD",
+        "symbol": "tusd",
+        "description": "TrueUSD provides its token holders regular attestations of escrowed balances, full collateral, and also the legal protection against misappropriating underlying USD. The team believes that TrueUSD will be able to come up with the stable trading instrument for the traders of cryptocurrency that has been long-awaited. This will allow the businesses and consumers to use the digital currency as a medium of an exchange. The goal of the TrueUSD team was to build a coin that is stable and which can be used and trusted by them too. TrustToken is a platform that creates the tokens backed by assets that can easily be purchased and sold all around the world. The first asset token of TrustToken is TrueUSD, which is a stable coin and can be redeemed 1-for-1 for US dollars. TrustToken have partnered with registered fiduciaries and banks for holding the funds securely backed by TrueUSD tokens. To increase the amount of security, fiduciaries, and banks directly handle all the funds. Escrowed funds do not give access to the TrueUSD system.\r\n\r\nTrueUSD works with various trust companies which already manage around billions of dollars. Just pass an AML/KYC check, send USD to a trust company with an agreement of escrow. When the funds get verified, their API tells the smart contract of TUSD to mint an equal amount of TUSD to your public <a href=\"https://www.coingecko.com/en/coins/ethereum\">Ethereum</a> address.\r\n\r\nThe USD funds are regularly verified in scheduled attestations by a very much trusted auditing firm. USD funds are kept safely in a third party account, that is escrow accounts, wherein TrustToken does not hold any direct access to the funds and cannot abscond with them even if they wish to. The token burning and minting system makes sure that every TUSD token is backed by 1 USD.\r\n\r\nA mandatory check of AML/KYC makes sure that TUSD keeps shady people away from the entire project. TUSD makes faster transactions in low transaction fees. Even though TUSD is a unique offering, it is most likely overshadowed by its bigger competitors - Tether. While TUSD arguably offers more security and features, it may be losing the marketing battle. This is not to say that the situation will remain the same. With more crypto investors joining the market every day, the good times for TUSD may be on their way.",
+        "price_change_24h_usd": -0.00040715030673133,
+        "current_price": 0.999768,
+        "market_cap": 1186687414,
+        "atl": 0.88355,
+        "ath": 1.62,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/3449/thumb/tusd.png?1618395665",
+            "small": "https://assets.coingecko.com/coins/images/3449/small/tusd.png?1618395665",
+            "large": "https://assets.coingecko.com/coins/images/3449/large/tusd.png?1618395665"
+        }
+    },
+    {
+        "name": "Neutrino USD",
+        "symbol": "usdn",
+        "description": "Token, Asset-backed Tokens, Stablecoins, Decentralized Finance (DeFi)\r\nUSD Stablecoin, Neutrino",
+        "price_change_24h_usd": -0.002985730904346951,
+        "current_price": 0.992278,
+        "market_cap": 724669095,
+        "atl": 0.728841,
+        "ath": 2.52,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/10117/thumb/78GWcZu.png?1600845716",
+            "small": "https://assets.coingecko.com/coins/images/10117/small/78GWcZu.png?1600845716",
+            "large": "https://assets.coingecko.com/coins/images/10117/large/78GWcZu.png?1600845716"
+        }
+    },
+    {
+        "name": "USDD",
+        "symbol": "usdd",
+        "description": "Decentralized StableCoin USDD on TRON\r\nThe TRON DAO Reserve manages USDD and guarantees its price stability",
+        "price_change_24h_usd": -0.001952479678212327,
+        "current_price": 0.997675,
+        "market_cap": 724380087,
+        "atl": 0.928067,
+        "ath": 1.03,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/25380/thumb/UUSD.jpg?1651823371",
+            "small": "https://assets.coingecko.com/coins/images/25380/small/UUSD.jpg?1651823371",
+            "large": "https://assets.coingecko.com/coins/images/25380/large/UUSD.jpg?1651823371"
+        }
+    },
+    {
+        "name": "TerraClassicUSD",
+        "symbol": "ustc",
+        "description": "Terra USD (UST) is an algorithmic stablecoin that is pegged to the USD.",
+        "price_change_24h_usd": 0.00233088,
+        "current_price": 0.03765944,
+        "market_cap": 379975738,
+        "atl": 0.00601921,
+        "ath": 1.092,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/12681/thumb/UST.png?1653548090",
+            "small": "https://assets.coingecko.com/coins/images/12681/small/UST.png?1653548090",
+            "large": "https://assets.coingecko.com/coins/images/12681/large/UST.png?1653548090"
+        }
+    },
+    {
+        "name": "USDP Stablecoin",
+        "symbol": "usdp",
+        "description": "",
+        "price_change_24h_usd": -0.007758248881572283,
+        "current_price": 0.998373,
+        "market_cap": 4541325,
+        "atl": 0.699723,
+        "ath": 1.41,
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/13234/thumb/USDP.png?1606579598",
+            "small": "https://assets.coingecko.com/coins/images/13234/small/USDP.png?1606579598",
+            "large": "https://assets.coingecko.com/coins/images/13234/large/USDP.png?1606579598"
+        }
+    }
+]

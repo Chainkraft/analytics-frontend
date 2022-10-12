@@ -1,0 +1,1102 @@
+{
+    "data": [
+        {
+            "gecko_id": "tether",
+            "llama_id": "1",
+            "name": "Tether",
+            "symbol": "USDT",
+            "chains": [
+                "Tron",
+                "Ethereum",
+                "BSC",
+                "Solana",
+                "Omni",
+                "Polygon",
+                "Avalanche",
+                "Arbitrum",
+                "Algorand",
+                "Heco",
+                "Near",
+                "Fantom",
+                "Optimism",
+                "Klaytn",
+                "EOS",
+                "Tezos",
+                "KCC",
+                "OKExChain",
+                "Gnosis",
+                "Aurora",
+                "Canto",
+                "DefiChain",
+                "Metis",
+                "Liquidchain",
+                "NEO",
+                "Moonriver",
+                "Everscale",
+                "zkSync",
+                "Ontology",
+                "Bittorrent",
+                "RSK",
+                "Oasis",
+                "Zilliqa",
+                "Statemine",
+                "Astar",
+                "IoTeX",
+                "Loopring",
+                "Fuse",
+                "Milkomeda",
+                "Wanchain",
+                "Moonbeam",
+                "Dogechain",
+                "Boba",
+                "Telos",
+                "TomoChain",
+                "Kardia",
+                "Meter",
+                "Terra Classic",
+                "Syscoin",
+                "Celo",
+                "REINetwork",
+                "Crab",
+                "EthereumClassic",
+                "Evmos",
+                "Shiden",
+                "Kava",
+                "Theta",
+                "SXnetwork",
+                "Arbitrum Nova",
+                "Harmony"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707",
+            "current_price": 1.001,
+            "volume_24h_usd": 45613742967,
+            "price_change_24h": -0.001181701305335903
+        },
+        {
+            "gecko_id": "usd-coin",
+            "llama_id": "2",
+            "name": "USD Coin",
+            "symbol": "USDC",
+            "chains": [
+                "Ethereum",
+                "Solana",
+                "Tron",
+                "Polygon",
+                "Avalanche",
+                "BSC",
+                "Arbitrum",
+                "Optimism",
+                "Fantom",
+                "Stellar",
+                "Algorand",
+                "Aurora",
+                "Near",
+                "Gnosis",
+                "Elrond",
+                "Moonriver",
+                "Ronin",
+                "KCC",
+                "Metis",
+                "Canto",
+                "Klaytn",
+                "Loopring",
+                "Osmosis",
+                "DefiChain",
+                "Moonbeam",
+                "Flow",
+                "Astar",
+                "zkSync",
+                "Hedera",
+                "OKExChain",
+                "Ontology",
+                "Everscale",
+                "DFK",
+                "Dogechain",
+                "Milkomeda",
+                "Fuse",
+                "Boba",
+                "Oasis",
+                "SXnetwork",
+                "Wanchain",
+                "Celo",
+                "Telos",
+                "Elastos",
+                "Syscoin",
+                "Kardia",
+                "Meter",
+                "Arbitrum Nova",
+                "Karura",
+                "Evmos",
+                "Terra Classic",
+                "Theta",
+                "Crab",
+                "EthereumClassic",
+                "REINetwork",
+                "TomoChain",
+                "Kava",
+                "RSK",
+                "Kadena"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
+            "current_price": 1.002,
+            "volume_24h_usd": 4021787849,
+            "price_change_24h": 0.00015697
+        },
+        {
+            "gecko_id": "terrausd",
+            "llama_id": "3",
+            "name": "TerraClassicUSD",
+            "symbol": "USTC",
+            "chains": [
+                "Terra Classic",
+                "Ethereum",
+                "BSC",
+                "Avalanche",
+                "Solana",
+                "Polygon",
+                "Fantom",
+                "Harmony",
+                "Aurora",
+                "Moonbeam",
+                "Osmosis",
+                "Oasis",
+                "Fuse",
+                "Metis",
+                "Arbitrum",
+                "Celo",
+                "Optimism",
+                "DFK"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/12681/large/UST.png?1653548090",
+            "current_price": 0.03212984,
+            "volume_24h_usd": 28347964,
+            "price_change_24h": 0.00181316
+        },
+        {
+            "gecko_id": "binance-usd",
+            "llama_id": "4",
+            "name": "Binance USD",
+            "symbol": "BUSD",
+            "chains": [
+                "Ethereum",
+                "BSC",
+                "Kava",
+                "Solana",
+                "Astar",
+                "Boba",
+                "Moonriver",
+                "IoTeX",
+                "OKExChain",
+                "Meter",
+                "Polygon",
+                "Moonbeam",
+                "Milkomeda",
+                "Fuse",
+                "Klaytn",
+                "Dogechain",
+                "Elastos",
+                "Fantom",
+                "Avalanche",
+                "Metis",
+                "KCC",
+                "Theta",
+                "Syscoin",
+                "Terra Classic",
+                "Aurora",
+                "Shiden",
+                "EthereumClassic",
+                "Evmos",
+                "RSK",
+                "Loopring",
+                "Oasis",
+                "Near",
+                "Harmony"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/9576/large/BUSD.png?1568947766",
+            "current_price": 0.99508,
+            "volume_24h_usd": 7156851710,
+            "price_change_24h": -0.005104996441489319
+        },
+        {
+            "gecko_id": "dai",
+            "llama_id": "5",
+            "name": "Dai",
+            "symbol": "DAI",
+            "chains": [
+                "Ethereum",
+                "Avalanche",
+                "Polygon",
+                "BSC",
+                "Optimism",
+                "Fantom",
+                "Gnosis",
+                "Arbitrum",
+                "Klaytn",
+                "Near",
+                "zkSync",
+                "Metis",
+                "Osmosis",
+                "Astar",
+                "Solana",
+                "Moonriver",
+                "Aztec",
+                "Boba",
+                "Loopring",
+                "Milkomeda",
+                "Aurora",
+                "Moonbeam",
+                "RSK",
+                "Ontology",
+                "Velas",
+                "Everscale",
+                "StarkNet",
+                "Arbitrum Nova",
+                "Dogechain",
+                "KCC",
+                "Syscoin",
+                "Shiden",
+                "EthereumClassic",
+                "ThunderCore",
+                "Evmos",
+                "Terra Classic",
+                "SXnetwork",
+                "Oasis",
+                "Harmony"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/9956/large/4943.png?1636636734",
+            "current_price": 1.001,
+            "volume_24h_usd": 463747364,
+            "price_change_24h": -0.001862974593323852
+        },
+        {
+            "gecko_id": "frax",
+            "llama_id": "6",
+            "name": "Frax",
+            "symbol": "FRAX",
+            "chains": [
+                "Ethereum",
+                "Arbitrum",
+                "Moonriver",
+                "Harmony",
+                "Optimism",
+                "Polygon",
+                "Fantom",
+                "Avalanche",
+                "Moonbeam",
+                "BSC",
+                "Boba",
+                "Solana",
+                "Evmos",
+                "zkSync",
+                "Aurora",
+                "Milkomeda",
+                "Everscale",
+                "Dogechain"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/13422/large/frax_logo.png?1608476506",
+            "current_price": 1.001,
+            "volume_24h_usd": 16688499,
+            "price_change_24h": 0.00258804
+        },
+        {
+            "gecko_id": "true-usd",
+            "llama_id": "7",
+            "name": "TrueUSD",
+            "symbol": "TUSD",
+            "chains": [
+                "Ethereum",
+                "Tron",
+                "BSC",
+                "Polygon",
+                "Avalanche",
+                "Fantom",
+                "Arbitrum",
+                "Heco",
+                "Near",
+                "Syscoin"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/3449/large/tusd.png?1618395665",
+            "current_price": 1.001,
+            "volume_24h_usd": 49721241,
+            "price_change_24h": -0.001049605233322204
+        },
+        {
+            "gecko_id": "liquity-usd",
+            "llama_id": "8",
+            "name": "Liquity USD",
+            "symbol": "LUSD",
+            "chains": [
+                "Ethereum",
+                "Optimism",
+                "Polygon",
+                "BSC",
+                "Avalanche",
+                "Fantom"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/14666/large/Group_3.png?1617631327",
+            "current_price": 1.03,
+            "volume_24h_usd": 3160609,
+            "price_change_24h": 0.00101642
+        },
+        {
+            "gecko_id": "fei-usd",
+            "llama_id": "9",
+            "name": "Fei USD",
+            "symbol": "FEI",
+            "chains": [
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/14570/large/ZqsF51Re_400x400.png?1617082206",
+            "current_price": 0.980808,
+            "volume_24h_usd": 277616,
+            "price_change_24h": -0.005707156678919413
+        },
+        {
+            "gecko_id": "magic-internet-money",
+            "llama_id": "10",
+            "name": "Magic Internet Money",
+            "symbol": "MIM",
+            "chains": [
+                "Ethereum",
+                "Avalanche",
+                "Arbitrum",
+                "Fantom",
+                "Moonriver",
+                "Metis",
+                "BSC",
+                "Polygon",
+                "Boba"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/16786/large/mimlogopng.png?1624979612",
+            "current_price": 0.997924,
+            "volume_24h_usd": 1908901,
+            "price_change_24h": 0.0002483
+        },
+        {
+            "gecko_id": "paxos-standard",
+            "llama_id": "11",
+            "name": "Pax Dollar",
+            "symbol": "USDP",
+            "chains": [
+                "Ethereum",
+                "BSC"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/6013/large/Pax_Dollar.png?1629877204",
+            "current_price": 1.003,
+            "volume_24h_usd": 153727019,
+            "price_change_24h": 0.00036908
+        },
+        {
+            "gecko_id": "neutrino",
+            "llama_id": "12",
+            "name": "Neutrino USD",
+            "symbol": "USDN",
+            "chains": [
+                "Waves",
+                "Ethereum",
+                "BSC",
+                "Polygon"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/10117/large/78GWcZu.png?1600845716",
+            "current_price": 0.971472,
+            "volume_24h_usd": 2068443,
+            "price_change_24h": 0.00232509
+        },
+        {
+            "gecko_id": "yusd-stablecoin",
+            "llama_id": "13",
+            "name": "YUSD Stablecoin",
+            "symbol": "YUSD",
+            "chains": [
+                "Avalanche"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25024/large/1_oJ0F2Zf6CuAhLP0zOboo6w.png?1649837252",
+            "current_price": 0.995202,
+            "volume_24h_usd": 1476114,
+            "price_change_24h": -0.000501310721204962
+        },
+        {
+            "gecko_id": "usdd",
+            "llama_id": "14",
+            "name": "USDD",
+            "symbol": "USDD",
+            "chains": [
+                "Tron",
+                "Ethereum",
+                "BSC",
+                "Bittorrent"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25380/large/UUSD.jpg?1651823371",
+            "current_price": 1.001,
+            "volume_24h_usd": 63051218,
+            "price_change_24h": -0.000963875704849349
+        },
+        {
+            "gecko_id": "dola-usd",
+            "llama_id": "15",
+            "name": "Dola",
+            "symbol": "DOLA",
+            "chains": [
+                "Ethereum",
+                "Fantom",
+                "Optimism"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/14287/large/anchor-logo-1-200x200.png?1615275005",
+            "current_price": 0.999927,
+            "volume_24h_usd": 31688,
+            "price_change_24h": 0.00204125
+        },
+        {
+            "gecko_id": "parrot-usd",
+            "llama_id": "16",
+            "name": "Parrot USD",
+            "symbol": "PAI",
+            "chains": [
+                "Solana"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/18439/large/pai.png?1632004568",
+            "current_price": 0.993595,
+            "volume_24h_usd": 105143,
+            "price_change_24h": -0.001868140372286553
+        },
+        {
+            "gecko_id": "husd",
+            "llama_id": "17",
+            "name": "HUSD",
+            "symbol": "HUSD",
+            "chains": [
+                "Ethereum",
+                "Heco",
+                "Tron",
+                "Elastos",
+                "Solana"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/9567/large/HUSD.jpg?1568889385",
+            "current_price": 0.985916,
+            "volume_24h_usd": 91603771,
+            "price_change_24h": -0.004453360447865929
+        },
+        {
+            "gecko_id": "gemini-dollar",
+            "llama_id": "19",
+            "name": "Gemini Dollar",
+            "symbol": "GUSD",
+            "chains": [
+                "Ethereum",
+                "Wanchain"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/5992/large/gemini-dollar-gusd.png?1536745278",
+            "current_price": 1,
+            "volume_24h_usd": 2180589,
+            "price_change_24h": 0.00038914
+        },
+        {
+            "gecko_id": "alchemix-usd",
+            "llama_id": "20",
+            "name": "Alchemix USD",
+            "symbol": "ALUSD",
+            "chains": [
+                "Ethereum",
+                "Fantom",
+                "Optimism",
+                "Arbitrum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1614410406",
+            "current_price": 1.001,
+            "volume_24h_usd": 9521.74,
+            "price_change_24h": 0.0025451
+        },
+        {
+            "gecko_id": "flex-usd",
+            "llama_id": "21",
+            "name": "flexUSD",
+            "symbol": "FLEXUSD",
+            "chains": [
+                "smartBCH",
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/13323/large/flexUSD_2x.png?1607480702",
+            "current_price": 0.43096,
+            "volume_24h_usd": 222.67,
+            "price_change_24h": 0.02057667
+        },
+        {
+            "gecko_id": "nusd",
+            "llama_id": "22",
+            "name": "sUSD",
+            "symbol": "SUSD",
+            "chains": [
+                "Optimism",
+                "Ethereum",
+                "Ontology",
+                "Arbitrum",
+                "Fantom"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/5013/large/sUSD.png?1616150765",
+            "current_price": 1.007,
+            "volume_24h_usd": 6048496,
+            "price_change_24h": -0.003669951071955558
+        },
+        {
+            "gecko_id": "origin-dollar",
+            "llama_id": "23",
+            "name": "Origin Dollar",
+            "symbol": "OUSD",
+            "chains": [
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/12589/large/ousd-logo-200x200.png?1600943287",
+            "current_price": 0.997182,
+            "volume_24h_usd": 850490,
+            "price_change_24h": -0.001033443158053538
+        },
+        {
+            "gecko_id": "celo-dollar",
+            "llama_id": "24",
+            "name": "Celo Dollar",
+            "symbol": "CUSD",
+            "chains": [
+                "Celo",
+                "Solana",
+                "Ethereum",
+                "Klaytn"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/13161/large/icon-celo-dollar-color-1000-circle-cropped.png?1605771134",
+            "current_price": 0.995563,
+            "volume_24h_usd": 413909,
+            "price_change_24h": 0.00325717
+        },
+        {
+            "gecko_id": "reserve",
+            "llama_id": "25",
+            "name": "Reserve",
+            "symbol": "RSV",
+            "chains": [
+                "Ethereum",
+                "Gnosis"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/10952/large/rsv.png?1637983297",
+            "current_price": 0.997394,
+            "volume_24h_usd": 51310,
+            "price_change_24h": -0.004077136637825052
+        },
+        {
+            "gecko_id": "musd",
+            "llama_id": "26",
+            "name": "mStable USD",
+            "symbol": "MUSD",
+            "chains": [
+                "Ethereum",
+                "Polygon",
+                "Gnosis"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/11576/large/mStable_USD.png?1595591803",
+            "current_price": 0.999477,
+            "volume_24h_usd": 9258.87,
+            "price_change_24h": 0.00303185
+        },
+        {
+            "gecko_id": "usdk",
+            "llama_id": "27",
+            "name": "USDK",
+            "symbol": "USDK",
+            "chains": [
+                "Ethereum",
+                "OKExChain",
+                "Solana",
+                "Polygon"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/8824/large/usdk.png?1563418517",
+            "current_price": 1.001,
+            "volume_24h_usd": 31983597,
+            "price_change_24h": -0.002507552731403351
+        },
+        {
+            "gecko_id": "vai",
+            "llama_id": "28",
+            "name": "Vai",
+            "symbol": "VAI",
+            "chains": [
+                "BSC"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/13861/large/VAI_logo.png?1612413571",
+            "current_price": 0.945222,
+            "volume_24h_usd": 966.22,
+            "price_change_24h": -0.001339559023396997
+        },
+        {
+            "gecko_id": "tor",
+            "llama_id": "29",
+            "name": "TOR",
+            "symbol": "TOR",
+            "chains": [
+                "Fantom"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/23609/large/tor.png?1644747242",
+            "current_price": 0.998367,
+            "volume_24h_usd": 301769,
+            "price_change_24h": -0.001103989205255451
+        },
+        {
+            "gecko_id": "spiceusd",
+            "llama_id": "31",
+            "name": "SpiceUSD",
+            "symbol": "USDS",
+            "chains": [
+                "Avalanche",
+                "BSC",
+                "Polygon",
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25697/large/USDS.png?1653440948",
+            "current_price": 0.826664,
+            "volume_24h_usd": 2973.5,
+            "price_change_24h": 0.105475
+        },
+        {
+            "gecko_id": "sperax-usd",
+            "llama_id": "32",
+            "name": "Sperax USD",
+            "symbol": "USDS",
+            "chains": [
+                "Arbitrum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/21973/large/USDs_logo_1000X1000.png?1640565887",
+            "current_price": 0.998699,
+            "volume_24h_usd": 37611,
+            "price_change_24h": -0.001932740294965818
+        },
+        {
+            "gecko_id": "usdp",
+            "llama_id": "33",
+            "name": "USDP Stablecoin",
+            "symbol": "USDP",
+            "chains": [
+                "Ethereum",
+                "BSC",
+                "Gnosis",
+                "Fantom"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/13234/large/USDP.png?1606579598",
+            "current_price": 0.986046,
+            "volume_24h_usd": 16476.12,
+            "price_change_24h": -0.00145395138187987
+        },
+        {
+            "gecko_id": "usd-balance",
+            "llama_id": "34",
+            "name": "USD Balance",
+            "symbol": "USDB",
+            "chains": [
+                "Fantom"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/24341/large/usdb.png?1647398082",
+            "current_price": 0.999299,
+            "volume_24h_usd": 1228.6,
+            "price_change_24h": -0.001718646754977682
+        },
+        {
+            "gecko_id": "mimatic",
+            "llama_id": "35",
+            "name": "MAI",
+            "symbol": "MAI",
+            "chains": [
+                "Polygon",
+                "Optimism",
+                "Fantom",
+                "Moonriver",
+                "Avalanche",
+                "Ethereum",
+                "Metis",
+                "BSC",
+                "Gnosis",
+                "Cronos",
+                "Solana",
+                "Arbitrum",
+                "IoTeX",
+                "Aurora",
+                "Milkomeda",
+                "Celo",
+                "Harmony"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/15264/large/mimatic-red.png?1620281018",
+            "current_price": 0.994867,
+            "volume_24h_usd": 2341671,
+            "price_change_24h": 0.00060573
+        },
+        {
+            "gecko_id": "ratio-stable-coin",
+            "llama_id": "36",
+            "name": "Ratio Stable Coin",
+            "symbol": "USDR",
+            "chains": [
+                "Solana"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/26066/large/usdr_logo.png?1655469254",
+            "current_price": 1.034,
+            "volume_24h_usd": 309.54,
+            "price_change_24h": null
+        },
+        {
+            "gecko_id": "just-stablecoin",
+            "llama_id": "37",
+            "name": "USDJ",
+            "symbol": "USDJ",
+            "chains": [
+                "Tron"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/10998/large/usdj.png?1587026569",
+            "current_price": 0.999098,
+            "volume_24h_usd": 2307274,
+            "price_change_24h": -0.003796219455586392
+        },
+        {
+            "gecko_id": "usdx",
+            "llama_id": "42",
+            "name": "USDX",
+            "symbol": "USDX",
+            "chains": [
+                "Kava"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/13056/large/USDX_coin.png?1604734048",
+            "current_price": 0.938927,
+            "volume_24h_usd": 509312,
+            "price_change_24h": -0.002243762531583094
+        },
+        {
+            "gecko_id": "token-dforce-usd",
+            "llama_id": "44",
+            "name": "dForce USD",
+            "symbol": "USX",
+            "chains": [
+                "Ethereum",
+                "BSC",
+                "Arbitrum",
+                "Optimism",
+                "Kava",
+                "Avalanche",
+                "Polygon"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/17422/large/usx_32.png?1627600920",
+            "current_price": 0.995969,
+            "volume_24h_usd": 96588,
+            "price_change_24h": -0.006106194213486571
+        },
+        {
+            "gecko_id": "acala-dollar",
+            "llama_id": "45",
+            "name": "Acala Dollar",
+            "symbol": "AUSD",
+            "chains": [
+                "Karura",
+                "Acala"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25812/large/ezgif-1-f4612f5260.png?1653987299",
+            "current_price": 0.894112,
+            "volume_24h_usd": 104670,
+            "price_change_24h": 0.02194679
+        },
+        {
+            "gecko_id": "usd",
+            "llama_id": "46",
+            "name": "USD+",
+            "symbol": "USD+",
+            "chains": [
+                "Optimism",
+                "Polygon",
+                "BSC",
+                "Avalanche"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25757/large/USD__logo.png?1653519267",
+            "current_price": 0.99989,
+            "volume_24h_usd": 2748464,
+            "price_change_24h": -0.003165667298449027
+        },
+        {
+            "gecko_id": "dei-token",
+            "llama_id": "47",
+            "name": "DEI",
+            "symbol": "DEI",
+            "chains": [
+                "Fantom",
+                "Polygon",
+                "Ethereum",
+                "BSC",
+                "Metis"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/18779/large/DEI-logo-round-white-3.png?1646300101",
+            "current_price": 0.994767,
+            "volume_24h_usd": 183431,
+            "price_change_24h": -0.001855666567740499
+        },
+        {
+            "gecko_id": "bai-stablecoin",
+            "llama_id": "48",
+            "name": "BAI Stablecoin",
+            "symbol": "BAI",
+            "chains": [
+                "Astar"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25385/large/BAI_Token_Logo.png?1651633359",
+            "current_price": 1,
+            "volume_24h_usd": 16915.94,
+            "price_change_24h": 0.00179905
+        },
+        {
+            "gecko_id": "usn",
+            "llama_id": "54",
+            "name": "USN",
+            "symbol": "USN",
+            "chains": [
+                "Near",
+                "Aurora"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/24930/large/download.png?1649395750",
+            "current_price": 0.999993,
+            "volume_24h_usd": 464175,
+            "price_change_24h": -0.00218286086578412
+        },
+        {
+            "gecko_id": "hedge-usd",
+            "llama_id": "57",
+            "name": "Hedge USD",
+            "symbol": "USH",
+            "chains": [
+                "Solana"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25481/large/ush.png?1652011029",
+            "current_price": 0.993455,
+            "volume_24h_usd": 634878,
+            "price_change_24h": 0.00219889
+        },
+        {
+            "gecko_id": "bacon-protocol-home",
+            "llama_id": "60",
+            "name": "HomeCoin",
+            "symbol": "HOME",
+            "chains": [
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/26185/large/homecoin_200.png?1656384254",
+            "current_price": 0.96625,
+            "volume_24h_usd": 2959.78,
+            "price_change_24h": -0.0199705955625874
+        },
+        {
+            "gecko_id": "fixed-income-asset-token",
+            "llama_id": "61",
+            "name": "Fixed Income Asset Token",
+            "symbol": "FIAT",
+            "chains": [
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25477/large/fiat.png?1652007537",
+            "current_price": 1.001,
+            "volume_24h_usd": 14100.98,
+            "price_change_24h": null
+        },
+        {
+            "gecko_id": "pusd-2",
+            "llama_id": "62",
+            "name": "PUSd",
+            "symbol": "PUSD",
+            "chains": [
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25858/large/PUSd.png?1654161232",
+            "current_price": 1.013,
+            "volume_24h_usd": 2681296,
+            "price_change_24h": -0.02247278244311257
+        },
+        {
+            "gecko_id": "fantom-usd",
+            "llama_id": "63",
+            "name": "Fantom USD",
+            "symbol": "FUSD",
+            "chains": [
+                "Fantom"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/22230/large/fUSD_32.png?1641246519",
+            "current_price": 0.329723,
+            "volume_24h_usd": 774.07,
+            "price_change_24h": 0.00138794
+        },
+        {
+            "gecko_id": "uxd-stablecoin",
+            "llama_id": "64",
+            "name": "UXD Stablecoin",
+            "symbol": "UXD",
+            "chains": [
+                "Solana"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/22850/large/UXD-White.png?1642747473",
+            "current_price": 1.002,
+            "volume_24h_usd": 442731,
+            "price_change_24h": -0.003878762345004727
+        },
+        {
+            "gecko_id": "usdh",
+            "llama_id": "65",
+            "name": "USDH",
+            "symbol": "USDH",
+            "chains": [
+                "Solana"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/22941/large/USDH_icon.png?1643008131",
+            "current_price": 0.997282,
+            "volume_24h_usd": 1830423,
+            "price_change_24h": -0.000036668324955191
+        },
+        {
+            "gecko_id": "bean2",
+            "llama_id": "67",
+            "name": "Bean",
+            "symbol": "BEAN",
+            "chains": [
+                "Ethereum"
+            ],
+            "current_price": 0.991056770305064
+        },
+        {
+            "gecko_id": "pando-usd",
+            "llama_id": "69",
+            "name": "Pando USD",
+            "symbol": "PUSD",
+            "chains": [
+                "Mixin"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25322/large/cwg65MGy_400x400.jpg?1651221836",
+            "current_price": 0.977104,
+            "volume_24h_usd": 1463403,
+            "price_change_24h": 0.00030401
+        },
+        {
+            "gecko_id": "digitaldollar",
+            "llama_id": "70",
+            "name": "DigitalDollar",
+            "symbol": "DUSD",
+            "chains": [
+                "Arbitrum"
+            ],
+            "current_price": 0.745722
+        },
+        {
+            "gecko_id": "vesta-stable",
+            "llama_id": "71",
+            "name": "Vesta Stable",
+            "symbol": "VST",
+            "chains": [
+                "Arbitrum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/23621/large/vesta.png?1644809642",
+            "current_price": 0.979783,
+            "volume_24h_usd": 846585,
+            "price_change_24h": -0.000106047024618805
+        },
+        {
+            "gecko_id": "kolibri-usd",
+            "llama_id": "72",
+            "name": "Kolibri USD",
+            "symbol": "KUSD",
+            "chains": [
+                "Tezos"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/19464/large/kolibri.png?1635251602",
+            "current_price": 0.986539,
+            "volume_24h_usd": 11964.44,
+            "price_change_24h": -0.011115142023573887
+        },
+        {
+            "gecko_id": "usdtez",
+            "llama_id": "73",
+            "name": "USDtez",
+            "symbol": "USDTZ",
+            "chains": [
+                "Tezos"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/19467/large/usdtz.png?1635254532",
+            "current_price": 0.977031,
+            "volume_24h_usd": 762.27,
+            "price_change_24h": -0.00189597113046236
+        },
+        {
+            "gecko_id": "moremoney-usd",
+            "llama_id": "74",
+            "name": "Moremoney USD",
+            "symbol": "MONEY",
+            "chains": [
+                "Avalanche"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/24237/large/money.png?1647087223",
+            "current_price": 1.001,
+            "volume_24h_usd": 3588.3,
+            "price_change_24h": -0.00143301569682075
+        },
+        {
+            "gecko_id": "youves-uusd",
+            "llama_id": "75",
+            "name": "Youves uUSD",
+            "symbol": "UUSD",
+            "chains": [
+                "Tezos"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/19172/large/uUSD_Youves.png?1634611471",
+            "current_price": 0.989343,
+            "volume_24h_usd": 7019.9,
+            "price_change_24h": -0.006272384459812597
+        },
+        {
+            "gecko_id": "interest-protocol",
+            "llama_id": "76",
+            "name": "Interest Protocol",
+            "symbol": "USDI",
+            "chains": [
+                "Ethereum"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/25999/large/20598.png?1655277115",
+            "current_price": 0.994219,
+            "volume_24h_usd": 9320.31,
+            "price_change_24h": -0.011244607775517059
+        },
+        {
+            "gecko_id": "note",
+            "llama_id": "78",
+            "name": "Note",
+            "symbol": "NOTE",
+            "chains": [
+                "Canto"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/26988/large/iShot_2022-08-23_09.17.46.png?1661217695",
+            "current_price": 1.006,
+            "volume_24h_usd": 2037210,
+            "price_change_24h": -0.001459259225926601
+        },
+        {
+            "gecko_id": "helio-protocol-hay",
+            "llama_id": "79",
+            "name": "Destablecoin HAY",
+            "symbol": "HAY",
+            "chains": [
+                "BSC"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/26947/large/HAY.png?1660984091",
+            "current_price": 0.995831,
+            "volume_24h_usd": 14956.86,
+            "price_change_24h": 0.00110422
+        },
+        {
+            "gecko_id": "usk",
+            "llama_id": "81",
+            "name": "USK",
+            "symbol": "USK",
+            "chains": [
+                "Kujira"
+            ],
+            "image": "https://assets.coingecko.com/coins/images/27274/large/usk.png?1663073635",
+            "current_price": 1.011,
+            "volume_24h_usd": 17176.49,
+            "price_change_24h": -0.015786083747418193
+        }
+    ],
+    "message": "findAll"
+}
