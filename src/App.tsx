@@ -1,8 +1,6 @@
 import './App.css';
 
 import * as React from 'react';
-import CoinCard from './components/CoinCard';
-import { Container, Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -23,8 +21,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 
-import coins from './responses/stablecoins-list.json';
-
 import { styled, Theme, CSSObject, ThemeProvider, createTheme } from '@mui/material/styles';
 
 import CssBaseline from '@mui/material/CssBaseline';
@@ -35,6 +31,7 @@ import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 
 import { pageTitles } from './helpers/helpers';
 import TokenDetailsDashboard from './components/TokenDetailsDashboard';
+import { green, grey, orange, red } from '@mui/material/colors';
 
 const drawerWidth = 240;
 
@@ -106,19 +103,35 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const theme = createTheme({
+const globalTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
       main: "#1a1a2e"
     },
+    secondary: {
+      main: "#f9A822"
+    },
+    warning: {
+      main: red[500]
+    },
+    success: {
+      main: green[500]
+    },
     background: {
       default: "#13131e",
       paper: "#1a1a2e"
+    },
+    text: {
+      primary: "#ffffff",
+      secondary: grey[400],
+      disabled: grey[600]
     }
   },
+  status: {
+    danger: red[500],
+  },
 });
-
 
 function App() {
 
@@ -135,7 +148,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={globalTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="fixed" open={open}>
@@ -160,7 +173,7 @@ function App() {
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              {globalTheme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </DrawerHeader>
           <Divider />
@@ -215,7 +228,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<StablecoinsGrid coins={coins.data} />}
+            element={<StablecoinsGrid />}
           />
           <Route
             path="/alerts"

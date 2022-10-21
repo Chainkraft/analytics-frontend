@@ -1,28 +1,95 @@
-import { alpha, Container, Grid, Paper } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Toolbar from '@mui/material/Toolbar';
-import { green, grey, red } from '@mui/material/colors';
 import { useParams } from 'react-router';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import { currencyFormat } from '../helpers/helpers';
-import coin from '../responses/stablecoin-details-mim.json';
 import PriceChart from './charts/PriceChart';
 import MarketCapChart from './charts/MarketCapChart';
 import ChainkraftScoreChart from './charts/ChainkraftScoreChart';
-
+import useSWR from 'swr';
+import { useMemo } from 'react';
+import { fetcherAxios } from '../helpers/fetcher-axios';
+const R = require('ramda');
 
 
 const TokenDetailsDashboard = (props: any) => {
-
-    const lightGrey = grey[400];
     let { tokenId } = useParams();
 
-    let token = coin.data.token;
-    let priceHistory = coin.data.priceHistory;
-    let marketCapHistory = coin.data.marketCapHistory;
+    const { data, error } = useSWR<any>(`stablecoins/${tokenId}`, fetcherAxios)
+    console.log('data', data);
+    console.log('error', error);
+
+    const EMPTY_OBJECT: any = {};
+
+    const extendedData: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'data', data), [data]);
+
+    const token: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'token', extendedData), [extendedData]);
+    const priceHistory: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'priceHistory', extendedData), [extendedData]);
+    const marketCapHistory: any = useMemo(() => R.prop('marketCapHistory', extendedData), [extendedData]);
+
+    const name: any = useMemo(() => R.propOr('', 'name', token), [token]);
+    const image: any = useMemo(() => R.prop('image', token), [token]);
+    const symbol: any = useMemo(() => R.propOr('', 'symbol', token), [token]);
+
+
+    function renderError() {
+        return (
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    height: '100vh',
+                    overflow: 'auto',
+                }} >
+                <Toolbar />
+                <Container sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '50vh',
+                    p: 2
+                }} >
+                    An error has occured.
+                </Container>
+            </Box>
+        );
+    }
+
+    function renderLoading() {
+        return (
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    height: '100vh',
+                    overflow: 'auto',
+                }} >
+                <Toolbar />
+                <Container sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '50vh',
+                    p: 2
+                }} >
+                    <CircularProgress size={40} color='secondary' />
+                </Container>
+            </Box>
+        );
+    }
+
+    if (error) {
+        return renderError();
+    }
+    if (!data) {
+        return renderLoading();
+    }
 
     return (
         <Box
@@ -44,15 +111,15 @@ const TokenDetailsDashboard = (props: any) => {
                     alignItems: 'center',
                     gap: '10px'
                 }}>
-                    <Box
+                    {image && <Box
                         component="img"
                         alt="Coin symbol"
-                        src={token.image}
+                        src={image}
                         sx={{
                             maxHeight: '50px'
                         }}
-                    />
-                    <Typography variant="h5">{token.name} ({token.symbol.toUpperCase()})</Typography>
+                    />}
+                    <Typography variant="h5">{name} ({symbol})</Typography>
                 </Box>
 
                 <Box sx={{
@@ -69,7 +136,7 @@ const TokenDetailsDashboard = (props: any) => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             gap: '5px',
-                            color: green[500]
+                            color: 'success.main'
                         }}>
                             <Box component={TrendingUpIcon} />
                             <Typography variant="body1">(+{currencyFormat(token.price_change_24h, 3)})</Typography>
@@ -80,10 +147,10 @@ const TokenDetailsDashboard = (props: any) => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             gap: '5px',
-                            color: red[500]
+                            color: 'warning.main'
                         }}>
                             <Box component={TrendingDownIcon} />
-                            <Typography variant="body1">(+{currencyFormat(token.price_change_24h, 3)})</Typography>
+                            <Typography variant="body1">({currencyFormat(token.price_change_24h, 3)})</Typography>
                         </Box>
                     }
                 </Box>
@@ -105,33 +172,32 @@ const TokenDetailsDashboard = (props: any) => {
                             display: 'flex',
                             flexDirection: 'column',
                             maxWidth: '60%',
+                            flexGrow: 1,
                             p: 1
                         }}
                     >
                         <Typography variant="subtitle2">Overview</Typography>
-                        <Typography variant="body1">USDC is a fully collateralized US dollar stablecoin. USDC is the bridge between dollars and trading on cryptocurrency exchanges. The technology behind CENTRE makes it possible to exchange value between people, businesses and financial institutions just like email between mail services and texts between SMS providers. We believe by removing artificial economic borders, we can create a more inclusive global economy.</Typography>
+                        <Typography variant="body1">{token.description}</Typography>
                         <Typography variant="subtitle2" sx={{ mt: 2 }}>Backing strategy</Typography>
                         <Typography variant="body1">Crypto-backed</Typography>
                         <Typography variant="subtitle2" sx={{ mt: 2 }}>Regulated</Typography>
-                        <Typography variant="body1">Yes, by New York State Department of Financial Services</Typography>
+                        <Typography variant="body1">{token.regulated ? 'Yes' : 'No data'}</Typography>
                         <Typography variant="subtitle2" sx={{ mt: 2 }}>Audits</Typography>
-                        <Typography variant="body1">Yes</Typography>
+                        <Typography variant="body1">{token.audits ? 'Yes' : 'No data'}</Typography>
                         <Typography variant="subtitle2" sx={{ mt: 2 }}>Issuer</Typography>
-                        <Typography variant="body1">Paxos Global</Typography>
+                        <Typography variant="body1">{token.issuer ? token.issuer : 'No data'}</Typography>
+
                     </Box>
                     <Box
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
                             width: '40%',
-                            p: 1,
-                            justifyItems: 'stretch'
+                            alignItems: 'center',
+                            justifyContent: 'flex-start'
+
                         }}>
-                        <Box sx={{
-                            flexGrow: 10
-                        }}>
-                            <ChainkraftScoreChart />
-                        </Box>
+                        <ChainkraftScoreChart token={token} />
                     </Box>
                 </Box>
 
@@ -144,22 +210,26 @@ const TokenDetailsDashboard = (props: any) => {
                         mt: 2
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            bgcolor: 'background.paper',
-                            borderRadius: '12px',
-                            boxShadow: 1,
-                            fontWeight: 'bold',
-                            p: 2,
-                            flexGrow: 1
-                        }}
-                    >
-                        <Typography variant="h6">Market cap</Typography>
-                        <Typography variant="h4" color='rgba(249, 168, 34, 1)' sx={{ mt: 2, }}>{currencyFormat(token.current_market_cap)}</Typography>
-                    </Box>
+                    {token.current_market_cap > 0 &&
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                bgcolor: 'background.paper',
+                                borderRadius: '12px',
+                                boxShadow: 1,
+                                fontWeight: 'bold',
+                                p: 2,
+                                flexGrow: 1
+                            }}
+                        >
+                            <Typography variant="h6">Market cap</Typography>
+                            <Typography variant="h4" color='secondary' sx={{ mt: 2, }}>
+                                {currencyFormat(token.current_market_cap)}
+                            </Typography>
+                        </Box>
+                    }
 
                     <Box
                         sx={{
@@ -176,7 +246,7 @@ const TokenDetailsDashboard = (props: any) => {
                     >
 
                         <Typography variant="h6">24h volume</Typography>
-                        <Typography variant="h4" color='rgba(249, 168, 34, 1)' sx={{ mt: 2, }}>{currencyFormat(token.volume_24h)}</Typography>
+                        <Typography variant="h4" color='secondary' sx={{ mt: 2, }}>{currencyFormat(token.volume_24h)}</Typography>
 
 
 
@@ -196,7 +266,7 @@ const TokenDetailsDashboard = (props: any) => {
                     >
 
                         <Typography variant="h6">Chains</Typography>
-                        <Typography variant="h4" color='rgba(249, 168, 34, 1)' sx={{ mt: 2, }}>{token.chains.length}</Typography>
+                        <Typography variant="h4" color='secondary' sx={{ mt: 2, }}>{token.chains.length}</Typography>
                     </Box>
                 </Box>
 
@@ -216,24 +286,27 @@ const TokenDetailsDashboard = (props: any) => {
                     <PriceChart token={token} priceHistory={priceHistory} />
                 </Box>
 
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: { xs: 'column', md: 'row' },
-                        alignItems: 'center',
-                        bgcolor: 'background.paper',
-                        borderRadius: '12px',
-                        boxShadow: 1,
-                        fontWeight: 'bold',
-                        mt: 2,
-                        p: 2
-                    }}
-                >
-                    <MarketCapChart token={token} marketCapHistory={marketCapHistory} />
-                </Box>
+                {marketCapHistory &&
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'column', md: 'row' },
+                            alignItems: 'center',
+                            bgcolor: 'background.paper',
+                            borderRadius: '12px',
+                            boxShadow: 1,
+                            fontWeight: 'bold',
+                            mt: 2,
+                            p: 2
+                        }}
+                    >
+                        <MarketCapChart token={token} marketCapHistory={marketCapHistory} />
+                    </Box>
+                }
             </Container >
         </Box >
     );
+
 }
 
 

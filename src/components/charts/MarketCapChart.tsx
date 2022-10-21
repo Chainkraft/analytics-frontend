@@ -1,4 +1,4 @@
-import { alpha, Container, Grid, Paper } from '@mui/material';
+import { alpha, Container, Grid, Paper, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -25,10 +25,6 @@ import tether from "../../responses/tether-marketcap.json";
 
 const MarketCapChart = (props: any) => {
 
-    const lightGrey = grey[400];
-    let { tokenId } = useParams();
-    // let token = coins.data.find(token => token.symbol === tokenId)!;
-
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -40,7 +36,7 @@ const MarketCapChart = (props: any) => {
         Filler
     );
 
-    const textColor = 'white';
+    const theme = useTheme();
 
     let tetherDataset = [];
     for (var i = usdd.length - 1; i >= 0; i--) {
@@ -50,7 +46,7 @@ const MarketCapChart = (props: any) => {
 
     let labels: string[] = [];
     let tokenDataset: number[] = [];
-    console.log(props.token);
+
     const marketCapsDataset = props.marketCapHistory.market_caps.slice(-90);
 
     for (let index = 0; index < marketCapsDataset.length; index++) {
@@ -75,24 +71,25 @@ const MarketCapChart = (props: any) => {
         scales: {
             x: {
                 ticks: {
-                    color: textColor,
+                    color: theme.palette.text.primary,
                     font: {
                         size: 14,
                     },
                 },
                 grid: {
-                    borderColor: textColor,
+                    borderColor: theme.palette.text.primary,
                 },
             },
             y: {
+                // suggestedMin: 0,
                 ticks: {
-                    color: textColor,
+                    color: theme.palette.text.primary,
                     font: {
                         size: 14,
                     },
                 },
                 grid: {
-                    borderColor: textColor,
+                    borderColor: theme.palette.text.primary,
                 },
             },
         },
@@ -100,7 +97,7 @@ const MarketCapChart = (props: any) => {
             title: {
                 display: true,
                 text: "Market cap",
-                color: textColor,
+                color: theme.palette.text.primary,
                 font: {
                     size: 16,
                 },
@@ -118,16 +115,9 @@ const MarketCapChart = (props: any) => {
                 label: props.token.symbol,
                 data: tokenDataset,
                 borderWidth: 3,
-                backgroundColor: 'rgb(249, 168, 34, 1)',
+                backgroundColor: theme.palette.secondary.main,
                 fill: true
-            },
-            // {
-            //     label: 'Tether',
-            //     data: tetherDataset.reverse(),
-            //     borderWidth: 3,
-            //     backgroundColor: 'rgb(249, 168, 34, 0.5)',
-            //     fill: true
-            // }
+            }
         ],
     };
 

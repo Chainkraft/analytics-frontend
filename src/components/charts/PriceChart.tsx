@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -22,10 +23,11 @@ const PriceChart = (props: any) => {
         Legend
     );
 
-    const textColor = 'white';
+    const theme = useTheme();
 
     let labels: string[] = [];
     let tokenDataset: number[] = [];
+
     const priceDataset = props.priceHistory.prices.length > 90 ? props.priceHistory.prices.slice(-90) : props.priceHistory.prices.slice(-30);
 
     for (let index = 0; index < priceDataset.length; index++) {
@@ -45,32 +47,32 @@ const PriceChart = (props: any) => {
         elements: {
             point: {
                 radius: 0,
-                backgroundColor: '#F9A822',
+                backgroundColor: theme.palette.secondary.main,
             },
         },
         scales: {
             x: {
                 ticks: {
-                    color: textColor,
+                    color: theme.palette.text.primary,
                     font: {
                         size: 14,
                     },
                 },
                 grid: {
-                    borderColor: textColor,
+                    borderColor: theme.palette.text.primary,
                 },
             },
             y: {
                 suggestedMin: Math.min(...tokenDataset) - 0.05,
                 suggestedMax: Math.max(...tokenDataset) + 0.05,
                 ticks: {
-                    color: textColor,
+                    color: theme.palette.text.primary,
                     font: {
                         size: 14,
                     },
                 },
                 grid: {
-                    borderColor: textColor,
+                    borderColor: theme.palette.text.primary,
                 },
             },
         },
@@ -78,7 +80,7 @@ const PriceChart = (props: any) => {
             title: {
                 display: true,
                 text: "Price",
-                color: textColor,
+                color: theme.palette.text.primary,
                 font: {
                     size: 16,
                 },
@@ -96,8 +98,8 @@ const PriceChart = (props: any) => {
                 label: props.token.symbol,
                 data: tokenDataset,
                 borderWidth: 3,
-                borderColor: '#F9A822',
-                backgroundColor: '#F9A822',
+                borderColor: theme.palette.secondary.main,
+                backgroundColor: theme.palette.secondary.main,
             }
         ],
     };

@@ -5,21 +5,17 @@ import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { grey } from '@mui/material/colors';
 import { useState } from 'react';
-import axios from 'axios';
+import { apiClient } from '../helpers/fetcher-axios';
 
 const Alerts = (props: any) => {
-
-    const lightGrey = grey[400];
 
     const handleSubmit = async () => {
         setProcessing(true);
         let error = form.email.includes('@') ? '' : 'Incorrect email.';
 
         if (error.length == 0) {
-            const url = "http://localhost:1337/users/email";
-            let addEmail = await axios.post(url,
+            let addEmail = await apiClient.post("users/email",
                 {
                     email_address: form.email,
                     status: "subscribed"
@@ -59,8 +55,8 @@ const Alerts = (props: any) => {
                 gap: '20px',
                 minHeight: '70vh'
             }} >
-                <Typography variant="h3" align='center' color={lightGrey}>Coming soon.</Typography>
-                <Typography variant="subtitle1" maxWidth='80vh' align='center' color={lightGrey}>You will be able to get depeg and price alerts about your favourite stablecoins.
+                <Typography variant="h3" align='center' >Coming soon.</Typography>
+                <Typography variant="subtitle1" maxWidth='80vh' align='center'>You will be able to get depeg and price alerts about your favourite stablecoins.
                     Know about important events early. No rugpulls or crashes will go unnoticed. </Typography>
                 <Box component="form"  >
                     <TextField
@@ -71,7 +67,7 @@ const Alerts = (props: any) => {
                         name="email"
                         autoComplete="email"
                         value={form.email}
-                        error={form.error != ''}
+                        error={form.error !== ''}
                         helperText={form.error}
                         onChange={handleEmailChange}
                     />
