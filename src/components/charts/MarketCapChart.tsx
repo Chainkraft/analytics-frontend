@@ -1,10 +1,4 @@
-import { alpha, Container, Grid, Paper, useTheme } from '@mui/material';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-
-import Toolbar from '@mui/material/Toolbar';
-import { green, grey, red } from '@mui/material/colors';
-import { useParams } from 'react-router';
+import { useTheme } from '@mui/material';
 
 import {
     Chart as ChartJS,
@@ -18,9 +12,6 @@ import {
     Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import usdd from "../../responses/usdc-marketcap.json";
-import tether from "../../responses/tether-marketcap.json";
-
 
 
 const MarketCapChart = (props: any) => {
@@ -37,12 +28,6 @@ const MarketCapChart = (props: any) => {
     );
 
     const theme = useTheme();
-
-    let tetherDataset = [];
-    for (var i = usdd.length - 1; i >= 0; i--) {
-        tetherDataset.push(tether[i].totalCirculating.peggedUSD);
-    }
-
 
     let labels: string[] = [];
     let tokenDataset: number[] = [];

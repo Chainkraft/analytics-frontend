@@ -197,7 +197,7 @@ const TokenDetailsDashboard = (props: any) => {
                             justifyContent: 'flex-start'
 
                         }}>
-                        <ChainkraftScoreChart token={token} />
+                        <ChainkraftScoreChart token={token} priceHistory={priceHistory} />
                     </Box>
                 </Box>
 
@@ -300,7 +300,7 @@ const TokenDetailsDashboard = (props: any) => {
                             p: 2
                         }}
                     >
-                        <MarketCapChart token={token} marketCapHistory={marketCapHistory} />
+                        <MarketCapChart token={token} priceHistory={priceHistory} marketCapHistory={marketCapHistory} />
                     </Box>
                 }
             </Container >

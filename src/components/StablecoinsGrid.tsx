@@ -32,7 +32,7 @@ const StablecoinsGrid = (props: any) => {
                     height: '50vh',
                     p: 2
                 }} >
-                    <CircularProgress size={80} color='secondary' />
+                    <CircularProgress size={40} color='secondary' />
                 </Container >
             </Box >);
     }
