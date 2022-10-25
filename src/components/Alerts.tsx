@@ -8,28 +8,45 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { apiClient } from '../helpers/fetcher-axios';
 
-const Alerts = (props: any) => {
+const isEmailValid = (email: string) => {
+    return email
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        ) !== null;
+};
 
+const Alerts = (props: any) => {
     const handleSubmit = async () => {
         setProcessing(true);
-        let error = form.email.includes('@') ? '' : 'Incorrect email.';
 
-        if (error.length == 0) {
-            let addEmail = await apiClient.post("users/email",
+        let error: string = isEmailValid(form.email) ? '' : 'Incorrect email.';
+        if (error.length === 0) {
+            apiClient.post("subscribers/alerting",
                 {
-                    email_address: form.email,
-                    status: "subscribed"
+                    email: form.email,
+                })
+                .then((res) => {
+                    setForm({ ...form, error: error });
+                    setProcessing(false);
+                    setSuccess(true);
+                })
+                .catch((err) => {
+                    setForm({ ...form, error: "Sorry, an error has occured." });
+                    setProcessing(false);
+                    setSuccess(false);
                 });
-            console.log(addEmail);
-        }
 
-        setForm({ ...form, error: error });
-        setProcessing(false);
+        } else {
+            setForm({ ...form, error: "Sorry, incorrect email." });
+            setProcessing(false);
+            setSuccess(false);
+        }
     }
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-        // Updates form state variable setting the message
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, email: e.target.value });
+    }
 
     const [form, setForm] = useState({
         email: "",
@@ -37,6 +54,7 @@ const Alerts = (props: any) => {
     });
 
     const [processing, setProcessing] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     return (
         <Box
@@ -58,7 +76,7 @@ const Alerts = (props: any) => {
                 <Typography variant="h3" align='center' >Coming soon.</Typography>
                 <Typography variant="subtitle1" maxWidth='80vh' align='center'>You will be able to get depeg and price alerts about your favourite stablecoins.
                     Know about important events early. No rugpulls or crashes will go unnoticed. </Typography>
-                <Box component="form"  >
+                <Box component="form">
                     <TextField
                         fullWidth
                         id="email"
@@ -79,8 +97,8 @@ const Alerts = (props: any) => {
                         sx={{ mt: 2 }} >
                         {processing ? 'Processing...' : "Notify me"}
                     </Button>
-
                 </Box>
+                {success && <Typography color='success.main'>Thank you. You are now on our waiting list.</Typography>}
             </Container >
         </Box>
     );
