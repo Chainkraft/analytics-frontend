@@ -10,10 +10,10 @@ import {
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
 import { CircularProgress, useTheme } from "@mui/material";
-import { fetcherAxios } from "../../helpers/fetcher-axios";
+import { fetcherAxios } from "../../../helpers/fetcher-axios";
 import useSWR from "swr";
-import { PriceHistory, Token } from "../../interfaces/tokens.inteface";
-import { Score } from "../../interfaces/scores.interface";
+import { PriceHistory, Token } from "../../../interfaces/tokens.inteface";
+import { Score } from "../../../interfaces/scores.interface";
 
 const calculateScore = (token: Token, priceHistory: PriceHistory, score: Score) => {
 
