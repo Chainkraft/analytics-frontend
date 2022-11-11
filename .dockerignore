@@ -1,0 +1,11 @@
+node_modules
+dist
+scripts
+Dockerfile
+docker-compose
+.dockerignore
+.git
+.gitignore
+.idea
+.iml
+README.md
