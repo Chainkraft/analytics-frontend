@@ -28,7 +28,10 @@ const PriceChart = (props: any) => {
     let labels: string[] = [];
     let tokenDataset: number[] = [];
 
-    const priceDataset = props.priceHistory.prices.length > 90 ? props.priceHistory.prices.slice(-90) : props.priceHistory.prices.slice(-30);
+    let priceDataset = props.priceHistory.prices
+        .sort((a: any, b: any) => Date.parse(b.date) - (Date.parse(a.date)))
+        .slice(0, 90)
+        .reverse();
 
     for (let index = 0; index < priceDataset.length; index++) {
         let element = priceDataset[index];
