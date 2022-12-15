@@ -91,11 +91,17 @@ export default function Header() {
             sx={{ backgroundImage: 'none' }}
         >
             <Container maxWidth="lg">
-                <Toolbar>
-                    <Link href="/" sx={{ lineHeight: 1 }}>
+                <Toolbar disableGutters={true}>
+                    <Link href="/" sx={{lineHeight: 1}}>
                         <Box
                             component="img"
-                            sx={{ height: 39, mr: 2 }}
+                            sx={(theme) => ({
+                                height: 39,
+                                mr: 2,
+                                [theme.breakpoints.down("sm")]: {
+                                    height: 33
+                                }
+                            })}
                             alt="Analytics"
                             src="/logo.png"
                         />
