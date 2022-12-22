@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import { Link as RouterLink } from 'react-router-dom'
 import useSWR from 'swr';
 import { fetcherAxios } from '../../helpers/fetcher-axios';
-import Typography from "@mui/material/Typography";
 
 const StableCoinList = (props: any) => {
 
@@ -32,7 +31,7 @@ const StableCoinList = (props: any) => {
                 maxWidth="lg"
                 sx={{ display: 'flex', alignItems: 'center', padding: 2 }}
             >
-                <Typography variant="h5" sx={{ flexGrow: 1 }}>Stablecoins</Typography>
+                {/* <Typography variant="h5" sx={{ flexGrow: 1 }}>Stablecoins</Typography> */}
                 {/*<FormControl sx={{m: 1, minWidth: 120}} size="small">*/}
                 {/*    <InputLabel id="demo-select-small">Sort by</InputLabel>*/}
                 {/*    <Select*/}

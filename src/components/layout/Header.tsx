@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import { Autocomplete, Container, Link, Menu, MenuItem } from "@mui/material";
 import { fetcherAxios } from '../../helpers/fetcher-axios';
 import useSWR from 'swr';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -55,13 +55,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const pages = [
-    { label: "Stablecoins", url: "/stablecoins" },
-    { label: "DeFi", url: "/defi", disabled: true },
-    { label: "Subscribe", url: "/subscribe", disabled: true },
-];
 
 export default function Header() {
+    const pathname = useLocation().pathname
+
+    const pages = [
+        { label: "Stablecoins", url: "/stablecoins", disabled: false, active: pathname === "/" || pathname.startsWith("/stablecoins") || pathname.startsWith("/token") },
+        { label: "Subscribe", url: "/alerts", disabled: false, active: pathname.startsWith("/alerts") || pathname.startsWith("/subscribe") },
+        // { label: "DeFi", url: "/defi", disabled: true, active: pathname.startsWith("/defi") },
+    ];
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [searchVisibility, setSearchVisibility] = React.useState<boolean>(false);
 
@@ -92,7 +95,7 @@ export default function Header() {
         >
             <Container maxWidth="lg">
                 <Toolbar disableGutters={true}>
-                    <Link href="/" sx={{lineHeight: 1}}>
+                    <Link href="/" sx={{ lineHeight: 1 }}>
                         <Box
                             component="img"
                             sx={(theme) => ({
@@ -114,7 +117,11 @@ export default function Header() {
                                 href={page.url}
                                 onClick={handleCloseNavMenu}
                                 disabled={page.disabled}
-                                sx={{ my: 2, color: 'white', display: 'block', textAlign: 'center' }}
+                                sx={(theme) => ({
+                                    my: 2,
+                                    color: page.active ? theme.palette.text.primary : theme.palette.text.disabled,
+                                    display: 'block', textAlign: 'center'
+                                })}
                             >
                                 {page.label}
                             </Button>
