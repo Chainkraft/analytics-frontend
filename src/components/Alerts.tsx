@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -30,11 +30,13 @@ const Alerts = (props: any) => {
                     setForm({ ...form, error: error });
                     setProcessing(false);
                     setSuccess(true);
+                    setServerError(false);
                 })
                 .catch((err) => {
-                    setForm({ ...form, error: "Sorry, an error has occured." });
+                    setForm({ ...form, error: error });
                     setProcessing(false);
                     setSuccess(false);
+                    setServerError(true);
                 });
 
         } else {
@@ -55,6 +57,7 @@ const Alerts = (props: any) => {
 
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [serverError, setServerError] = useState(false);
 
     return (
         <Box
@@ -95,10 +98,11 @@ const Alerts = (props: any) => {
                         variant="contained"
                         disabled={processing}
                         sx={{ mt: 2 }} >
-                        {processing ? 'Processing...' : "Notify me"}
+                        {processing ? 'Processing...' : "Subscribe"}
                     </Button>
                 </Box>
                 {success && <Typography color='success.main'>Thank you. You are now on our waiting list.</Typography>}
+                {serverError && <Typography color='warning.main'>Sorry, an error has occured.</Typography>}
             </Container >
         </Box>
     );
