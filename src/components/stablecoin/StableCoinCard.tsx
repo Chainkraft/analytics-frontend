@@ -61,7 +61,7 @@ const StableCoinCard = (props: any) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     gap: '5px',
-                    color: props.coin.price_change_24h > 0 ? "success.main" : "warning.main"
+                    color: props.coin.price_change_24h > 0 ? "success.main" : "error.main"
                 }}>
                     <Box component={props.coin.price_change_24h > 0 ? TrendingUpIcon : TrendingDownIcon}/>
                     <Typography variant="body2" title="24h change">

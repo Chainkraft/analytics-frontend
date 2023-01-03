@@ -1,4 +1,4 @@
-import {CircularProgress, Container} from '@mui/material';
+import {CircularProgress, Container, Tooltip} from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {useParams} from 'react-router';
@@ -9,22 +9,38 @@ import PriceChart from './charts/PriceChart';
 import MarketCapChart from './charts/MarketCapChart';
 import ChainkraftScoreChart from './charts/ChainkraftScoreChart';
 import useSWR from 'swr';
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {fetcherAxios} from '../../helpers/fetcher-axios';
+import WarningIcon from '@mui/icons-material/Warning';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import {TokenContractSummary, TokenContractSummaryStatus} from "../../interfaces/token-contract.summary.interface";
+import {styled} from "@mui/material/styles";
 
 const R = require('ramda');
 
+const SmartContractSummary = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '12px',
+    boxShadow: '1',
+    fontWeight: 'bold',
+    padding: theme.spacing(2),
+    flexGrow: '1',
+    cursor: 'pointer'
+}));
 
 const StableCoinDashboard = (props: any) => {
     let {tokenId} = useParams();
 
-    const {data, error} = useSWR<any>(`stablecoins/${tokenId}`, fetcherAxios)
-    console.log('data', data);
-    console.log('error', error);
+    const {data: tokenData, error} = useSWR<any>(`stablecoins/${tokenId}`, fetcherAxios)
+    const {data: contractsSummary} = useSWR<TokenContractSummary>(`contracts/${tokenId}/summary`, fetcherAxios, {shouldRetryOnError: false})
 
     const EMPTY_OBJECT: any = {};
 
-    const extendedData: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'data', data), [data]);
+    const extendedData: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'data', tokenData), [tokenData]);
 
     const token: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'token', extendedData), [extendedData]);
     const priceHistory: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'priceHistory', extendedData), [extendedData]);
@@ -70,7 +86,7 @@ const StableCoinDashboard = (props: any) => {
     if (error) {
         return renderError();
     }
-    if (!data) {
+    if (!tokenData) {
         return renderLoading();
     }
 
@@ -124,7 +140,7 @@ const StableCoinDashboard = (props: any) => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         gap: '5px',
-                        color: 'warning.main'
+                        color: 'error.main'
                     }}>
                         <Box component={TrendingDownIcon}/>
                         <Typography variant="body1">({currencyFormat(token.price_change_24h, 3)})</Typography>
@@ -132,24 +148,25 @@ const StableCoinDashboard = (props: any) => {
                 }
             </Box>
 
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'stretch',
-                bgcolor: 'background.paper',
-                borderRadius: '12px',
-                boxShadow: 1,
-                mt: 2,
-                p: 2,
-
-            }}
+            <Box
+                sx={(theme) => ({
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    bgcolor: 'background.paper',
+                    borderRadius: '12px',
+                    boxShadow: 1,
+                    mt: 2,
+                    p: 2,
+                    [theme.breakpoints.down("sm")]: {
+                        flexDirection: 'column-reverse',
+                    }
+                })}
             >
                 <Box
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        maxWidth: '60%',
-                        flexGrow: 1,
                         p: 1
                     }}
                 >
@@ -163,17 +180,13 @@ const StableCoinDashboard = (props: any) => {
                     <Typography variant="body1">{token.audits ? 'Yes' : 'No data'}</Typography>
                     <Typography variant="subtitle2" sx={{mt: 2}}>Issuer</Typography>
                     <Typography variant="body1">{token.issuer ? token.issuer : 'No data'}</Typography>
-
                 </Box>
                 <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '40%',
-                        alignItems: 'center',
-                        justifyContent: 'flex-start'
-
-                    }}>
+                    sx={(theme) => ({
+                        [theme.breakpoints.up("sm")]: {
+                            minWidth: '40%'
+                        }
+                    })}>
                     <ChainkraftScoreChart token={token} priceHistory={priceHistory}/>
                 </Box>
             </Box>
@@ -186,6 +199,36 @@ const StableCoinDashboard = (props: any) => {
                     mt: 2
                 }}
             >
+                {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.ALARM &&
+                    <Tooltip title="We have detected smart contract changes recently. Subscribe to get details." arrow>
+                        <SmartContractSummary>
+                            <Typography variant="h6">Smart contracts</Typography>
+                            <Typography sx={{mt: 1}}>
+                                <PriorityHighIcon fontSize="large" sx={{color: 'error.main'}}></PriorityHighIcon>
+                            </Typography>
+                        </SmartContractSummary>
+                    </Tooltip>
+                }
+                {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.WARNING &&
+                    <Tooltip title="We have detected smart contract warnings. Subscribe to get details." arrow>
+                        <SmartContractSummary>
+                            <Typography variant="h6">Smart contracts</Typography>
+                            <Typography sx={{mt: 1}}>
+                                <WarningIcon fontSize="large" sx={{color: 'warning.main'}}></WarningIcon>
+                            </Typography>
+                        </SmartContractSummary>
+                    </Tooltip>
+                }
+                {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.OK &&
+                    <Tooltip title="We have not detected smart contracts anomalies" arrow>
+                        <SmartContractSummary>
+                            <Typography variant="h6">Smart contracts</Typography>
+                            <Typography sx={{mt: 1}}>
+                                <VerifiedUserIcon fontSize="large" sx={{color: 'success.main'}}></VerifiedUserIcon>
+                            </Typography>
+                        </SmartContractSummary>
+                    </Tooltip>
+                }
                 {token.current_market_cap > 0 &&
                     <Box
                         sx={{

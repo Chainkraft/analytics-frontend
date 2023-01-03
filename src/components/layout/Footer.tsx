@@ -48,7 +48,7 @@ export default function Footer() {
                     <Button href="https://analytics.chainkraft.com">Home</Button>
                     <Button href="https://chainkraft.com/en">Blog</Button>
                     <Button href="https://chainkraft.com/en/contact">Contact</Button>
-                    <Button href="https://chainkraft.com/en/contact">
+                    <Button href="https://twitter.com/stablealerts" target="_blank">
                         <TwitterIcon sx={{mr: 1}}></TwitterIcon>
                         Twitter
                     </Button>
