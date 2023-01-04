@@ -19,7 +19,7 @@ import {styled} from "@mui/material/styles";
 
 const R = require('ramda');
 
-const SmartContractSummary = styled(Box)(({ theme }) => ({
+const SmartContractSummary = styled(Link)(({theme}) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -28,7 +28,9 @@ const SmartContractSummary = styled(Box)(({ theme }) => ({
     boxShadow: '1',
     fontWeight: 'bold',
     padding: theme.spacing(2),
-    flexGrow: '1'
+    flexGrow: '1',
+    textDecoration: 'none',
+    color: 'inherit'
 }));
 
 const StableCoinDashboard = (props: any) => {
@@ -199,39 +201,37 @@ const StableCoinDashboard = (props: any) => {
                 }}
             >
                 {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.ALARM &&
-                    <Tooltip title="We have detected smart contract changes recently. Subscribe to get details." enterTouchDelay={0} arrow>
-                        <Link href="/alerts" underline="none" color="inherit">
-                            <SmartContractSummary>
-                                <Typography variant="h6">Smart contracts</Typography>
-                                <Typography sx={{mt: 1}}>
-                                    <PriorityHighIcon fontSize="large" sx={{color: 'error.main'}}></PriorityHighIcon>
-                                </Typography>
-                            </SmartContractSummary>
-                        </Link>
+                    <Tooltip title="We have detected smart contract changes recently. Subscribe to get details."
+                             enterTouchDelay={0} arrow>
+                        <SmartContractSummary href="/alerts">
+                            <Typography variant="h6">Smart contracts</Typography>
+                            <Typography sx={{mt: 1}}>
+                                <PriorityHighIcon fontSize="large" sx={{color: 'error.main'}}></PriorityHighIcon>
+                            </Typography>
+                        </SmartContractSummary>
+
                     </Tooltip>
                 }
                 {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.WARNING &&
-                    <Tooltip title="We have detected smart contract warnings. Subscribe to get details." enterTouchDelay={0} arrow>
-                        <Link href="/alerts" underline="none" color="inherit">
-                            <SmartContractSummary>
-                                <Typography variant="h6">Smart contracts</Typography>
-                                <Typography sx={{mt: 1}}>
-                                    <WarningIcon fontSize="large" sx={{color: 'warning.main'}}></WarningIcon>
-                                </Typography>
-                            </SmartContractSummary>
-                        </Link>
+                    <Tooltip title="We have detected smart contract warnings. Subscribe to get details."
+                             enterTouchDelay={0} arrow>
+                        <SmartContractSummary href="/alerts">
+                            <Typography variant="h6">Smart contracts</Typography>
+                            <Typography sx={{mt: 1}}>
+                                <WarningIcon fontSize="large" sx={{color: 'warning.main'}}></WarningIcon>
+                            </Typography>
+                        </SmartContractSummary>
+
                     </Tooltip>
                 }
                 {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.OK &&
                     <Tooltip title="We have not detected smart contracts anomalies" enterTouchDelay={0} arrow>
-                        <Link href="/alerts" underline="none" color="inherit">
-                            <SmartContractSummary>
-                                <Typography variant="h6">Smart contracts</Typography>
-                                <Typography sx={{mt: 1}}>
-                                    <VerifiedUserIcon fontSize="large" sx={{color: 'success.main'}}></VerifiedUserIcon>
-                                </Typography>
-                            </SmartContractSummary>
-                        </Link>
+                        <SmartContractSummary href="/alerts">
+                            <Typography variant="h6">Smart contracts</Typography>
+                            <Typography sx={{mt: 1}}>
+                                <VerifiedUserIcon fontSize="large" sx={{color: 'success.main'}}></VerifiedUserIcon>
+                            </Typography>
+                        </SmartContractSummary>
                     </Tooltip>
                 }
                 {token.current_market_cap > 0 &&

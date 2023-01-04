@@ -77,8 +77,10 @@ const Alerts = (props: any) => {
                 minHeight: '70vh'
             }} >
                 <Typography variant="h3" align='center' >Coming soon.</Typography>
-                <Typography variant="subtitle1" maxWidth='80vh' align='center'>Get depeg and price alerts about your stablecoins straight to your inbox.
-                    Know about important events early. No rugpulls or crashes will go unnoticed. </Typography>
+                <Typography variant="subtitle1" maxWidth='80vh' align='center'>Get depeg, price and smart contract alerts about your stablecoins straight to your inbox.<br/>
+                    Know about important events early.<br/>
+                    No rugpulls or crashes will go unnoticed.
+                </Typography>
                 <Box component="form">
                     <TextField
                         fullWidth
