@@ -1,6 +1,6 @@
 import * as React from 'react';
 import StableCoinCard from './StableCoinCard';
-import { CircularProgress, Container, Grid, Link } from '@mui/material';
+import { Container, Grid, Link, Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { Link as RouterLink } from 'react-router-dom'
@@ -13,46 +13,30 @@ const StableCoinList = (props: any) => {
 
     if (!data) {
         return (
-            <Container
-                maxWidth="lg"
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '50vh'
-                }}>
-                <CircularProgress size={40} color='secondary' />
-            </Container>);
+            <Container maxWidth="lg" sx={{ display: 'flex', alignItems: 'center', padding: 2 }}>
+                <Box
+                    component="main"
+                    sx={{ flexGrow: 1, overflow: 'auto' }}>
+                    <Grid container spacing={4} justifyContent="flex-start">
+                        {[...Array(40)].map((coin: number) => (
+                            <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+                                <Skeleton variant="rectangular" height={140} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+            </Container>
+
+        );
     }
 
     return (
         <React.Fragment>
-            <Container
-                maxWidth="lg"
-                sx={{ display: 'flex', alignItems: 'center', padding: 2 }}
-            >
-                {/* <Typography variant="h5" sx={{ flexGrow: 1 }}>Stablecoins</Typography> */}
-                {/*<FormControl sx={{m: 1, minWidth: 120}} size="small">*/}
-                {/*    <InputLabel id="demo-select-small">Sort by</InputLabel>*/}
-                {/*    <Select*/}
-                {/*        labelId="demo-select-small"*/}
-                {/*        id="demo-select-small"*/}
-                {/*        value={age}*/}
-                {/*        label="Sort by"*/}
-                {/*        onChange={handleChange}*/}
-                {/*    >*/}
-                {/*        <MenuItem value={10}>Market cap</MenuItem>*/}
-                {/*        <MenuItem value={30}>Volume</MenuItem>*/}
-                {/*        <MenuItem value={20}>Peg stability</MenuItem>*/}
-                {/*    </Select>*/}
-                {/*</FormControl>*/}
-            </Container>
-
-            <Container maxWidth="lg">
+            < Container maxWidth="lg"
+                sx={{ display: 'flex', alignItems: 'center', padding: 2 }}>
                 <Box
                     component="main"
-                    sx={{ flexGrow: 1, overflow: 'auto' }}
-                >
+                    sx={{ flexGrow: 1, overflow: 'auto' }}>
                     <Grid container spacing={4} justifyContent="flex-start">
                         {data.data.map((coin: any) => (
                             <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
@@ -64,8 +48,8 @@ const StableCoinList = (props: any) => {
                         ))}
                     </Grid>
                 </Box>
-            </Container>
-        </React.Fragment>
+            </Container >
+        </React.Fragment >
     );
 }
 

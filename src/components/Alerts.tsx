@@ -77,9 +77,8 @@ const Alerts = (props: any) => {
                 minHeight: '70vh'
             }} >
                 <Typography variant="h3" align='center' >Coming soon.</Typography>
-                <Typography variant="subtitle1" maxWidth='80vh' align='center'>Get depeg, price and smart contract alerts about your stablecoins straight to your inbox.<br/>
-                    Know about important events early.<br/>
-                    No rugpulls or crashes will go unnoticed.
+                <Typography variant="subtitle1" maxWidth='80vh' align='center'>
+                    Don't wait until it's too late to protect your stablecoin investments.<br />Sign up for our waiting list and be the first to access our powerful monitoring service. Stay informed of potential risks such as rugpulls, crashes, and smart contract vulnerabilities.<br />Subscribe now and safeguard your portfolio.
                 </Typography>
                 <Box component="form">
                     <TextField
@@ -106,7 +105,7 @@ const Alerts = (props: any) => {
                 {success && <Typography color='success.main'>Thank you. You are now on our waiting list.</Typography>}
                 {serverError && <Typography color='warning.main'>Sorry, an error has occured.</Typography>}
             </Container >
-        </Box>
+        </Box >
     );
 }
 
