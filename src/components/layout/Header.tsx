@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { alpha, styled } from '@mui/material/styles';
+import {alpha, styled} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,12 +8,13 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from "@mui/material/Button";
-import { Autocomplete, Container, Link, Menu, MenuItem } from "@mui/material";
-import { fetcherAxios } from '../../helpers/fetcher-axios';
+import {Autocomplete, Container, Link, Menu, MenuItem} from "@mui/material";
+import {fetcherAxios} from '../../helpers/fetcher-axios';
 import useSWR from 'swr';
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import SubscriptionDialog from "../home/SubscriptionDialog";
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.10),
@@ -28,7 +29,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -38,7 +39,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -60,13 +61,31 @@ export default function Header() {
     const pathname = useLocation().pathname
 
     const pages = [
-        { label: "Stablecoins", url: "/stablecoins", disabled: false, active: pathname === "/" || pathname.startsWith("/stablecoins") || pathname.startsWith("/token") || pathname.startsWith("/pools") },
-        { label: "Subscribe", url: "/alerts", disabled: false, active: pathname.startsWith("/alerts") || pathname.startsWith("/subscribe") },
-        // { label: "DeFi", url: "/defi", disabled: true, active: pathname.startsWith("/defi") },
+        {
+            label: "Stablecoins",
+            active: pathname.startsWith("/stablecoins") || pathname.startsWith("/token"),
+            props: {
+                href: "/stablecoins",
+                disabled: false,
+                onClick: () => handleCloseNavMenu
+            }
+        },
+        {
+            label: "Subscribe",
+            active: pathname.startsWith("/alerts") || pathname.startsWith("/subscribe"),
+            props: {
+                disabled: false,
+                onClick: () => {
+                    setSubscriptionDialog(true);
+                    handleCloseNavMenu();
+                }
+            }
+        }
     ];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [searchVisibility, setSearchVisibility] = React.useState<boolean>(false);
+    const [subscriptionDialog, setSubscriptionDialog] = React.useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -93,6 +112,7 @@ export default function Header() {
             position="relative"
             sx={{ backgroundImage: 'none' }}
         >
+            <SubscriptionDialog opened={subscriptionDialog} onClose={() => setSubscriptionDialog(false)}/>
             <Container maxWidth="lg">
                 <Toolbar disableGutters={true}>
                     <Link href="/" sx={{ lineHeight: 1 }}>
@@ -114,12 +134,10 @@ export default function Header() {
                         {pages.map(page => (
                             <Button
                                 key={page.label}
-                                href={page.url}
-                                onClick={handleCloseNavMenu}
-                                disabled={page.disabled}
+                                {...page.props}
                                 sx={(theme) => ({
                                     my: 2,
-                                    color: page.active ? theme.palette.text.primary : theme.palette.text.disabled,
+                                    color: page.active ? theme.palette.text.disabled : theme.palette.text.primary,
                                     display: 'block', textAlign: 'center'
                                 })}
                             >
@@ -130,9 +148,9 @@ export default function Header() {
 
 
                     {data &&
-                        <Search sx={{ display: { xs: searchVisibility ? 'flex' : 'none', md: 'flex' } }}>
+                        <Search sx={{display: {xs: searchVisibility ? 'flex' : 'none', md: 'flex'}}}>
                             <SearchIconWrapper>
-                                <SearchIcon />
+                                <SearchIcon/>
                             </SearchIconWrapper>
 
                             <Autocomplete
@@ -144,22 +162,22 @@ export default function Header() {
                                     }))
                                 }
                                 onChange={onSearchQueryChange}
-                                sx={{ width: 250 }}
+                                sx={{width: 250}}
                                 renderInput={(params) => {
-                                    const { InputLabelProps, InputProps, ...rest } = params;
-                                    return <StyledInputBase {...params.InputProps} {...rest} placeholder="Search..." />
+                                    const {InputLabelProps, InputProps, ...rest} = params;
+                                    return <StyledInputBase {...params.InputProps} {...rest} placeholder="Search..."/>
                                 }}
                             />
                         </Search>
                     }
                     <IconButton
                         onClick={handleSearchIconClick}
-                        sx={{ display: { xs: searchVisibility ? 'none' : 'flex', md: 'none' } }} aria-label="search"
+                        sx={{display: {xs: searchVisibility ? 'none' : 'flex', md: 'none'}}} aria-label="search"
                         color="inherit">
-                        <SearchIcon />
+                        <SearchIcon/>
                     </IconButton>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -168,7 +186,7 @@ export default function Header() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -185,14 +203,14 @@ export default function Header() {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
+                                display: {xs: 'block', md: 'none'},
                             }}
                         >
                             {pages.map(page => (
-                                <MenuItem onClick={handleCloseNavMenu}>
+                                <MenuItem onClick={handleCloseNavMenu} key={page.label}>
                                     <Link
-                                        sx={{ color: 'white' }}
-                                        href={page.url}
+                                        sx={{color: 'white'}}
+                                        {...page.props}
                                         textAlign="center"
                                     >
                                         {page.label}

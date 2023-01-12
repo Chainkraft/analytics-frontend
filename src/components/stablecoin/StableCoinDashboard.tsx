@@ -18,6 +18,7 @@ import { styled } from "@mui/material/styles";
 import { ShortLiquidityPool } from '../../interfaces/liquidity-pools.interface';
 import LiquidityPoolsSummary from './defi/LiquidityPoolsSummary';
 import PriceChart from './charts/PriceChart';
+import SubscriptionDialog from "../home/SubscriptionDialog";
 
 const R = require('ramda');
 
@@ -32,11 +33,14 @@ const SmartContractSummary = styled(Link)(({ theme }) => ({
     padding: theme.spacing(2),
     flexGrow: '1',
     textDecoration: 'none',
-    color: 'inherit'
+    color: 'inherit',
+    cursor: 'pointer'
 }));
 
 const StableCoinDashboard = () => {
     let { tokenId } = useParams();
+
+    const [subscriptionDialog, setSubscriptionDialog] = React.useState<boolean>(false);
 
     const { data: tokenData, error } = useSWR<any>(`stablecoins/${tokenId}`, fetcherAxios)
     const { data: contractsSummary } = useSWR<TokenContractSummary>(`contracts/${tokenId}/summary`, fetcherAxios, { shouldRetryOnError: false })
@@ -254,7 +258,7 @@ const StableCoinDashboard = () => {
                 {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.ALARM &&
                     <Tooltip title="We have detected smart contract changes recently. Subscribe to get details."
                         enterTouchDelay={0} arrow>
-                        <SmartContractSummary href="/alerts">
+                        <SmartContractSummary onClick={() => setSubscriptionDialog(true)}>
                             <Typography variant="h6">Smart contracts</Typography>
                             <Typography sx={{ mt: 1 }}>
                                 <PriorityHighIcon fontSize="large" sx={{ color: 'error.main' }}></PriorityHighIcon>
@@ -266,7 +270,7 @@ const StableCoinDashboard = () => {
                 {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.WARNING &&
                     <Tooltip title="We have detected smart contract warnings. Subscribe to get details."
                         enterTouchDelay={0} arrow>
-                        <SmartContractSummary href="/alerts">
+                        <SmartContractSummary onClick={() => setSubscriptionDialog(true)}>
                             <Typography variant="h6">Smart contracts</Typography>
                             <Typography sx={{ mt: 1 }}>
                                 <WarningIcon fontSize="large" sx={{ color: 'warning.main' }}></WarningIcon>
@@ -277,7 +281,7 @@ const StableCoinDashboard = () => {
                 }
                 {contractsSummary && contractsSummary.status === TokenContractSummaryStatus.OK &&
                     <Tooltip title="We have not detected smart contracts anomalies" enterTouchDelay={0} arrow>
-                        <SmartContractSummary href="/alerts">
+                        <SmartContractSummary onClick={() => setSubscriptionDialog(true)}>
                             <Typography variant="h6">Smart contracts</Typography>
                             <Typography sx={{ mt: 1 }}>
                                 <VerifiedUserIcon fontSize="large" sx={{ color: 'success.main' }}></VerifiedUserIcon>
@@ -418,6 +422,8 @@ const StableCoinDashboard = () => {
                     </Typography>
                 </Box>
             </Box> */}
+
+            {contractsSummary && <SubscriptionDialog opened={subscriptionDialog} onClose={() => setSubscriptionDialog(false)}/>}
         </Container >
     );
 
