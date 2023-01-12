@@ -1,113 +1,81 @@
 import { useTheme } from '@mui/material';
-
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
+    AreaChart,
+    Area,
+    XAxis,
+    YAxis,
     Tooltip,
-    Legend,
-    Filler
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
+    ResponsiveContainer,
+    Brush
+} from "recharts";
+import { currencyFormat } from '../../../helpers/helpers';
 
 const MarketCapChart = (props: any) => {
 
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend,
-        Filler
-    );
+    let theme = useTheme();
 
-    const theme = useTheme();
-
-    let labels: string[] = [];
-    let tokenDataset: number[] = [];
-
-    const marketCapsDataset = props.marketCapHistory.market_caps.slice(-90);
-
-    for (let index = 0; index < marketCapsDataset.length; index++) {
-        let element = marketCapsDataset[index];
-        labels.push(new Date(element.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
-        tokenDataset.push(marketCapsDataset[index].market_cap);
+    interface ChartData {
+        date: string;
+        marketCap: number;
     }
 
-    const options = {
-        responsive: true,
-        layout: {
-            padding: 15,
-        },
-        interaction: {
-            intersect: false,
-        },
-        elements: {
-            point: {
-                radius: 0
-            },
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: theme.palette.text.primary,
-                    font: {
-                        size: 14,
-                    },
-                },
-                grid: {
-                    borderColor: theme.palette.text.primary,
-                },
-            },
-            y: {
-                // suggestedMin: 0,
-                ticks: {
-                    color: theme.palette.text.primary,
-                    font: {
-                        size: 14,
-                    },
-                },
-                grid: {
-                    borderColor: theme.palette.text.primary,
-                },
-            },
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: "Market cap",
-                color: theme.palette.text.primary,
-                font: {
-                    size: 16,
-                },
-            },
-            legend: {
-                display: false,
-            },
-        },
-    };
+    let marketCaps = props.marketCapHistory.market_caps as { date: string; market_cap: number }[];
 
-    const data = {
-        labels: labels,
-        datasets: [
-            {
-                label: props.token.symbol,
-                data: tokenDataset,
-                borderWidth: 3,
-                backgroundColor: theme.palette.secondary.main,
-                fill: true
-            }
-        ],
-    };
+    const chartData: ChartData[] = marketCaps
+        .sort((a, b) => Date.parse(a.date) - (Date.parse(b.date)))
+        .slice(-180)
+        .filter(item => item.date && item.market_cap)
+        .map(({ date, market_cap }) => {
+            return {
+                date: date ? new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) : '',
+                marketCap: market_cap || 0
+            };
+        });
 
     return (
-        <Line options={options} data={data} />
+        <ResponsiveContainer width="100%" height={500}>
+            <AreaChart
+                data={chartData}
+            >
+                <XAxis
+                    dataKey="date"
+                    height={45}
+                    stroke="white"
+                    tickLine={false}
+                    tick={{ fill: theme.palette.text.primary }}
+                    tickMargin={10} />
+                <YAxis
+                    type="number"
+                    tickMargin={15}
+                    stroke="white"
+                    tickLine={false}
+                    tick={{ fill: theme.palette.text.primary }}
+                    tickFormatter={(value) =>
+                        new Intl.NumberFormat("en-US", {
+                            notation: "compact",
+                            compactDisplay: "short",
+                        }).format(value)}
+                />
+                <Tooltip contentStyle={{ backgroundColor: theme.palette.primary.main }}
+                    formatter={(value: any, name: any) => {
+                        return [currencyFormat(value), "Market Cap"];
+                    }}
+                />
+
+                <Area
+                    connectNulls
+                    type="monotone"
+                    dataKey="marketCap"
+                    stackId="1"
+                    stroke={theme.palette.secondary.main}
+                    fill={theme.palette.secondary.main}
+                />
+                <Brush alwaysShowText={false} dataKey="date"
+                    fill={theme.palette.primary.main}
+                />
+
+            </AreaChart>
+        </ResponsiveContainer>
     );
 }
 

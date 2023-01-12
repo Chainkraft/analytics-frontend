@@ -1,114 +1,89 @@
 import { useTheme } from '@mui/material';
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
+    XAxis,
+    YAxis,
     Tooltip,
-    Legend
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+    ResponsiveContainer,
+    Brush,
+    LineChart,
+    Line
+} from "recharts";
+import { currencyFormat } from '../../../helpers/helpers';
 
 const PriceChart = (props: any) => {
 
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend
-    );
+    let theme = useTheme();
 
-    const theme = useTheme();
-
-    let labels: string[] = [];
-    let tokenDataset: number[] = [];
-
-    let priceDataset = props.priceHistory.prices
-        .sort((a: any, b: any) => Date.parse(b.date) - (Date.parse(a.date)))
-        .slice(0, 90)
-        .reverse();
-
-    for (let index = 0; index < priceDataset.length; index++) {
-        let element = priceDataset[index];
-        labels.push(new Date(element.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
-        tokenDataset.push(priceDataset[index].price);
+    interface ChartData {
+        date: string;
+        price: number;
+        peg: number;
     }
 
-    const options = {
-        responsive: true,
-        layout: {
-            padding: 15,
-        },
-        interaction: {
-            intersect: false,
-        },
-        elements: {
-            point: {
-                radius: 0,
-                backgroundColor: theme.palette.secondary.main,
-            },
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: theme.palette.text.primary,
-                    font: {
-                        size: 14,
-                    },
-                },
-                grid: {
-                    borderColor: theme.palette.text.primary,
-                },
-            },
-            y: {
-                suggestedMin: Math.min(...tokenDataset) - 0.05,
-                suggestedMax: Math.max(...tokenDataset) + 0.05,
-                ticks: {
-                    color: theme.palette.text.primary,
-                    font: {
-                        size: 14,
-                    },
-                },
-                grid: {
-                    borderColor: theme.palette.text.primary,
-                },
-            },
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: "Price",
-                color: theme.palette.text.primary,
-                font: {
-                    size: 16,
-                },
-            },
-            legend: {
-                display: false,
-            },
-        },
-    };
+    let prices = props.priceHistory.prices as { date: string; price: number }[];
 
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: props.token.symbol,
-                data: tokenDataset,
-                borderWidth: 3,
-                borderColor: theme.palette.secondary.main,
-                backgroundColor: theme.palette.secondary.main,
-            }
-        ],
-    };
+    const chartData: ChartData[] = prices
+        .sort((a, b) => Date.parse(a.date) - (Date.parse(b.date)))
+        .slice(-180)
+        .filter(item => item.date && item.price)
+        .map(({ date, price }) => {
+            return {
+                date: date ? new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) : '',
+                price: price || 0,
+                peg: 1
+            };
+        });
 
+    console.log("price chart data", chartData);
     return (
-        <Line options={options} data={data} />
+        <ResponsiveContainer width="100%" height={500}>
+            <LineChart
+                data={chartData}
+            >
+                <XAxis
+                    dataKey="date"
+                    height={45}
+                    tick={{ fill: theme.palette.text.primary }}
+                    stroke="white"
+                    tickLine={false}
+                    tickMargin={10} />
+                <YAxis
+                    type="number"
+                    tickMargin={15}
+                    tickFormatter={tick => tick.toPrecision(3)}
+                    stroke="white"
+                    tickLine={false} />
+                {/* domain={([dataMin, dataMax]) => [dataMin - 0.05 < 0 ? 0 : dataMin - 0.05, dataMax + 0.05]} /> */}
+
+                <Tooltip contentStyle={{ backgroundColor: theme.palette.primary.main }}
+                    formatter={(value: any, name: any) => {
+                        return currencyFormat(value, 3);
+                    }}
+                />
+
+                <Line
+                    connectNulls
+                    type="monotone"
+                    dataKey="price"
+                    strokeWidth={3}
+                    dot={false}
+                    stroke={theme.palette.secondary.main}
+                />
+
+                <Line
+                    type="monotone"
+                    dataKey="peg"
+                    strokeDasharray="10"
+                    dot={false}
+                    activeDot={false}
+                    stroke={theme.palette.text.secondary}
+                />
+                <Brush alwaysShowText={false} dataKey="date"
+                    fill={theme.palette.primary.main}
+                />
+
+            </LineChart>
+        </ResponsiveContainer>
     );
 }
 

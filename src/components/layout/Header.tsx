@@ -60,7 +60,7 @@ export default function Header() {
     const pathname = useLocation().pathname
 
     const pages = [
-        { label: "Stablecoins", url: "/stablecoins", disabled: false, active: pathname === "/" || pathname.startsWith("/stablecoins") || pathname.startsWith("/token") },
+        { label: "Stablecoins", url: "/stablecoins", disabled: false, active: pathname === "/" || pathname.startsWith("/stablecoins") || pathname.startsWith("/token") || pathname.startsWith("/pools") },
         { label: "Subscribe", url: "/alerts", disabled: false, active: pathname.startsWith("/alerts") || pathname.startsWith("/subscribe") },
         // { label: "DeFi", url: "/defi", disabled: true, active: pathname.startsWith("/defi") },
     ];

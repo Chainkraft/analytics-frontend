@@ -5,7 +5,6 @@ import { useParams } from 'react-router';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import { currencyFormat } from '../../helpers/helpers';
-import PriceChart from './charts/PriceChart';
 import MarketCapChart from './charts/MarketCapChart';
 import ChainkraftScoreChart from './charts/ChainkraftScoreChart';
 import useSWR from 'swr';
@@ -16,6 +15,9 @@ import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { TokenContractSummary, TokenContractSummaryStatus } from "../../interfaces/token-contract.summary.interface";
 import { styled } from "@mui/material/styles";
+import { ShortLiquidityPool } from '../../interfaces/liquidity-pools.interface';
+import LiquidityPoolsSummary from './defi/LiquidityPoolsSummary';
+import PriceChart from './charts/PriceChart';
 
 const R = require('ramda');
 
@@ -33,12 +35,14 @@ const SmartContractSummary = styled(Link)(({ theme }) => ({
     color: 'inherit'
 }));
 
-const StableCoinDashboard = (props: any) => {
+const StableCoinDashboard = () => {
     let { tokenId } = useParams();
 
     const { data: tokenData, error } = useSWR<any>(`stablecoins/${tokenId}`, fetcherAxios)
     const { data: contractsSummary } = useSWR<TokenContractSummary>(`contracts/${tokenId}/summary`, fetcherAxios, { shouldRetryOnError: false })
+    const { data: lpData } = useSWR<ShortLiquidityPool[]>(`pools/token/${tokenId}`, fetcherAxios)
 
+    console.log('lpData', lpData);
     const EMPTY_OBJECT: any = {};
 
     const extendedData: any = useMemo(() => R.propOr(EMPTY_OBJECT, 'data', tokenData), [tokenData]);
@@ -50,7 +54,6 @@ const StableCoinDashboard = (props: any) => {
     const name: any = useMemo(() => R.propOr('', 'name', token), [token]);
     const image: any = useMemo(() => R.prop('image', token), [token]);
     const symbol: any = useMemo(() => R.propOr('', 'symbol', token), [token]);
-
 
     function renderError() {
         return (
@@ -346,38 +349,79 @@ const StableCoinDashboard = (props: any) => {
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: { xs: 'column', md: 'row' },
+                    flexDirection: 'column',
                     alignItems: 'center',
                     bgcolor: 'background.paper',
                     borderRadius: '12px',
                     boxShadow: 1,
-                    fontWeight: 'bold',
                     mt: 2,
                     p: 2
                 }}
             >
-                <PriceChart token={token} priceHistory={priceHistory} />
+                <Typography variant="h6">Price</Typography>
+                <PriceChart priceHistory={priceHistory} />
             </Box>
 
             {marketCapHistory &&
                 <Box
                     sx={{
                         display: 'flex',
-                        flexDirection: { xs: 'column', md: 'row' },
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        bgcolor: 'background.paper',
+                        borderRadius: '12px',
+                        boxShadow: 1,
+                        mt: 2,
+                        p: 2
+                    }}
+                >
+                    <Typography variant="h6">Market cap</Typography>
+                    <MarketCapChart marketCapHistory={marketCapHistory} />
+                </Box>
+            }
+
+            <Box
+                sx={{
+                    mt: 2,
+                }}>
+                <LiquidityPoolsSummary token={tokenId} />
+            </Box>
+
+            {/* <Box
+                sx={{
+                    display: 'flex',
+                    gap: '20px',
+                    mt: 2,
+                }}>
+                <Box
+                    sx={{ flex: 1 }}>
+                    <TopLiquidityPoolsTable token={tokenId} />
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         bgcolor: 'background.paper',
                         borderRadius: '12px',
                         boxShadow: 1,
                         fontWeight: 'bold',
-                        mt: 2,
-                        p: 2
+                        p: 2,
+                        flex: 1
                     }}
                 >
-                    <MarketCapChart token={token} priceHistory={priceHistory} marketCapHistory={marketCapHistory} />
+                    <Typography variant="h6">What is a liquidity pool?</Typography>
+                    <Typography variant="body1" sx={{ mt: 1, p: 3 }}>
+                        In decentralized finance (DeFi), a liquidity pool is a collection of assets that are pooled together and made available to be borrowed or lent. Liquidity pools are typically used to provide liquidity to decentralized exchanges (DEXs) and other DeFi platforms, allowing users to buy and sell assets without the need for a centralized exchange.
+                        <br /><br />
+                        Liquidity pools play a key role in DeFi, as they provide the necessary liquidity for decentralized exchanges and other DeFi platforms to function. They also offer an opportunity for users to earn passive income by contributing assets to the pool and sharing in the fees and rewards generated by trades.
+                    </Typography>
                 </Box>
-            }
-        </Container>
+            </Box> */}
+        </Container >
     );
+
+
 }
 
 export default StableCoinDashboard;

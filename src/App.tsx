@@ -9,6 +9,7 @@ import theme from "./theme";
 import { ThemeProvider } from "@mui/material";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import LiquidityPoolsDashboard from './components/stablecoin/defi/liquidity-pools/LiquidityPoolDashboard';
 
 function App() {
 
@@ -32,6 +33,10 @@ function App() {
                 <Route
                     path="/tokens/:tokenId"
                     element={<StableCoinDashboard />}
+                />
+                <Route
+                    path="/pools/:network/:address"
+                    element={<LiquidityPoolsDashboard />}
                 />
             </Routes>
             <Footer />
