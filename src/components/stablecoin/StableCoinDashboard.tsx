@@ -19,6 +19,7 @@ import { ShortLiquidityPool } from '../../interfaces/liquidity-pools.interface';
 import LiquidityPoolsSummary from './defi/LiquidityPoolsSummary';
 import PriceChart from './charts/PriceChart';
 import SubscriptionDialog from "../home/SubscriptionDialog";
+import ChainkraftScoreChartV2 from './charts/ChainkraftScoreChartV2';
 
 const R = require('ramda');
 
@@ -223,7 +224,8 @@ const StableCoinDashboard = () => {
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        p: 1
+                        p: 1,
+                        flex: 1
                     }}
                 >
                     <Typography variant="subtitle2">Overview</Typography>
@@ -241,9 +243,10 @@ const StableCoinDashboard = () => {
                     sx={(theme) => ({
                         [theme.breakpoints.up("sm")]: {
                             minWidth: '40%'
-                        }
+                        },
+                        flex: 1
                     })}>
-                    <ChainkraftScoreChart token={token} priceHistory={priceHistory} />
+                    <ChainkraftScoreChartV2 token={token} priceHistory={priceHistory} />
                 </Box>
             </Box>
 
@@ -423,7 +426,7 @@ const StableCoinDashboard = () => {
                 </Box>
             </Box> */}
 
-            {contractsSummary && <SubscriptionDialog opened={subscriptionDialog} onClose={() => setSubscriptionDialog(false)}/>}
+            {contractsSummary && <SubscriptionDialog opened={subscriptionDialog} onClose={() => setSubscriptionDialog(false)} />}
         </Container >
     );
 

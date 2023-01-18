@@ -9,6 +9,7 @@ import {
     Brush
 } from "recharts";
 import { currencyFormat } from '../../../helpers/helpers';
+import CustomizedAxisTick from './CustomizedAxisTick';
 
 const MarketCapChart = (props: any) => {
 
@@ -39,16 +40,18 @@ const MarketCapChart = (props: any) => {
             >
                 <XAxis
                     dataKey="date"
-                    height={45}
+                    height={55}
                     stroke="white"
                     tickLine={false}
-                    tick={{ fill: theme.palette.text.primary }}
-                    tickMargin={10} />
+                    strokeWidth={0.5}
+                    tick={<CustomizedAxisTick stroke={theme.palette.text.primary} />}
+                />
                 <YAxis
                     type="number"
                     tickMargin={15}
                     stroke="white"
                     tickLine={false}
+                    strokeWidth={0.5}
                     tick={{ fill: theme.palette.text.primary }}
                     tickFormatter={(value) =>
                         new Intl.NumberFormat("en-US", {
