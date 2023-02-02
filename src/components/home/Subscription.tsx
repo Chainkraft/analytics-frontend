@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import React, {useState} from 'react';
 import {apiClient} from '../../helpers/fetcher-axios';
 import theme from "../../theme";
-import {alpha} from "@mui/material/styles";
 import ShieldIcon from "@mui/icons-material/Shield";
 
 const isEmailValid = (email: string) => {
@@ -76,8 +75,7 @@ const Subscription = (props: SubscriptionProps) => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: theme.palette.primary.main
+                justifyContent: 'center'
             }}>
 
             <Typography variant="h4" align='center'>We're coming soon</Typography>
@@ -131,26 +129,17 @@ const Subscription = (props: SubscriptionProps) => {
                     error={form.error !== ''}
                     helperText={form.error}
                     onChange={handleEmailChange}
-                    sx={{
-                        mt: 3,
-                        '.MuiInputLabel-root.Mui-focused': {
-                            color: theme.palette.text.primary
-                        }
-                    }}
+                    sx={{mt: 3}}
                 />
                 <Button
                     fullWidth
                     variant="contained"
+                    color="secondary"
                     onClick={handleSubmit}
                     disabled={processing}
                     sx={{
                         my: 2,
-                        p: 2,
-                        color: 'black',
-                        backgroundColor: theme.palette.secondary.main,
-                        '&:hover': {
-                            backgroundColor: alpha(theme.palette.secondary.main, 0.8),
-                        },
+                        p: 2
                     }}>
                     {processing ? 'Processing...' : 'Subscribe for free'}
                 </Button>

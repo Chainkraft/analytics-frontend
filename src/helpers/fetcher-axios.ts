@@ -5,6 +5,7 @@ export const apiClient = axios.create({
     headers: {
         'content-type': 'application/json',
     },
+    withCredentials: true
 });
 
 export const fetcherAxios = (url: string) => apiClient.get(url).then(res => res.data);

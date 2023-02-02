@@ -1,4 +1,4 @@
-import {Container, Grid, Link, List, ListItem, ListItemIcon, ListItemText, Skeleton} from '@mui/material';
+import {Container, Grid, Link, List, ListItem, ListItemIcon, ListItemText, Paper, Skeleton} from '@mui/material';
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -55,7 +55,9 @@ const Home = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Subscription/>
+                    <Paper elevation={1} sx={{py: 2}}>
+                        <Subscription/>
+                    </Paper>
                 </Grid>
 
                 <Grid item xs={12} md={6} sx={{display: {xs: 'none', md: 'inline'}}}>
@@ -119,7 +121,7 @@ const Home = () => {
                                             display: 'flex',
                                             flexDirection: 'column',
                                             alignItems: 'center',
-                                            verticalAlign: 'center'
+                                            justifyContent: 'center'
                                         }}>
                                         <Box component="img" src={coin.image} sx={{maxWidth: '60px'}}/>
                                         <Typography variant="body2" sx={{
@@ -147,16 +149,15 @@ const Home = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6} sx={{display: {xs: 'none', md: 'inline'}}}>
-                    <Box sx={{
+                    <Paper elevation={1} sx={{
                         padding: 3,
                         wordBreak: 'break-all',
-                        backgroundColor: theme.palette.primary.main,
                         color: '#5e5e5e'
                     }}>
                         608060405234801561001057600080fd5b5060405160208061080d83398101604081815291517f6f72672e7a657070656c696e6f732e70726f78792e696d706c656d656e74617482527f696f6e00000000000000000000000000000000000000000000000000000000006020830152915190819003602
                         <Typography component="span" sx={{color: theme.palette.secondary.main}}>3019020819</Typography>
                         06000805160206107ed8339815191521461009157fe5b6100a381640100000000610104810204565b50604080517f6f72672e7a657070656c696e6f732e70726f78792e
-                    </Box>
+                    </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Box>

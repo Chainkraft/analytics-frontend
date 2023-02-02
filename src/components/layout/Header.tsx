@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import {alpha, styled} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,11 +9,13 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from "@mui/material/Button";
-import {Autocomplete, Container, Link, Menu, MenuItem} from "@mui/material";
-import {fetcherAxios} from '../../helpers/fetcher-axios';
+import {Autocomplete, Badge, Container, Link, Menu, MenuItem} from "@mui/material";
+import {apiClient, fetcherAxios} from '../../helpers/fetcher-axios';
 import useSWR from 'swr';
 import {useLocation, useNavigate} from "react-router-dom";
 import SubscriptionDialog from "../home/SubscriptionDialog";
+import AuthContext from "../auth/AuthContext";
+import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -57,6 +60,10 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 
+function NotificationsIcon(props: { color: string }) {
+    return null;
+}
+
 export default function Header() {
     const pathname = useLocation().pathname
 
@@ -87,6 +94,7 @@ export default function Header() {
     const [searchVisibility, setSearchVisibility] = React.useState<boolean>(false);
     const [subscriptionDialog, setSubscriptionDialog] = React.useState<boolean>(false);
 
+    const {user, logout} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -101,7 +109,18 @@ export default function Header() {
         setSearchVisibility(true)
     };
 
-    const { data } = useSWR<any>(`stablecoins`, fetcherAxios);
+    const handleLogout = () => {
+        apiClient.post("/auth/logout")
+            .then(() => {})
+            .catch((err) => {
+                console.error(err);
+            })
+            .finally(() => {
+                logout();
+            });
+    };
+
+    const {data: stablecoins} = useSWR<any>(`stablecoins`, fetcherAxios);
 
     const onSearchQueryChange = (event: object, value: any) => {
         navigate(value.id);
@@ -110,12 +129,12 @@ export default function Header() {
     return (
         <AppBar
             position="relative"
-            sx={{ backgroundImage: 'none' }}
+            sx={{backgroundImage: 'none'}}
         >
             <SubscriptionDialog opened={subscriptionDialog} onClose={() => setSubscriptionDialog(false)}/>
             <Container maxWidth="lg">
                 <Toolbar disableGutters={true}>
-                    <Link href="/" sx={{ lineHeight: 1 }}>
+                    <Link href="/" sx={{lineHeight: 1}}>
                         <Box
                             component="img"
                             sx={(theme) => ({
@@ -130,52 +149,21 @@ export default function Header() {
                         />
                     </Link>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map(page => (
                             <Button
                                 key={page.label}
                                 {...page.props}
                                 sx={(theme) => ({
-                                    my: 2,
+                                    px: 2,
                                     color: page.active ? theme.palette.text.disabled : theme.palette.text.primary,
-                                    display: 'block', textAlign: 'center'
+                                    display: 'block'
                                 })}
                             >
                                 {page.label}
                             </Button>
                         ))}
                     </Box>
-
-
-                    {data &&
-                        <Search sx={{display: {xs: searchVisibility ? 'flex' : 'none', md: 'flex'}}}>
-                            <SearchIconWrapper>
-                                <SearchIcon/>
-                            </SearchIconWrapper>
-
-                            <Autocomplete
-                                forcePopupIcon={false}
-                                options={
-                                    data.data.map((coin: any) => ({
-                                        label: `${coin.symbol} - ${coin.name}`,
-                                        id: `tokens/${coin.slug}`
-                                    }))
-                                }
-                                onChange={onSearchQueryChange}
-                                sx={{width: 250}}
-                                renderInput={(params) => {
-                                    const {InputLabelProps, InputProps, ...rest} = params;
-                                    return <StyledInputBase {...params.InputProps} {...rest} placeholder="Search..."/>
-                                }}
-                            />
-                        </Search>
-                    }
-                    <IconButton
-                        onClick={handleSearchIconClick}
-                        sx={{display: {xs: searchVisibility ? 'none' : 'flex', md: 'none'}}} aria-label="search"
-                        color="inherit">
-                        <SearchIcon/>
-                    </IconButton>
 
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
@@ -186,7 +174,14 @@ export default function Header() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <MenuIcon/>
+                            {user &&
+                                <Badge badgeContent={4} color="error">
+                                    <MenuIcon/>
+                                </Badge>
+                            }
+                            {!user &&
+                                <MenuIcon/>
+                            }
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -211,14 +206,91 @@ export default function Header() {
                                     <Link
                                         sx={{color: 'white'}}
                                         {...page.props}
-                                        textAlign="center"
                                     >
                                         {page.label}
                                     </Link>
                                 </MenuItem>
                             ))}
+                            {user &&
+                                <div>
+                                    <MenuItem onClick={handleCloseNavMenu} key="alerts">
+                                        <Badge badgeContent={4} color="error">
+                                            <Link href="/alerts">Alerts</Link>
+                                        </Badge>
+                                    </MenuItem>
+                                    <MenuItem onClick={handleCloseNavMenu} key="logout">
+                                        <Link onClick={handleLogout}>Log out</Link>
+                                    </MenuItem>
+                                </div>
+                            }
+                            {!user &&
+                                <MenuItem onClick={handleCloseNavMenu} key="signin">
+                                    <Link href="/login" sx={{color: 'white'}}>Sign in</Link>
+                                </MenuItem>
+                            }
                         </Menu>
                     </Box>
+
+                    {stablecoins &&
+                        <Search sx={{
+                            display: searchVisibility ? 'flex' : 'none',
+                            mx: 1
+                        }}>
+                            <SearchIconWrapper>
+                                <SearchIcon/>
+                            </SearchIconWrapper>
+
+                            <Autocomplete
+                                forcePopupIcon={false}
+                                options={
+                                    stablecoins.data.map((coin: any) => ({
+                                        label: `${coin.symbol} - ${coin.name}`,
+                                        id: `tokens/${coin.slug}`
+                                    }))
+                                }
+                                onChange={onSearchQueryChange}
+                                sx={{width: 220}}
+                                renderInput={(params) => {
+                                    const {InputLabelProps, InputProps, ...rest} = params;
+                                    return <StyledInputBase {...params.InputProps} {...rest}
+                                                            placeholder="Search..."/>
+                                }}
+                            />
+                        </Search>
+                    }
+
+                    <IconButton
+                        onClick={handleSearchIconClick}
+                        sx={{display: searchVisibility ? 'none' : 'flex'}}
+                        aria-label="search"
+                        color="inherit">
+                        <SearchIcon/>
+                    </IconButton>
+
+                    {user &&
+                        <React.Fragment>
+                            <IconButton aria-label={"New alerts"}
+                                        sx={{display: {xs: 'none', md: 'block'}}}>
+                                <Badge badgeContent={4} color="error">
+                                    <GppMaybeIcon color="action"/>
+                                </Badge>
+                            </IconButton>
+                            <Button onClick={handleLogout} variant="outlined" sx={{
+                                display: {xs: 'none', md: 'block'},
+                                marginLeft: 2,
+                            }}>
+                                Log out
+                            </Button>
+                        </React.Fragment>
+                    }
+                    {!user &&
+                        <Button variant="outlined" href="/login" sx={{
+                            display: {xs: 'none', md: 'block'},
+                            marginLeft: 2,
+                        }}>
+                            Sign in
+                        </Button>
+                    }
                 </Toolbar>
             </Container>
         </AppBar>
