@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material';
+import { PureComponent } from 'react';
 import {
     XAxis,
     YAxis,
@@ -6,9 +7,12 @@ import {
     ResponsiveContainer,
     Brush,
     LineChart,
-    Line
+    Line,
+    CartesianGrid
 } from "recharts";
 import { currencyFormat } from '../../../helpers/helpers';
+import CustomizedAxisTick from './CustomizedAxisTick';
+
 
 const PriceChart = (props: any) => {
 
@@ -42,16 +46,19 @@ const PriceChart = (props: any) => {
             >
                 <XAxis
                     dataKey="date"
-                    height={45}
-                    tick={{ fill: theme.palette.text.primary }}
+                    height={55}
+                    tick={<CustomizedAxisTick stroke={theme.palette.text.primary} />}
                     stroke="white"
                     tickLine={false}
-                    tickMargin={10} />
+                    strokeWidth={0.5}
+                />
                 <YAxis
                     type="number"
                     tickMargin={15}
-                    tickFormatter={tick => tick.toPrecision(3)}
+                    tickFormatter={tick => tick.toFixed(1)}
                     stroke="white"
+                    strokeWidth={0.5}
+                    ticks={[0, 0.2, 0.4, 0.6, 0.8, 1, 1.2]}
                     tickLine={false} />
                 {/* domain={([dataMin, dataMax]) => [dataMin - 0.05 < 0 ? 0 : dataMin - 0.05, dataMax + 0.05]} /> */}
 
@@ -73,7 +80,7 @@ const PriceChart = (props: any) => {
                 <Line
                     type="monotone"
                     dataKey="peg"
-                    strokeDasharray="10"
+                    strokeDasharray="3 3"
                     dot={false}
                     activeDot={false}
                     stroke={theme.palette.text.secondary}

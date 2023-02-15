@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { currencyFormat } from '../../../../helpers/helpers';
 import { ICoinFromPoolDataApi } from '../../../../interfaces/liquidity-pools.interface';
+import CustomizedAxisTick from '../../charts/CustomizedAxisTick';
 
 const LiquidityCompositionChart = (props: any) => {
 
@@ -57,8 +58,8 @@ const LiquidityCompositionChart = (props: any) => {
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date"
-                    tick={{ fill: theme.palette.text.primary }}
-                    tickMargin={10} />
+                    height={55}
+                    tick={<CustomizedAxisTick stroke={theme.palette.text.primary} />} />
                 <YAxis
                     type="number"
                     tickMargin={15}
