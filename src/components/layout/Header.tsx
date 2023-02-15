@@ -59,11 +59,6 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
     },
 }));
 
-
-function NotificationsIcon(props: { color: string }) {
-    return null;
-}
-
 export default function Header() {
     const pathname = useLocation().pathname
 

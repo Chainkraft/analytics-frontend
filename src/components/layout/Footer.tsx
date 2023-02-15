@@ -2,7 +2,6 @@ import * as React from 'react';
 import {ButtonGroup, Container, Link} from "@mui/material";
 import Box from "@mui/material/Box";
 import TwitterIcon from '@mui/icons-material/Twitter';
-import {alpha} from "@mui/material/styles";
 import theme from "../../theme";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -22,7 +21,7 @@ export default function Footer() {
                     alignContent: 'center',
                     textAlign: 'center'
                 }
-        }}>
+            }}>
             <Box sx={{
                 display: 'flex',
                 alignContent: 'center',
