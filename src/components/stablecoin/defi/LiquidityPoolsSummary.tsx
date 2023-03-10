@@ -12,7 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
 import useSWR from 'swr';
 import { fetcherAxios } from '../../../helpers/fetcher-axios';
-import { currencyFormat } from '../../../helpers/helpers';
+import { currencyFormat, dexLogos } from '../../../helpers/helpers';
 import { ShortLiquidityPool } from '../../../interfaces/liquidity-pools.interface';
 
 const LiquidityPoolsSummary = (props: any) => {
@@ -69,7 +69,7 @@ const LiquidityPoolsSummary = (props: any) => {
                     {data.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((lp: ShortLiquidityPool) => (
                         <ListItemButton alignItems="center" href={`/pools/ethereum/${lp.address}`}>
                             <ListItemAvatar>
-                                <Avatar src="/curve.png" />
+                                <Avatar src={dexLogos[lp.dex]} />
                             </ListItemAvatar>
 
                             <ListItemText

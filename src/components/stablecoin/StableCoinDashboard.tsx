@@ -1,32 +1,29 @@
-import {Container, Skeleton} from '@mui/material';
+import { Container, Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {useParams} from 'react-router';
+import { useParams } from 'react-router';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import {currencyFormat} from '../../helpers/helpers';
+import { currencyFormat, shortCurrencyFormat } from '../../helpers/helpers';
 import MarketCapChart from './charts/MarketCapChart';
-import ChainkraftScoreChart from './charts/ChainkraftScoreChart';
 import useSWR from 'swr';
-import React, {useMemo} from 'react';
-import {fetcherAxios} from '../../helpers/fetcher-axios';
-import {ShortLiquidityPool} from '../../interfaces/liquidity-pools.interface';
+import React, { useMemo } from 'react';
+import { fetcherAxios } from '../../helpers/fetcher-axios';
 import LiquidityPoolsSummary from './defi/LiquidityPoolsSummary';
 import PriceChart from './charts/PriceChart';
 import ContractSummary from '../contract/ContractSummary';
-import ChainkraftScoreChartV2 from './charts/ChainkraftScoreChartV2';
+import ChainkraftScoreChart from './charts/ChainkraftScoreChart';
 
 const R = require('ramda');
 
 const StableCoinDashboard = () => {
-    let {tokenId} = useParams() as {
+    let { tokenId } = useParams() as {
         tokenId: string
     };
 
     const [subscriptionDialog, setSubscriptionDialog] = React.useState<boolean>(false);
 
-    const {data: tokenData, error} = useSWR<any>(`stablecoins/${tokenId}`, fetcherAxios)
-    const {data: lpData} = useSWR<ShortLiquidityPool[]>(`pools/token/${tokenId}`, fetcherAxios)
+    const { data: tokenData, error } = useSWR<any>(`stablecoins/${tokenId}`, fetcherAxios)
 
     const EMPTY_OBJECT: any = {};
 
@@ -79,35 +76,35 @@ const StableCoinDashboard = () => {
                     gap: '10px',
                     mt: 1
                 }}>
-                    <Skeleton variant="text" width={250}/>
+                    <Skeleton variant="text" width={250} />
                 </Box>
                 <Box
                     sx={{
                         mt: 2
                     }}
                 >
-                    <Skeleton variant="rectangular" width="100%" height={300}/>
+                    <Skeleton variant="rectangular" width="100%" height={300} />
                 </Box>
                 <Box
                     sx={{
                         mt: 2
                     }}
                 >
-                    <Skeleton variant="rectangular" width="100%" height={100}/>
+                    <Skeleton variant="rectangular" width="100%" height={100} />
                 </Box>
                 <Box
                     sx={{
                         mt: 2
                     }}
                 >
-                    <Skeleton variant="rectangular" width="100%" height={300}/>
+                    <Skeleton variant="rectangular" width="100%" height={300} />
                 </Box>
                 <Box
                     sx={{
                         mt: 2
                     }}
                 >
-                    <Skeleton variant="rectangular" width="100%" height={300}/>
+                    <Skeleton variant="rectangular" width="100%" height={300} />
                 </Box>
             </Container>
         );
@@ -173,7 +170,7 @@ const StableCoinDashboard = () => {
                         color: 'error.main'
                     }}>
                         <Box component={TrendingDownIcon} />
-                        <Typography variant="body1">({currencyFormat(token.price_change_24h, 3)})</Typography>
+                        <Typography variant="body1">({shortCurrencyFormat(token.price_change_24h)})</Typography>
                     </Box>
                 }
             </Box>
@@ -205,13 +202,13 @@ const StableCoinDashboard = () => {
                 >
                     <Typography variant="subtitle2">Overview</Typography>
                     <Typography variant="body1">{token.description}</Typography>
-                    <Typography variant="subtitle2" sx={{mt: 2}}>Backing strategy</Typography>
+                    <Typography variant="subtitle2" sx={{ mt: 2 }}>Backing strategy</Typography>
                     <Typography variant="body1">Crypto-backed</Typography>
-                    <Typography variant="subtitle2" sx={{mt: 2}}>Regulated</Typography>
+                    <Typography variant="subtitle2" sx={{ mt: 2 }}>Regulated</Typography>
                     <Typography variant="body1">{token.regulated ? 'Yes' : 'No data'}</Typography>
-                    <Typography variant="subtitle2" sx={{mt: 2}}>Audits</Typography>
+                    <Typography variant="subtitle2" sx={{ mt: 2 }}>Audits</Typography>
                     <Typography variant="body1">{token.audits ? 'Yes' : 'No data'}</Typography>
-                    <Typography variant="subtitle2" sx={{mt: 2}}>Issuer</Typography>
+                    <Typography variant="subtitle2" sx={{ mt: 2 }}>Issuer</Typography>
                     <Typography variant="body1">{token.issuer ? token.issuer : 'No data'}</Typography>
                 </Box>
                 <Box
@@ -221,7 +218,7 @@ const StableCoinDashboard = () => {
                         },
                         flex: 1
                     })}>
-                    <ChainkraftScoreChartV2 token={token} priceHistory={priceHistory} />
+                    <ChainkraftScoreChart token={token} priceHistory={priceHistory} />
                 </Box>
             </Box>
 
@@ -249,7 +246,7 @@ const StableCoinDashboard = () => {
                     >
                         <Typography variant="h6">Market cap</Typography>
                         <Typography variant="h4" color='secondary' sx={{ mt: 1 }}>
-                            {currencyFormat(token.current_market_cap)}
+                            {shortCurrencyFormat(token.current_market_cap)}
                         </Typography>
                     </Box>
                 }
@@ -270,7 +267,7 @@ const StableCoinDashboard = () => {
 
                     <Typography variant="h6">24h volume</Typography>
                     <Typography variant="h4" color='secondary' sx={{ mt: 1 }}>
-                        {currencyFormat(token.volume_24h)}
+                        {shortCurrencyFormat(token.volume_24h)}
                     </Typography>
                 </Box>
                 <Box
@@ -325,7 +322,7 @@ const StableCoinDashboard = () => {
                     }}
                 >
                     <Typography variant="h6">Market cap</Typography>
-                    <MarketCapChart marketCapHistory={marketCapHistory}/>
+                    <MarketCapChart marketCapHistory={marketCapHistory} />
                 </Box>
             }
 
@@ -333,7 +330,7 @@ const StableCoinDashboard = () => {
                 sx={{
                     mt: 2,
                 }}>
-                <LiquidityPoolsSummary token={tokenId}/>
+                <LiquidityPoolsSummary token={tokenId} />
             </Box>
 
             {/* <Box
