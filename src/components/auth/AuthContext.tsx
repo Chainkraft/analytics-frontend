@@ -1,10 +1,10 @@
 import {createContext, ReactElement, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {User} from "../../interfaces/users.inteface";
+import jwt_decode from "jwt-decode";
 
 export type AuthContextType = {
     user?: User
-    login: (data: User) => void
+    login: (data: User, token: string) => void
     logout: () => void
 }
 const AuthContext = createContext<AuthContextType>({
@@ -13,26 +13,28 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthContextProvider = ({children}: { children: ReactElement }) => {
-    const navigate = useNavigate();
 
     const [user, setUser] = useState(() => {
-        let userData = localStorage.getItem("user");
-        if (userData) {
-            return JSON.parse(userData);
+        const expiresIn = localStorage.getItem("expiresIn");
+        if (expiresIn === null || parseInt(expiresIn) > new Date().getTime()) {
+            const userData = localStorage.getItem("user");
+            if (userData) {
+                return JSON.parse(userData);
+            }
         }
         return null;
     });
 
-    const login = (user: User) => {
+    const login = (user: User, token: string) => {
         localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("expiresIn", jwt_decode<any>(token).exp);
         setUser(user);
-        navigate("/");
     };
 
     const logout = () => {
         localStorage.removeItem("user");
+        localStorage.removeItem("expiresIn");
         setUser(null);
-        navigate("/login");
     };
 
     return (

@@ -10,6 +10,7 @@ import Divider from "@mui/material/Divider";
 import {styled} from "@mui/material/styles";
 import {apiClient} from "../../helpers/fetcher-axios";
 import AuthContext from "./AuthContext";
+import {useNavigate} from "react-router-dom";
 
 const StackItem = styled(Box)(({theme}) => ({
     width: '100%',
@@ -20,6 +21,7 @@ const StackItem = styled(Box)(({theme}) => ({
 
 const Login = () => {
 
+    const navigate = useNavigate();
     const {login} = useContext(AuthContext);
 
     const [form, setForm] = useState({email: "", password: ""});
@@ -36,7 +38,8 @@ const Login = () => {
 
         apiClient.post("/auth/login", form)
             .then((response) => {
-                login(response.data.data);
+                login(response.data.profile, response.data.token);
+                navigate("/");
             })
             .catch((err) => {
                 console.error(err);

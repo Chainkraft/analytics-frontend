@@ -112,6 +112,7 @@ export default function Header() {
             })
             .finally(() => {
                 logout();
+                navigate("/login");
             });
     };
 
