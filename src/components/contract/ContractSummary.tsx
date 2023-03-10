@@ -13,45 +13,45 @@ import {
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import useSWR from 'swr';
-import React, {useContext, useMemo, useState} from 'react';
-import {fetcherAxios} from '../../helpers/fetcher-axios';
-import {styled} from "@mui/material/styles";
+import React, { useContext, useMemo, useState } from 'react';
+import { fetcherAxios } from '../../helpers/fetcher-axios';
+import { styled } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import theme from "../../theme";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Divider from "@mui/material/Divider";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import {ContractNetwork, ContractSummary, ContractSummaryStatus} from "../../interfaces/contracts.interface";
-import {shortAddress} from "../../helpers/contract.helpers";
-import {timeElapsed} from "../../helpers/helpers";
+import { ContractNetwork, ContractSummary, ContractSummaryStatus } from "../../interfaces/contracts.interface";
+import { shortAddress } from "../../helpers/contract.helpers";
+import { timeElapsed } from "../../helpers/helpers";
 import Button from "@mui/material/Button";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AuthContext from "../auth/AuthContext";
 
 const R = require('ramda');
 
-const StyledBox = styled(Box)(({theme}) => ({
+const StyledBox = styled(Box)(({ theme }) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     backgroundColor: theme.palette.background.paper,
     borderRadius: '12px'
 }));
 
-const StatusIcon = ({status}: { status: ContractSummaryStatus }) =>
+const StatusIcon = ({ status }: { status: ContractSummaryStatus }) =>
     <React.Fragment>
         {status === ContractSummaryStatus.OK &&
-            <CheckCircleOutlineIcon color="success" sx={{mx: 1}}></CheckCircleOutlineIcon>
+            <CheckCircleOutlineIcon color="success" sx={{ mx: 1 }}></CheckCircleOutlineIcon>
         }
         {status === ContractSummaryStatus.WARNING &&
-            <WarningAmberIcon color="warning" sx={{mx: 1}}></WarningAmberIcon>
+            <WarningAmberIcon color="warning" sx={{ mx: 1 }}></WarningAmberIcon>
         }
         {status === ContractSummaryStatus.ALARM &&
-            <ErrorOutlineIcon color="error" sx={{mx: 1}}></ErrorOutlineIcon>
+            <ErrorOutlineIcon color="error" sx={{ mx: 1 }}></ErrorOutlineIcon>
         }
     </React.Fragment>;
 
-const SectionDivider = ({id, label, status}: { id: string, label: string, status: ContractSummaryStatus }) =>
+const SectionDivider = ({ id, label, status }: { id: string, label: string, status: ContractSummaryStatus }) =>
     <React.Fragment>
         <Divider
             id={id}
@@ -78,8 +78,8 @@ const ComponentLoader = (props: any) =>
             display: 'flex',
             flexDirection: 'column'
         }}>
-        <Box sx={{mt: 2}}>
-            <Skeleton variant="rectangular" width="100%" height={300}/>
+        <Box sx={{ mt: 2 }}>
+            <Skeleton variant="rectangular" width="100%" height={300} />
         </Box>
     </Container>;
 
@@ -97,7 +97,7 @@ const ComponentError = () =>
     </Container>;
 
 const calculateBlockDiff = (block: number, blockchain: any) => {
-    const formatter = Intl.NumberFormat('en', {notation: 'compact'});
+    const formatter = Intl.NumberFormat('en', { notation: 'compact' });
     return formatter.format(blockchain[ContractNetwork.ETH_MAINNET]! - block);
 }
 
@@ -115,30 +115,30 @@ const calculateScore = (summary: ContractSummary) => {
     return score;
 }
 
-const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
-    const {user} = useContext(AuthContext);
+const StableCoinDashboard = ({ tokenId }: { tokenId: string }) => {
+    const { user } = useContext(AuthContext);
     const [detailedView, setDetailedView] = useState(false);
 
-    const {data: contractData, isLoading: contractDataLoading, error} = useSWR<ContractSummary[]>(
-        `contracts/${tokenId}/summary`, fetcherAxios, {shouldRetryOnError: false}
+    const { data: contractData, isLoading: contractDataLoading, error } = useSWR<ContractSummary[]>(
+        `contracts/${tokenId}/summary`, fetcherAxios, { shouldRetryOnError: false }
     )
 
-    const {data: latestBlocks, isLoading: latestBlocksLoading} = useSWR<Map<ContractNetwork, number>>(
-        () => user ? `blockchains/lastBlocks` : null, fetcherAxios, {shouldRetryOnError: false}
+    const { data: latestBlocks, isLoading: latestBlocksLoading } = useSWR<Map<ContractNetwork, number>>(
+        () => user ? `blockchains/lastBlocks` : null, fetcherAxios, { shouldRetryOnError: false }
     )
     const summary: ContractSummary = useMemo(() => R.propOr({}, 0, contractData), [contractData]);
 
     if (error) {
-        return <ComponentError/>
+        return <Box />
     }
     if (contractDataLoading) {
-        return <ComponentLoader/>
+        return <ComponentLoader />
     }
 
     return (
         <StyledBox>
             <Typography variant="h5">Security audit</Typography>
-            <Typography sx={{my: 2}}>
+            <Typography sx={{ my: 2 }}>
                 We evaluate the code and determine if it follows industry standards and best practices for security.
                 This involves reviewing the contract's logic and active transaction monitoring affecting application
                 behavior leading to security vulnerabilities.
@@ -192,9 +192,9 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                                     <ListItem key="proxy">
                                         <ListItemButton href="#proxy" onClick={() => setDetailedView(true)}>
                                             <ListItemIcon>
-                                                <StatusIcon status={summary.proxyPattern.status}/>
+                                                <StatusIcon status={summary.proxyPattern.status} />
                                             </ListItemIcon>
-                                            <ListItemText primary="Proxy implementation"/>
+                                            <ListItemText primary="Proxy implementation" />
                                             <ListItemIcon>
                                                 <KeyboardArrowRightIcon></KeyboardArrowRightIcon>
                                             </ListItemIcon>
@@ -203,9 +203,9 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                                     <ListItem key="source-code">
                                         <ListItemButton href="#source-code" onClick={() => setDetailedView(true)}>
                                             <ListItemIcon>
-                                                <StatusIcon status={summary.sourceCode.status}/>
+                                                <StatusIcon status={summary.sourceCode.status} />
                                             </ListItemIcon>
-                                            <ListItemText primary="Source code"/>
+                                            <ListItemText primary="Source code" />
                                             <ListItemIcon>
                                                 <KeyboardArrowRightIcon></KeyboardArrowRightIcon>
                                             </ListItemIcon>
@@ -214,9 +214,9 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                                     <ListItem key="proof-of-time">
                                         <ListItemButton href="#proof-of-time" onClick={() => setDetailedView(true)}>
                                             <ListItemIcon>
-                                                <StatusIcon status={summary.proofOfTime.status}/>
+                                                <StatusIcon status={summary.proofOfTime.status} />
                                             </ListItemIcon>
-                                            <ListItemText primary="Proof of time"/>
+                                            <ListItemText primary="Proof of time" />
                                             <ListItemIcon>
                                                 <KeyboardArrowRightIcon></KeyboardArrowRightIcon>
                                             </ListItemIcon>
@@ -300,7 +300,7 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
             </Grid>
             {user && !detailedView &&
                 <Box paddingTop={2} textAlign="center">
-                    <Button variant="text" endIcon={<ExpandMoreIcon/>} onClick={() => setDetailedView(true)}>
+                    <Button variant="text" endIcon={<ExpandMoreIcon />} onClick={() => setDetailedView(true)}>
                         Show details
                     </Button>
                 </Box>
@@ -309,8 +309,8 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
             {user && detailedView &&
                 <React.Fragment>
                     <SectionDivider id={"proxy"}
-                                    label={"Proxy implementation"}
-                                    status={summary.proxyPattern.status}></SectionDivider>
+                        label={"Proxy implementation"}
+                        status={summary.proxyPattern.status}></SectionDivider>
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         <Grid item xs={12} md={6}>
                             {summary.proxyPattern.status === ContractSummaryStatus.OK &&
@@ -350,37 +350,37 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                                         }
                                     }}>
                                         <ListItem key="proxy-pattern">
-                                            <ListItemText primary="Proxy pattern"/>
+                                            <ListItemText primary="Proxy pattern" />
                                             <ListItemIcon>
                                                 <Typography>{summary.proxyPattern.type}</Typography>
                                             </ListItemIcon>
                                         </ListItem>
-                                        <Divider/>
+                                        <Divider />
                                         <ListItem key="proxy-address">
-                                            <ListItemText primary="Proxy contract address"/>
+                                            <ListItemText primary="Proxy contract address" />
                                             <ListItemIcon>
                                                 <Link target="_blank" rel="noopener noreferrer"
-                                                      href={`https://etherscan.io/address/${summary.proxyPattern.address}`}>
+                                                    href={`https://etherscan.io/address/${summary.proxyPattern.address}`}>
                                                     {shortAddress(summary.proxyPattern.address)}
                                                 </Link>
                                             </ListItemIcon>
                                         </ListItem>
-                                        <Divider/>
+                                        <Divider />
                                         <ListItem key="proxy-logic-address">
-                                            <ListItemText primary="Logic contract address"/>
+                                            <ListItemText primary="Logic contract address" />
                                             <ListItemIcon>
                                                 <Link target="_blank" rel="noopener noreferrer"
-                                                      href={`https://etherscan.io/address/${summary.proxyPattern.implSlot}`}>
+                                                    href={`https://etherscan.io/address/${summary.proxyPattern.implSlot}`}>
                                                     {shortAddress(summary.proxyPattern.implSlot)}
                                                 </Link>
                                             </ListItemIcon>
                                         </ListItem>
-                                        <Divider/>
+                                        <Divider />
                                         <ListItem key="proxy-admin-address">
-                                            <ListItemText primary="Admin address"/>
+                                            <ListItemText primary="Admin address" />
                                             <ListItemIcon>
                                                 <Link target="_blank" rel="noopener noreferrer"
-                                                      href={`https://etherscan.io/address/${summary.proxyPattern.adminSlot}`}>
+                                                    href={`https://etherscan.io/address/${summary.proxyPattern.adminSlot}`}>
                                                     {shortAddress(summary.proxyPattern.adminSlot)}
                                                 </Link>
                                             </ListItemIcon>
@@ -416,8 +416,8 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                     </Grid>
 
                     <SectionDivider id={"source-code"}
-                                    label={"Source code"}
-                                    status={summary.sourceCode.status}></SectionDivider>
+                        label={"Source code"}
+                        status={summary.sourceCode.status}></SectionDivider>
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         <Grid item xs={12} md={6}>
                             <Paper sx={{
@@ -438,34 +438,34 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                                     }
                                 }}>
                                     <ListItem key="close-size">
-                                        <ListItemText primary="Size"/>
+                                        <ListItemText primary="Size" />
                                         <ListItemIcon>
                                             <Typography>{summary.sourceCode.size} bytes</Typography>
                                         </ListItemIcon>
                                     </ListItem>
-                                    <Divider/>
+                                    <Divider />
                                     <ListItem key="created-by-block">
-                                        <ListItemText primary="Created by block"/>
+                                        <ListItemText primary="Created by block" />
                                         <ListItemIcon>
                                             <Link target="_blank" rel="noopener noreferrer"
-                                                  href={`https://etherscan.io/block/${summary.sourceCode.createdByBlock}`}>
+                                                href={`https://etherscan.io/block/${summary.sourceCode.createdByBlock}`}>
                                                 {summary.sourceCode.createdByBlock}
                                             </Link>
                                         </ListItemIcon>
                                     </ListItem>
-                                    <Divider/>
+                                    <Divider />
                                     <ListItem key="created-by-address">
-                                        <ListItemText primary="Created by address"/>
+                                        <ListItemText primary="Created by address" />
                                         <ListItemIcon>
                                             <Link target="_blank" rel="noopener noreferrer"
-                                                  href={`https://etherscan.io/address/${summary.sourceCode.createdByAddress}`}>
+                                                href={`https://etherscan.io/address/${summary.sourceCode.createdByAddress}`}>
                                                 {shortAddress(summary.sourceCode.createdByAddress)}
                                             </Link>
                                         </ListItemIcon>
                                     </ListItem>
-                                    <Divider/>
+                                    <Divider />
                                     <ListItem key="compiler-version">
-                                        <ListItemText primary="Compiler version"/>
+                                        <ListItemText primary="Compiler version" />
                                         <ListItemIcon>
                                             <Typography>{summary.sourceCode.compilerVersion}</Typography>
                                         </ListItemIcon>
@@ -497,8 +497,8 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                     </Grid>
 
                     <SectionDivider id={"proof-of-time"}
-                                    label={"Proof of time"}
-                                    status={summary.proofOfTime.status}></SectionDivider>
+                        label={"Proof of time"}
+                        status={summary.proofOfTime.status}></SectionDivider>
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         <Grid item xs={12} md={6}>
                             <Box sx={{
@@ -521,8 +521,8 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                                 }
                                 {latestBlocksLoading &&
                                     <React.Fragment>
-                                        <Skeleton variant="text" width={150}/>
-                                        <Skeleton variant="text" width={400}/>
+                                        <Skeleton variant="text" width={150} />
+                                        <Skeleton variant="text" width={400} />
                                     </React.Fragment>
                                 }
                             </Box>
@@ -544,8 +544,8 @@ const StableCoinDashboard = ({tokenId}: { tokenId: string }) => {
                                 }
                                 {latestBlocksLoading &&
                                     <React.Fragment>
-                                        <Skeleton variant="text" width={150}/>
-                                        <Skeleton variant="text" width={400}/>
+                                        <Skeleton variant="text" width={150} />
+                                        <Skeleton variant="text" width={400} />
                                     </React.Fragment>
                                 }
                             </Box>
