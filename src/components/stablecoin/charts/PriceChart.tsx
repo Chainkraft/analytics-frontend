@@ -62,7 +62,7 @@ const PriceChart = (props: any) => {
                     tickLine={false} />
                 {/* domain={([dataMin, dataMax]) => [dataMin - 0.05 < 0 ? 0 : dataMin - 0.05, dataMax + 0.05]} /> */}
 
-                <Tooltip contentStyle={{ backgroundColor: theme.palette.primary.main }}
+                <Tooltip contentStyle={{ backgroundColor: theme.palette.background.paper }}
                     formatter={(value: any, name: any) => {
                         return currencyFormat(value, 3);
                     }}
@@ -86,7 +86,7 @@ const PriceChart = (props: any) => {
                     stroke={theme.palette.text.secondary}
                 />
                 <Brush alwaysShowText={false} dataKey="date"
-                    fill={theme.palette.primary.main}
+                    fill={theme.palette.background.paper}
                 />
 
             </LineChart>

@@ -1,5 +1,3 @@
-import { useTheme } from '@mui/material';
-import ListItemText from '@mui/material/ListItemText';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { currencyFormat, numberFormat, percentageFormat } from '../../../../helpers/helpers';
-import { ICoinFromPoolDataApi } from '../../../../interfaces/liquidity-pools.interface';
+import { ICoinFromPoolDataApi, LiquidityPoolHistory, LiquidityPoolPricingType } from '../../../../interfaces/liquidity-pools.interface';
 
 interface TableCompositionData {
     symbol: string;
@@ -16,10 +14,34 @@ interface TableCompositionData {
     usdPrice: number;
 }
 
-const LiquidityCompositionTable = (props: any) => {
+export function calculateUniswapLiquidityTableData(
+    lp: LiquidityPoolHistory,
+    latestBalance: { coins: ICoinFromPoolDataApi[]; date: Date }
+): TableCompositionData[] {
+    const [coin0, coin1] = latestBalance.coins;
 
-    var balances = props.lp.balances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
-    var underlyingBalances = props.lp.underlyingBalances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
+    const tableCoins: TableCompositionData[] = [
+        {
+            symbol: coin0.symbol,
+            poolBalance: Number(coin0.poolBalance),
+            weight: coin0.weight * 100,
+            usdPrice: Number(coin0.usdPrice),
+        },
+        {
+            symbol: coin1.symbol,
+            poolBalance: Number(coin1.poolBalance),
+            weight: coin1.weight * 100,
+            usdPrice: Number(coin1.usdPrice),
+        },
+    ];
+
+    return tableCoins;
+}
+
+const LiquidityCompositionTable = ({ lp }: { lp: LiquidityPoolHistory }) => {
+
+    var balances = lp.balances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
+    var underlyingBalances = lp.underlyingBalances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
 
     // check if there are any underlying balances
     let latestBalance;
@@ -33,10 +55,9 @@ const LiquidityCompositionTable = (props: any) => {
         })[0];
     }
 
-
     let totalBalance = latestBalance.coins.reduce((acc, coin) => acc + Math.floor(parseFloat(coin.poolBalance) / (10 ** parseInt(coin.decimals))), 0);
 
-    let tableCoins: TableCompositionData[] = latestBalance.coins.map(coin => {
+    let tableCoins: TableCompositionData[] = lp.pricingType === LiquidityPoolPricingType.USD ? latestBalance.coins.map(coin => {
         let shiftedBalance = Number(coin.poolBalance) * Math.pow(10, -Number(coin.decimals));
         return {
             symbol: coin.symbol,
@@ -44,7 +65,7 @@ const LiquidityCompositionTable = (props: any) => {
             weight: Number(shiftedBalance) / totalBalance * 100,
             usdPrice: Number(coin.usdPrice),
         }
-    });
+    }) : calculateUniswapLiquidityTableData(lp, latestBalance);
 
     return (
         <TableContainer>

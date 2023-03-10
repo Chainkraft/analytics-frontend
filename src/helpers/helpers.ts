@@ -7,6 +7,13 @@ export const currencyFormat = (num: number, fraction = 0) => new Intl.NumberForm
     minimumFractionDigits: fraction
 }).format(num);
 
+export const shortCurrencyFormat = (num: number) => new Intl.NumberFormat("en-US", {
+    style: 'currency',
+    currency: 'USD',
+    notation: "compact",
+    compactDisplay: "long",
+}).format(num);
+
 export const numberFormat = (num: number, fraction = 0) => new Intl.NumberFormat('en-US', {
     maximumFractionDigits: fraction,
     minimumFractionDigits: fraction
@@ -18,9 +25,9 @@ export const percentageFormat = (weight: number) => {
 
 export const timeElapsed = (date: Date): string => {
     const months = moment().diff(moment(date), 'months');
-    if(months > 12) {
+    if (months > 12) {
         return moment().diff(moment(date), 'years') + " years";
-    } else if(months < 12) {
+    } else if (months < 12) {
         return months + " months";
     }
     return "1 year";
@@ -29,4 +36,14 @@ export const timeElapsed = (date: Date): string => {
 export const pageTitles: { [key: string]: string } = {
     "/": "Stablecoins",
     "/alerts": "Alerts"
+};
+
+export const dexLogos: { [key: string]: string } = {
+    "curve": "/curve.png",
+    "uniswap": "/uniswap.png"
+};
+
+export const dexLpNames: { [key: string]: string } = {
+    "curve": "Curve.fi",
+    "uniswap": "Uniswap"
 };

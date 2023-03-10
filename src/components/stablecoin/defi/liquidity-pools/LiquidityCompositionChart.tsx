@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material';
+import moment from 'moment';
 import {
     AreaChart,
     Area,
@@ -9,23 +10,49 @@ import {
     ResponsiveContainer
 } from "recharts";
 import { currencyFormat } from '../../../../helpers/helpers';
-import { ICoinFromPoolDataApi } from '../../../../interfaces/liquidity-pools.interface';
+import { ICoinFromPoolDataApi, LiquidityPoolHistory, LiquidityPoolPricingType } from '../../../../interfaces/liquidity-pools.interface';
 import CustomizedAxisTick from '../../charts/CustomizedAxisTick';
 
-const LiquidityCompositionChart = (props: any) => {
+interface ChartData {
+    date: string;
+    [symbol: string]: number | string;
+}
 
-    var balances = props.lp.balances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
-    var underlyingBalances = props.lp.underlyingBalances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
+export function calculateUniswapLiquidityChartData(
+    lp: LiquidityPoolHistory,
+    chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]
+): ChartData[] {
+
+    return chartBalances.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }).filter((balance) => {
+        return moment.utc(balance.date).isSame(moment.utc(balance.date).startOf("day"));
+    }).map(({ date, coins }) => {
+
+        const [coin0, coin1] = coins;
+        const token0Weight = Number(coin0.poolBalance) / lp.tvlUSD;
+        const token1Weight = Number(coin1.poolBalance) * Number(coin0.price) / lp.tvlUSD;
+        const token0UsdPrice = lp.tvlUSD * token0Weight / Number(coin0.poolBalance);
+        const token1UsdPrice = lp.tvlUSD * token1Weight / Number(coin1.poolBalance);
+
+        const dataPoint: ChartData = { date: new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) };
+
+        dataPoint[coin0.symbol] = token0UsdPrice * Number(coin0.poolBalance);
+        dataPoint[coin1.symbol] = token1UsdPrice * Number(coin1.poolBalance);
+
+        return dataPoint;
+    })
+}
+
+const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
+
+    var balances = lp.balances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
+    var underlyingBalances = lp.underlyingBalances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
 
     let chartBalances = (underlyingBalances.length > 0 && underlyingBalances[0].coins.length > 0)
         ? underlyingBalances : balances;
 
-    interface ChartData {
-        date: string;
-        [symbol: string]: number | string;
-    }
-
-    const chartData = chartBalances.sort((a, b) => {
+    const chartData = lp.pricingType === LiquidityPoolPricingType.USD ? chartBalances.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
     }).map(({ date, coins }) => {
         const dataPoint: ChartData = { date: new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) };
@@ -34,7 +61,7 @@ const LiquidityCompositionChart = (props: any) => {
             dataPoint[symbol] = Math.floor(parseFloat(poolBalance) / decimalMultiplier);
         });
         return dataPoint;
-    });
+    }) : calculateUniswapLiquidityChartData(lp, chartBalances);
 
     let coins: string[] = Array.from(new Set(chartBalances.map((balance) => balance.coins.map((coin: any) => coin.symbol)).reduce((acc, val) => acc.concat(val), [])));
 
@@ -70,7 +97,7 @@ const LiquidityCompositionChart = (props: any) => {
                             compactDisplay: "short",
                         }).format(value)}
                 />
-                <Tooltip contentStyle={{ backgroundColor: theme.palette.primary.main }}
+                <Tooltip contentStyle={{ backgroundColor: theme.palette.background.paper }}
                     formatter={(value: any) => {
                         return currencyFormat(value);
                     }}

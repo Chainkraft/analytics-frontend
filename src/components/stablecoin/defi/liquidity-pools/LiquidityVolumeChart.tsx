@@ -6,32 +6,30 @@ import {
     YAxis,
     Tooltip,
     ResponsiveContainer,
-    Brush
 } from "recharts";
-import { currencyFormat } from '../../../helpers/helpers';
-import CustomizedAxisTick from './CustomizedAxisTick';
+import { currencyFormat } from '../../../../helpers/helpers';
+import { LiquidityPoolHistory } from '../../../../interfaces/liquidity-pools.interface';
+import CustomizedAxisTick from '../../charts/CustomizedAxisTick';
 
-const MarketCapChart = (props: any) => {
+const LiquidityVolumeChart = (props: any) => {
 
     let theme = useTheme();
 
     interface ChartData {
         date: string;
-        marketCap: number;
+        volumeUSD: number;
     }
 
-    let marketCaps = props.marketCapHistory.market_caps as { date: string; market_cap: number }[];
+    let lp = props.lp as LiquidityPoolHistory;
 
-    const chartData: ChartData[] = marketCaps
-        .sort((a, b) => Date.parse(a.date) - (Date.parse(b.date)))
-        .slice(-180)
-        .filter(item => item.date && item.market_cap)
-        .map(({ date, market_cap }) => {
-            return {
-                date: date ? new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) : '',
-                marketCap: market_cap || 0
-            };
-        });
+    let chartData: ChartData[] = lp.poolDayData.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }).map((poolDayData) => {
+        return {
+            date: new Date(poolDayData.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }),
+            volumeUSD: Number(poolDayData.volumeUSD)
+        }
+    });
 
     return (
         <ResponsiveContainer width="100%" height={500}>
@@ -61,26 +59,22 @@ const MarketCapChart = (props: any) => {
                 />
                 <Tooltip contentStyle={{ backgroundColor: theme.palette.background.paper }}
                     formatter={(value: any, name: any) => {
-                        return [currencyFormat(value), "Market Cap"];
+                        return [currencyFormat(value), "Volume"];
                     }}
                 />
 
                 <Area
                     connectNulls
                     type="monotone"
-                    dataKey="marketCap"
+                    dataKey="volumeUSD"
                     stackId="1"
                     stroke={theme.palette.secondary.main}
                     fill={theme.palette.secondary.main}
                 />
-                <Brush alwaysShowText={false} dataKey="date"
-                    fill={theme.palette.background.paper}
-                />
-
             </AreaChart>
         </ResponsiveContainer>
     );
 }
 
 
-export default MarketCapChart; 
+export default LiquidityVolumeChart; 

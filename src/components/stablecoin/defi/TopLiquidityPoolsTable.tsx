@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import React from 'react';
 import useSWR from 'swr';
 import { fetcherAxios } from '../../../helpers/fetcher-axios';
-import { currencyFormat } from '../../../helpers/helpers';
+import { currencyFormat, dexLogos } from '../../../helpers/helpers';
 import { ShortLiquidityPool } from '../../../interfaces/liquidity-pools.interface';
 
 const TopLiquidityPoolsTable = (props: any) => {
@@ -20,7 +20,6 @@ const TopLiquidityPoolsTable = (props: any) => {
     // const [page, setPage] = React.useState(1);
 
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -53,7 +52,6 @@ const TopLiquidityPoolsTable = (props: any) => {
                 fontWeight: 'bold',
                 p: 2
             }}>
-            {/* <TableContainer component={Paper}> */}
             <Typography variant="h6" sx={{
                 alignSelf: 'center',
             }}>Top Liquidity Pools</Typography>
@@ -76,7 +74,7 @@ const TopLiquidityPoolsTable = (props: any) => {
                                 </TableCell>
                                 <TableCell >{row.tvl ? currencyFormat(row.tvl, 0) : ''}</TableCell>
                                 <TableCell >
-                                    <Avatar src="/curve.png" />
+                                    <Avatar src={dexLogos[row.dex]} />
                                 </TableCell>
                             </TableRow>
                         ))}
