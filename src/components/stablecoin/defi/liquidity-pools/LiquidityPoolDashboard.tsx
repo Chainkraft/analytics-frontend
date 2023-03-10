@@ -161,15 +161,8 @@ const LiquidityPoolsDashboard = () => {
                 }}>
                 <Typography variant="h6" sx={{ p: 2 }}>Liquidity composition</Typography>
 
-                <Box
-                    sx={(theme) => ({
-                        width: '1',
-                        mt: 2,
-                        p: 1
-                    })}>
+                <LiquidityCompositionChart lp={data} />
 
-                    <LiquidityCompositionChart lp={data} />
-                </Box>
                 <Box sx={{
                     width: '1',
                     p: 2

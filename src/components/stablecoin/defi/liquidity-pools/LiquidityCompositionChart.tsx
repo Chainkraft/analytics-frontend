@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import moment from 'moment';
 import {
     AreaChart,
@@ -78,46 +78,57 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
     ]
     let coinToColorMap = new Map(coins.map((coin, index) => [coin, availableColors[index]]));
 
+    if (chartData.length < 7) {
+        return <Box />
+    }
+
     return (
-        <ResponsiveContainer width="100%" height={500}>
-            <AreaChart
-                data={chartData}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date"
-                    height={55}
-                    tick={<CustomizedAxisTick stroke={theme.palette.text.primary} />} />
-                <YAxis
-                    type="number"
-                    tickMargin={15}
-                    tick={{ fill: theme.palette.text.primary }}
-                    tickFormatter={(value) =>
-                        new Intl.NumberFormat("en-US", {
-                            notation: "compact",
-                            compactDisplay: "short",
-                        }).format(value)}
-                />
-                <Tooltip contentStyle={{ backgroundColor: theme.palette.background.paper }}
-                    formatter={(value: any) => {
-                        return currencyFormat(value);
-                    }}
-                />
+        <Box
+            sx={(theme) => ({
+                width: '1',
+                mt: 2,
+                p: 1
+            })}>
+            <ResponsiveContainer width="100%" height={500}>
+                <AreaChart
+                    data={chartData}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date"
+                        height={55}
+                        tick={<CustomizedAxisTick stroke={theme.palette.text.primary} />} />
+                    <YAxis
+                        type="number"
+                        tickMargin={15}
+                        tick={{ fill: theme.palette.text.primary }}
+                        tickFormatter={(value) =>
+                            new Intl.NumberFormat("en-US", {
+                                notation: "compact",
+                                compactDisplay: "short",
+                            }).format(value)}
+                    />
+                    <Tooltip contentStyle={{ backgroundColor: theme.palette.background.paper }}
+                        formatter={(value: any) => {
+                            return currencyFormat(value);
+                        }}
+                    />
 
-                {coins.map((coin) => {
-                    return (
-                        <Area
-                            type="monotone"
-                            dataKey={coin}
-                            stackId="1"
-                            stroke={coinToColorMap.get(coin)}
-                            fill={coinToColorMap.get(coin)}
-                        />
-                    );
-                })
-                }
+                    {coins.map((coin) => {
+                        return (
+                            <Area
+                                type="monotone"
+                                dataKey={coin}
+                                stackId="1"
+                                stroke={coinToColorMap.get(coin)}
+                                fill={coinToColorMap.get(coin)}
+                            />
+                        );
+                    })
+                    }
 
-            </AreaChart>
-        </ResponsiveContainer>
+                </AreaChart>
+            </ResponsiveContainer>
+        </Box>
     );
 }
 
