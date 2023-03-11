@@ -304,7 +304,7 @@ const StableCoinDashboard = () => {
                 }}
             >
                 <Typography variant="h6">Price</Typography>
-                <PriceChart priceHistory={priceHistory} />
+                <PriceChart token={token} priceHistory={priceHistory} />
             </Box>
 
             {
@@ -322,7 +322,7 @@ const StableCoinDashboard = () => {
                     }}
                 >
                     <Typography variant="h6">Market cap</Typography>
-                    <MarketCapChart marketCapHistory={marketCapHistory} />
+                    <MarketCapChart token={token} marketCapHistory={marketCapHistory} />
                 </Box>
             }
 

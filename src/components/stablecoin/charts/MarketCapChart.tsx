@@ -33,6 +33,8 @@ const MarketCapChart = (props: any) => {
             };
         });
 
+    chartData[chartData.length - 1] = { date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }), marketCap: props.token.current_market_cap };
+
     return (
         <ResponsiveContainer width="100%" height={500}>
             <AreaChart

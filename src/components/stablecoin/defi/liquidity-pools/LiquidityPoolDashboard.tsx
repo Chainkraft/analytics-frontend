@@ -29,9 +29,9 @@ const LiquidityPoolsDashboard = () => {
     let poolName = data.name ? data.name : `${dexLpNames[data.dex]} ${data.balances[0].coins.map((coin) => coin.symbol).join('/')}`;
 
     // sort poolDayData by date descending
-    let volume24h = data?.poolDayData.sort((a, b) => {
+    let volume24h = data?.poolDayData?.sort((a, b) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
-    })[0].volumeUSD ?? null;
+    })[0]?.volumeUSD ?? null;
 
     return (
         <Container

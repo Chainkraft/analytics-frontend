@@ -38,7 +38,8 @@ const PriceChart = (props: any) => {
             };
         });
 
-    console.log("price chart data", chartData);
+    chartData[chartData.length - 1] = { date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }), price: props.token.current_price, peg: 1 };
+
     return (
         <ResponsiveContainer width="100%" height={500}>
             <LineChart

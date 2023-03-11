@@ -17,18 +17,12 @@ interface ChartData {
     date: string;
     [symbol: string]: number | string;
 }
-
 export function calculateUniswapLiquidityChartData(
     lp: LiquidityPoolHistory,
     chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]
 ): ChartData[] {
 
-    return chartBalances.sort((a, b) => {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-    }).filter((balance) => {
-        return moment.utc(balance.date).isSame(moment.utc(balance.date).startOf("day"));
-    }).map(({ date, coins }) => {
-
+    const calculateChartPoint = (lp: LiquidityPoolHistory, coins: ICoinFromPoolDataApi[], date: Date) => {
         const [coin0, coin1] = coins;
         const token0Weight = Number(coin0.poolBalance) / lp.tvlUSD;
         const token1Weight = Number(coin1.poolBalance) * Number(coin0.price) / lp.tvlUSD;
@@ -41,7 +35,21 @@ export function calculateUniswapLiquidityChartData(
         dataPoint[coin1.symbol] = token1UsdPrice * Number(coin1.poolBalance);
 
         return dataPoint;
+    }
+
+    let sortedBalances = chartBalances.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+
+    let chartData = sortedBalances.filter((balance) => {
+        return moment.utc(balance.date).isSame(moment.utc(balance.date).startOf("day"));
+    }).map(({ date, coins }) => {
+        return calculateChartPoint(lp, coins, date);
     })
+
+    const lastBalance = sortedBalances[sortedBalances.length - 1];
+    chartData[chartData.length - 1] = calculateChartPoint(lp, lastBalance.coins, lastBalance.date);
+    return chartData;
 }
 
 const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
