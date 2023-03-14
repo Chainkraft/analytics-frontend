@@ -7,7 +7,8 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer
+    ResponsiveContainer,
+    Brush
 } from "recharts";
 import { currencyFormat } from '../../../../helpers/helpers';
 import { ICoinFromPoolDataApi, LiquidityPoolHistory, LiquidityPoolPricingType } from '../../../../interfaces/liquidity-pools.interface';
@@ -71,6 +72,8 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
         return dataPoint;
     }) : calculateUniswapLiquidityChartData(lp, chartBalances);
 
+    console.log('chartdata', chartData);
+
     let coins: string[] = Array.from(new Set(chartBalances.map((balance) => balance.coins.map((coin: any) => coin.symbol)).reduce((acc, val) => acc.concat(val), [])));
 
     let theme = useTheme();
@@ -131,8 +134,10 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
                                 fill={coinToColorMap.get(coin)}
                             />
                         );
-                    })
-                    }
+                    })}
+                    <Brush alwaysShowText={false} dataKey="date"
+                        fill={theme.palette.background.paper}
+                    />
 
                 </AreaChart>
             </ResponsiveContainer>

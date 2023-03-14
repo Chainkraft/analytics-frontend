@@ -5,13 +5,11 @@ import useSWR from 'swr';
 import { fetcherAxios } from '../../../../helpers/fetcher-axios';
 import { LiquidityPoolHistory } from '../../../../interfaces/liquidity-pools.interface';
 import { currencyFormat, dexLogos, dexLpNames, shortCurrencyFormat } from '../../../../helpers/helpers';
-import React from 'react';
-
 import { useParams } from 'react-router';
 import LiquidityCompositionChart from './LiquidityCompositionChart';
 import LiquidityCompositionTable from './LiquidityCompositionTable';
-import LiquidityVolumeChart from './LiquidityVolumeChart';
 import LiquidityPoolOverview from './LiquidityPoolOverview';
+import LiquidityVolumeBarChart from './LiquidityPoolVolumeBarChart';
 
 const LiquidityPoolsDashboard = () => {
     let { network, address } = useParams();
@@ -170,30 +168,9 @@ const LiquidityPoolsDashboard = () => {
                     <LiquidityCompositionTable lp={data} />
                 </Box>
             </Box>
+
             {data?.poolDayData?.length >= 7 &&
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        bgcolor: 'background.paper',
-                        borderRadius: '12px',
-                        boxShadow: 1,
-                        p: 2,
-                        mt: 2
-                    }}>
-                    <Typography variant="h6" sx={{ p: 2 }}>Volume</Typography>
-
-                    <Box
-                        sx={(theme) => ({
-                            width: '1',
-                            mt: 2,
-                            p: 1
-                        })}>
-
-                        <LiquidityVolumeChart lp={data} />
-                    </Box>
-                </Box>
+                <LiquidityVolumeBarChart lp={data} />
             }
         </Container >
     );
