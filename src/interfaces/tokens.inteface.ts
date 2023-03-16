@@ -1,5 +1,6 @@
 export interface Token {
   name: string;
+  slug: string;
   description: string;
   image: string;
 

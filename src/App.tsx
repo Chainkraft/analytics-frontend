@@ -14,6 +14,7 @@ import Home from "./components/home/Home";
 import Login from "./components/auth/Login";
 import RequestAccess from "./components/auth/RequestAccess";
 import {AuthContextProvider} from "./components/auth/AuthContext";
+import NotificationList from "./components/notification/NotificationList";
 
 function App() {
 
@@ -36,6 +37,10 @@ function App() {
                     <Route
                         path="/invite"
                         element={<RequestAccess/>}
+                    />
+                    <Route
+                        path="/notifications"
+                        element={<NotificationList/>}
                     />
                     <Route
                         path="/stablecoins"

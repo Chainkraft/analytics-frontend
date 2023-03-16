@@ -1,3 +1,7 @@
+export interface Contract {
+    address: string;
+}
+
 export interface ContractSummary {
     slug: string;
     network: ContractNetwork;

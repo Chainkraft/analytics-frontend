@@ -16,7 +16,7 @@ export const AuthContextProvider = ({children}: { children: ReactElement }) => {
 
     const [user, setUser] = useState(() => {
         const expiresIn = localStorage.getItem("expiresIn");
-        if (expiresIn === null || parseInt(expiresIn) > new Date().getTime()) {
+        if (expiresIn === null || parseInt(expiresIn) * 1000 > new Date().getTime()) {
             const userData = localStorage.getItem("user");
             if (userData) {
                 return JSON.parse(userData);

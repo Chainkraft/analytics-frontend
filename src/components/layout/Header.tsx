@@ -265,11 +265,10 @@ export default function Header() {
 
                     {user &&
                         <React.Fragment>
-                            <IconButton aria-label={"New alerts"}
-                                        sx={{display: {xs: 'none', md: 'block'}}}>
-                                <Badge badgeContent={4} color="error">
-                                    <GppMaybeIcon color="action"/>
-                                </Badge>
+                            <IconButton href={"/notifications"}
+                                        aria-label={"Notifications"}
+                                        sx={{display: {xs: 'none', md: 'flex'}}}>
+                                <GppMaybeIcon color="action"/>
                             </IconButton>
                             <Button onClick={handleLogout} variant="outlined" sx={{
                                 display: {xs: 'none', md: 'block'},
