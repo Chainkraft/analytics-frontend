@@ -1,18 +1,18 @@
-import {orange, green, grey, red} from '@mui/material/colors';
-import {createTheme} from "@mui/material";
+import { orange, green, grey, red } from '@mui/material/colors';
+import { createTheme } from "@mui/material";
 
 const theme = createTheme({
     palette: {
         mode: "dark",
         primary: {
-            main: "#ffffff"
+            main: "#FDFDFD"
         },
         secondary: {
-            main: "#f9A822",
-            dark: "rgba(249, 168, 34, 0.8)"
+            main: "#FFB83C",
+            dark: "#B7741E"
         },
         error: {
-            main: red[500]
+            main: "#FF4242"
         },
         warning: {
             main: orange[800]
@@ -21,17 +21,17 @@ const theme = createTheme({
             main: green[500]
         },
         background: {
-            default: "#13131e",
-            paper: "#1a1a2e"
+            paper: "#37383B",
+            default: "#2D2D2F"
         },
         text: {
-            primary: "#ffffff",
+            primary: "#FDFDFD",
             secondary: grey[400],
             disabled: grey[600]
         }
     },
     status: {
-        danger: red[500],
+        danger: "#FF4242",
     },
     typography: {
         button: {

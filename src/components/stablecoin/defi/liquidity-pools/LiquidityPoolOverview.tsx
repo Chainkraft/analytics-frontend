@@ -1,28 +1,21 @@
 import {
     Container,
-    Grid,
-    Link,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Paper,
+    Grid, Paper,
     Skeleton
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { styled } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import theme from "../../../../theme";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import Divider from "@mui/material/Divider";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Button from "@mui/material/Button";
-import AuthContext from '../../../auth/AuthContext';
+import Divider from "@mui/material/Divider";
+import { styled } from "@mui/material/styles";
 import { LiquidityPoolHistory, LiquidityPoolSummary, LiquidityPoolSummaryStatus } from '../../../../interfaces/liquidity-pools.interface';
+import theme from "../../../../theme";
+import AuthContext from '../../../auth/AuthContext';
 
 
 const R = require('ramda');

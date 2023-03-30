@@ -1,14 +1,7 @@
 import { useTheme } from '@mui/material';
-import { PureComponent } from 'react';
 import {
-    XAxis,
-    YAxis,
-    Tooltip,
-    ResponsiveContainer,
-    Brush,
-    LineChart,
-    Line,
-    CartesianGrid
+    Brush, Line, LineChart, ResponsiveContainer, Tooltip, XAxis,
+    YAxis
 } from "recharts";
 import { currencyFormat } from '../../../helpers/helpers';
 import CustomizedAxisTick from './CustomizedAxisTick';

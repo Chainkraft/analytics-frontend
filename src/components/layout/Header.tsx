@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useContext} from 'react';
-import {alpha, styled} from '@mui/material/styles';
+import { useContext } from 'react';
+import { alpha, styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,15 +9,15 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from "@mui/material/Button";
-import {Autocomplete, Badge, Container, Link, Menu, MenuItem} from "@mui/material";
-import {apiClient, fetcherAxios} from '../../helpers/fetcher-axios';
+import { Autocomplete, Badge, Container, Link, Menu, MenuItem } from "@mui/material";
+import { apiClient, fetcherAxios } from '../../helpers/fetcher-axios';
 import useSWR from 'swr';
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SubscriptionDialog from "../home/SubscriptionDialog";
 import AuthContext from "../auth/AuthContext";
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 
-const Search = styled('div')(({theme}) => ({
+const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.10),
@@ -32,7 +32,7 @@ const Search = styled('div')(({theme}) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({theme}) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -42,7 +42,7 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -65,7 +65,7 @@ export default function Header() {
     const pages = [
         {
             label: "Stablecoins",
-            active: pathname.startsWith("/stablecoins") || pathname.startsWith("/token"),
+            active: pathname.startsWith("/stablecoins") || pathname.startsWith("/token") || pathname === "/",
             props: {
                 href: "/stablecoins",
                 disabled: false,
@@ -73,23 +73,21 @@ export default function Header() {
             }
         },
         {
-            label: "Subscribe",
-            active: pathname.startsWith("/alerts") || pathname.startsWith("/subscribe"),
+            label: "DeFi",
+            active: pathname.startsWith("/pools"),
             props: {
+                href: "/pools",
                 disabled: false,
-                onClick: () => {
-                    setSubscriptionDialog(true);
-                    handleCloseNavMenu();
-                }
+                onClick: () => handleCloseNavMenu
             }
-        }
+        },
     ];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [searchVisibility, setSearchVisibility] = React.useState<boolean>(false);
     const [subscriptionDialog, setSubscriptionDialog] = React.useState<boolean>(false);
 
-    const {user, logout} = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -106,7 +104,7 @@ export default function Header() {
 
     const handleLogout = () => {
         apiClient.post("/auth/logout")
-            .then(() => {})
+            .then(() => { })
             .catch((err) => {
                 console.error(err);
             })
@@ -116,7 +114,7 @@ export default function Header() {
             });
     };
 
-    const {data: stablecoins} = useSWR<any>(`stablecoins`, fetcherAxios);
+    const { data: stablecoins } = useSWR<any>(`stablecoins`, fetcherAxios);
 
     const onSearchQueryChange = (event: object, value: any) => {
         navigate(value.id);
@@ -125,12 +123,12 @@ export default function Header() {
     return (
         <AppBar
             position="relative"
-            sx={{backgroundImage: 'none'}}
+            sx={{ backgroundImage: 'none' }}
         >
-            <SubscriptionDialog opened={subscriptionDialog} onClose={() => setSubscriptionDialog(false)}/>
+            <SubscriptionDialog opened={subscriptionDialog} onClose={() => setSubscriptionDialog(false)} />
             <Container maxWidth="lg">
                 <Toolbar disableGutters={true}>
-                    <Link href="/" sx={{lineHeight: 1}}>
+                    <Link href="/" sx={{ lineHeight: 1 }}>
                         <Box
                             component="img"
                             sx={(theme) => ({
@@ -145,15 +143,16 @@ export default function Header() {
                         />
                     </Link>
 
-                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map(page => (
                             <Button
                                 key={page.label}
                                 {...page.props}
                                 sx={(theme) => ({
                                     px: 2,
-                                    color: page.active ? theme.palette.text.disabled : theme.palette.text.primary,
-                                    display: 'block'
+                                    color: theme.palette.text.primary,
+                                    display: 'block',
+                                    opacity: page.active ? 1 : 0.6,
                                 })}
                             >
                                 {page.label}
@@ -161,7 +160,7 @@ export default function Header() {
                         ))}
                     </Box>
 
-                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -172,11 +171,11 @@ export default function Header() {
                         >
                             {user &&
                                 <Badge badgeContent={4} color="error">
-                                    <MenuIcon/>
+                                    <MenuIcon />
                                 </Badge>
                             }
                             {!user &&
-                                <MenuIcon/>
+                                <MenuIcon />
                             }
                         </IconButton>
                         <Menu
@@ -194,13 +193,13 @@ export default function Header() {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: {xs: 'block', md: 'none'},
+                                display: { xs: 'block', md: 'none' },
                             }}
                         >
                             {pages.map(page => (
                                 <MenuItem onClick={handleCloseNavMenu} key={page.label}>
                                     <Link
-                                        sx={{color: 'white'}}
+                                        sx={{ color: 'white' }}
                                         {...page.props}
                                     >
                                         {page.label}
@@ -221,7 +220,7 @@ export default function Header() {
                             }
                             {!user &&
                                 <MenuItem onClick={handleCloseNavMenu} key="signin">
-                                    <Link href="/login" sx={{color: 'white'}}>Sign in</Link>
+                                    <Link href="/login" sx={{ color: 'white' }}>Sign in</Link>
                                 </MenuItem>
                             }
                         </Menu>
@@ -233,7 +232,7 @@ export default function Header() {
                             mx: 1
                         }}>
                             <SearchIconWrapper>
-                                <SearchIcon/>
+                                <SearchIcon />
                             </SearchIconWrapper>
 
                             <Autocomplete
@@ -245,11 +244,11 @@ export default function Header() {
                                     }))
                                 }
                                 onChange={onSearchQueryChange}
-                                sx={{width: 220}}
+                                sx={{ width: 220 }}
                                 renderInput={(params) => {
-                                    const {InputLabelProps, InputProps, ...rest} = params;
+                                    const { InputLabelProps, InputProps, ...rest } = params;
                                     return <StyledInputBase {...params.InputProps} {...rest}
-                                                            placeholder="Search..."/>
+                                        placeholder="Search..." />
                                 }}
                             />
                         </Search>
@@ -257,21 +256,21 @@ export default function Header() {
 
                     <IconButton
                         onClick={handleSearchIconClick}
-                        sx={{display: searchVisibility ? 'none' : 'flex'}}
+                        sx={{ display: searchVisibility ? 'none' : 'flex' }}
                         aria-label="search"
                         color="inherit">
-                        <SearchIcon/>
+                        <SearchIcon />
                     </IconButton>
 
                     {user &&
                         <React.Fragment>
                             <IconButton href={"/notifications"}
-                                        aria-label={"Notifications"}
-                                        sx={{display: {xs: 'none', md: 'flex'}}}>
-                                <GppMaybeIcon color="action"/>
+                                aria-label={"Notifications"}
+                                sx={{ display: { xs: 'none', md: 'flex' } }}>
+                                <GppMaybeIcon color="action" />
                             </IconButton>
                             <Button onClick={handleLogout} variant="outlined" sx={{
-                                display: {xs: 'none', md: 'block'},
+                                display: { xs: 'none', md: 'block' },
                                 marginLeft: 2,
                             }}>
                                 Log out
@@ -280,7 +279,7 @@ export default function Header() {
                     }
                     {!user &&
                         <Button variant="outlined" href="/login" sx={{
-                            display: {xs: 'none', md: 'block'},
+                            display: { xs: 'none', md: 'block' },
                             marginLeft: 2,
                         }}>
                             Sign in

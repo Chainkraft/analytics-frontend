@@ -18,39 +18,85 @@ interface ChartData {
     date: string;
     [symbol: string]: number | string;
 }
-export function calculateUniswapLiquidityChartData(
-    lp: LiquidityPoolHistory,
-    chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]
-): ChartData[] {
 
-    const calculateChartPoint = (lp: LiquidityPoolHistory, coins: ICoinFromPoolDataApi[], date: Date) => {
-        const [coin0, coin1] = coins;
-        const token0Weight = Number(coin0.poolBalance) / lp.tvlUSD;
-        const token1Weight = Number(coin1.poolBalance) * Number(coin0.price) / lp.tvlUSD;
-        const token0UsdPrice = lp.tvlUSD * token0Weight / Number(coin0.poolBalance);
-        const token1UsdPrice = lp.tvlUSD * token1Weight / Number(coin1.poolBalance);
+export function getDailyData(chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]) {
+    const sortedValues = chartBalances.sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf());
 
-        const dataPoint: ChartData = { date: new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) };
+    // Create a new array to hold the latest value for each day
+    const dailyData = [];
 
-        dataPoint[coin0.symbol] = token0UsdPrice * Number(coin0.poolBalance);
-        dataPoint[coin1.symbol] = token1UsdPrice * Number(coin1.poolBalance);
+    // Iterate over the sorted chartValues array and get the latest value for each day
+    for (let i = 0; i < sortedValues.length; i++) {
+        const value = sortedValues[i];
+        const nextValue = sortedValues[i + 1];
 
-        return dataPoint;
+        // Check if this is the latest value for the day
+        const isLatestDayValue = !nextValue || !moment(value.date).isSame(moment(nextValue.date), 'day');
+
+        if (isLatestDayValue) {
+            dailyData.push(value);
+        }
     }
 
-    let sortedBalances = chartBalances.sort((a, b) => {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
+    return dailyData;
+}
+
+
+export function getHourlyData(chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]) {
+    const sortedValues = chartBalances
+        .filter(value => moment().diff(moment(value.date), 'hours') < 24)
+        .sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf());
+
+    // Create a new array to hold the first value for each hour
+    const hourlyData = [];
+
+    // Iterate over the sorted and filtered chartValues array and get the first value for each hour
+    for (let i = 0; i < sortedValues.length; i++) {
+        const value = sortedValues[i];
+        const prevValue = sortedValues[i - 1];
+
+        // Check if this is the first value for the hour
+        const isFirstHourValue = !prevValue || !moment(value.date).isSame(moment(prevValue.date), 'hour');
+
+        if (isFirstHourValue) {
+            hourlyData.push(value);
+        }
+    }
+
+    return hourlyData;
+}
+
+export function processUniswapData(
+    { coins, date }: { coins: ICoinFromPoolDataApi[]; date: Date },
+    dateFormat: string,
+    lp: LiquidityPoolHistory,
+): ChartData {
+    const [coin0, coin1] = coins;
+    const token0Weight = Number(coin0.poolBalance) / lp.tvlUSD;
+    const token1Weight = Number(coin1.poolBalance) * Number(coin0.price) / lp.tvlUSD;
+    const token0UsdPrice = lp.tvlUSD * token0Weight / Number(coin0.poolBalance);
+    const token1UsdPrice = lp.tvlUSD * token1Weight / Number(coin1.poolBalance);
+
+    const dataPoint: ChartData = { date: moment(date).format(dateFormat) };
+
+    dataPoint[coin0.symbol] = token0UsdPrice * Number(coin0.poolBalance);
+    dataPoint[coin1.symbol] = token1UsdPrice * Number(coin1.poolBalance);
+
+    return dataPoint;
+}
+
+function processData(
+    { coins, date }: { coins: ICoinFromPoolDataApi[]; date: Date },
+    dateFormat: string
+): ChartData {
+    const dataPoint: ChartData = {
+        date: moment(date).format(dateFormat),
+    };
+    coins.forEach(({ symbol, decimals, poolBalance }) => {
+        const decimalMultiplier = 10 ** parseInt(decimals);
+        dataPoint[symbol] = Math.floor(parseFloat(poolBalance) / decimalMultiplier);
     });
-
-    let chartData = sortedBalances.filter((balance) => {
-        return moment.utc(balance.date).isSame(moment.utc(balance.date).startOf("day"));
-    }).map(({ date, coins }) => {
-        return calculateChartPoint(lp, coins, date);
-    })
-
-    const lastBalance = sortedBalances[sortedBalances.length - 1];
-    chartData[chartData.length - 1] = calculateChartPoint(lp, lastBalance.coins, lastBalance.date);
-    return chartData;
+    return dataPoint;
 }
 
 const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
@@ -61,18 +107,18 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
     let chartBalances = (underlyingBalances.length > 0 && underlyingBalances[0].coins.length > 0)
         ? underlyingBalances : balances;
 
-    const chartData = lp.pricingType === LiquidityPoolPricingType.USD ? chartBalances.sort((a, b) => {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-    }).map(({ date, coins }) => {
-        const dataPoint: ChartData = { date: new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) };
-        coins.forEach(({ symbol, decimals, poolBalance }) => {
-            const decimalMultiplier = 10 ** parseInt(decimals);
-            dataPoint[symbol] = Math.floor(parseFloat(poolBalance) / decimalMultiplier);
-        });
-        return dataPoint;
-    }) : calculateUniswapLiquidityChartData(lp, chartBalances);
 
-    console.log('chartdata', chartData);
+    const dailyData = getDailyData(chartBalances).map(data =>
+        lp.pricingType === LiquidityPoolPricingType.USD
+            ? processData(data, "DD/MM")
+            : processUniswapData(data, "DD/MM", lp));
+
+    const hourlyData = getHourlyData(chartBalances).map(data =>
+        lp.pricingType === LiquidityPoolPricingType.USD
+            ? processData(data, "HH:mm")
+            : processUniswapData(data, "HH:mm", lp));
+
+    let chartData = dailyData;
 
     let coins: string[] = Array.from(new Set(chartBalances.map((balance) => balance.coins.map((coin: any) => coin.symbol)).reduce((acc, val) => acc.concat(val), [])));
 

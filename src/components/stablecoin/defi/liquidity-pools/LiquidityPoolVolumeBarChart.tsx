@@ -1,4 +1,5 @@
 import { Box, Typography, useTheme } from '@mui/material';
+import moment from 'moment';
 import { Bar, BarChart, Brush } from 'recharts';
 import {
     XAxis,
@@ -23,7 +24,7 @@ const LiquidityVolumeBarChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
     }).map((poolDayData) => {
         return {
-            date: new Date(poolDayData.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }),
+            date: moment(poolDayData.date).format('DD/MM'),
             volumeUSD: Number(poolDayData.volumeUSD)
         }
     });

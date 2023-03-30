@@ -18,7 +18,7 @@ const StableCoinList = (props: any) => {
                     component="main"
                     sx={{ flexGrow: 1, overflow: 'auto' }}>
                     <Grid container columnSpacing={2} rowSpacing={2} justifyContent="flex-start">
-                        {Array.from(Array(20).keys()).map((i: number) => (
+                        {Array.from(Array(40).keys()).map((i: number) => (
                             <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={i}>
                                 <Skeleton variant="rectangular" height={140} />
                             </Grid>
@@ -32,24 +32,39 @@ const StableCoinList = (props: any) => {
 
     return (
         <React.Fragment>
-            < Container maxWidth="lg"
-                sx={{ display: 'flex', alignItems: 'center', padding: 2 }}>
-                <Box
-                    component="main"
-                    sx={{ flexGrow: 1, overflow: 'auto' }}>
-                    <Grid container columnSpacing={2} rowSpacing={2} justifyContent="flex-start">
+            <Container
+                maxWidth="lg"
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: 2,
+                    justifyContent: 'center',
+                }}
+            >
+                <Box component="main" sx={{ flexGrow: 1, overflow: 'auto' }}>
+                    <Grid
+                        container
+                        columnSpacing={2}
+                        rowSpacing={2}
+                        justifyContent="flex-start"
+                    >
+
                         {data.data.map((coin: any) => (
                             <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={coin.slug}>
-                                <Link underline='none' component={RouterLink}
-                                    to={`/tokens/${coin.slug}`}>
+                                <Link
+                                    underline="none"
+                                    component={RouterLink}
+                                    to={`/tokens/${coin.slug}`}
+                                >
                                     <StableCoinCard coin={coin} />
                                 </Link>
                             </Grid>
                         ))}
                     </Grid>
                 </Box>
-            </Container >
-        </React.Fragment >
+            </Container>
+        </React.Fragment>
+
     );
 }
 

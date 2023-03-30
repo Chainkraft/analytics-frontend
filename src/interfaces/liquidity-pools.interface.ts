@@ -9,7 +9,9 @@ export interface ShortLiquidityPool {
     symbol: string;
     address: string;
     dex: string;
+    network?: string;
     tvl?: number;
+    tokens?: string[];
 }
 
 export interface LiquidityPoolHistory {
