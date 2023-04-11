@@ -1,5 +1,6 @@
-import {Token} from "./tokens.inteface";
-import {Contract} from "./contracts.interface";
+import { Token } from "./tokens.inteface";
+import { Contract } from "./contracts.interface";
+import { LiquidityPoolHistory } from "./liquidity-pools.interface";
 
 export interface Notification {
   _id: string;
@@ -9,6 +10,7 @@ export interface Notification {
 
   token?: Token;
   contract?: Contract;
+  liquidityPool?: LiquidityPoolHistory;
 
   updatedAt: Date;
   createdAt: Date;
@@ -19,6 +21,7 @@ export enum NotificationType {
   CONTRACT_PROXY_IMPL_CHANGE = 'CONTRACT_PROXY_IMPL_CHANGE',
   STABLECOIN_DEPEG = 'STABLECOIN_DEPEG',
   USER_ACCOUNT = 'USER_ACCOUNT',
+  LP_COMPOSITION_CHANGE = 'LP_COMPOSITION_CHANGE',
 }
 
 export enum NotificationSeverity {
@@ -37,6 +40,14 @@ export interface NotificationStablecoinDepegDataSchema {
 export interface NotificationContractChangeDataSchema {
   oldAddress: string;
   newAddress: string;
+}
+
+export interface NotificationLiquidityPoolCompositionChange {
+  token: string;
+  weight: number;
+  weightChange: number;
+  balance: number;
+  date: Date;
 }
 
 export interface NotificationPage {

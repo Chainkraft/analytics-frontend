@@ -47,9 +47,74 @@ const SocialTreeMapChart = () => {
         }
     ]
 
+    const data0101 = [
+        {
+            name: 'USDT',
+            size: 66_256_000_000
+        },
+        {
+            name: 'USDC',
+            size: 44_128_000_000
+        },
+        {
+            name: 'BUSD',
+            size: 16_578_000_000
+        },
+        // {
+        //     name: 'DAI',
+        //     size: 156_000_000
+        // },
+        // {
+        //     name: 'MIM',
+        //     size: 32_000_000
+        // },
+        // {
+        //     name: 'FRAX',
+        //     size: 22_450_000
+        // },
+        // {
+        //     name: 'USX',
+        //     size: 7_933_000
+        // },
+        // {
+        //     name: 'VST',
+        //     size: 6_602_000
+        // },
+        // {
+        //     name: 'DSU',
+        //     size: 4_630_000
+        // },
+        // {
+        //     name: 'MAI',
+        //     size: 4_147_000
+        // },
+        // {
+        //     name: 'nUSD',
+        //     size: 2_744_000
+        // }
+    ]
+
+
+    const data3103 = [
+        {
+            name: 'USDT',
+            size: 79_834_000_000
+        },
+        {
+            name: 'USDC',
+            size: 32_863_000_000
+        },
+        {
+            name: 'BUSD',
+            size: 7_626_000_000
+        },
+    ]
+
+
     const COLORS = [
-        '#3176C7', // USDC
         '#1A9292', //TETHER
+        '#3176C7', // USDC
+        '#EEB92F', // BUSD
         '#EAB140', // DAI
         '#5656F1', //MIM
         '#000000', // FRAX
@@ -77,7 +142,7 @@ const SocialTreeMapChart = () => {
                                 ? colors[index % 10]
                                 : "none",
                         stroke: "#1a1a2e",
-                        fillOpacity: 0.8,
+                        // fillOpacity: 0.8,
 
                         strokeWidth: 1,
                         // strokeWidth: 2 / (depth + 1e-10),
@@ -119,7 +184,7 @@ const SocialTreeMapChart = () => {
                 mt: 2,
                 mb: 2
             }}>
-            <Typography variant="h6" sx={{ p: 2 }}>Arbitrum stablecoin distribution</Typography>
+            <Typography variant="h6" sx={{ p: 2 }}>Top 3 stablecoin distribution 31.03.2023</Typography>
 
             <Box
                 sx={({
@@ -131,7 +196,7 @@ const SocialTreeMapChart = () => {
                     <Treemap
                         // width={400} 
                         // height={200} 
-                        data={data}
+                        data={data3103}
                         dataKey="size"
                         aspectRatio={4 / 3}
                         stroke="#fff"

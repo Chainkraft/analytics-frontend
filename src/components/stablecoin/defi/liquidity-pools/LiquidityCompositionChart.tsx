@@ -5,10 +5,13 @@ import {
     Area,
     XAxis,
     YAxis,
-    CartesianGrid,
     Tooltip,
     ResponsiveContainer,
-    Brush
+    Legend,
+    ReferenceLine,
+    Label,
+    Brush,
+    CartesianGrid
 } from "recharts";
 import { currencyFormat } from '../../../../helpers/helpers';
 import { ICoinFromPoolDataApi, LiquidityPoolHistory, LiquidityPoolPricingType } from '../../../../interfaces/liquidity-pools.interface';
@@ -92,9 +95,9 @@ function processData(
     const dataPoint: ChartData = {
         date: moment(date).format(dateFormat),
     };
-    coins.forEach(({ symbol, decimals, poolBalance }) => {
+    coins.forEach(({ symbol, decimals, poolBalance, usdPrice }) => {
         const decimalMultiplier = 10 ** parseInt(decimals);
-        dataPoint[symbol] = Math.floor(parseFloat(poolBalance) / decimalMultiplier);
+        dataPoint[symbol] = Math.floor(parseFloat(poolBalance) / decimalMultiplier) * Number(usdPrice);
     });
     return dataPoint;
 }
@@ -148,9 +151,9 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
             })}>
             <ResponsiveContainer width="100%" height={500}>
                 <AreaChart
-                    data={chartData}
-                >
+                    data={chartData} >
                     <CartesianGrid strokeDasharray="3 3" />
+
                     <XAxis dataKey="date"
                         height={55}
                         tick={<CustomizedAxisTick stroke={theme.palette.text.primary} />} />
@@ -184,6 +187,12 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
                     <Brush alwaysShowText={false} dataKey="date"
                         fill={theme.palette.background.paper}
                     />
+                    {/* <ReferenceLine x="13/02" opacity={0.8} stroke="white" strokeDasharray="3 3"  >
+                        <Label position='insideTopLeft' fill='white' opacity={0.8}>SEC lawsuit</Label>
+                    </ReferenceLine>
+                    <ReferenceLine x="10/03" opacity={0.8} stroke="white" strokeDasharray="3 3"  >
+                        <Label position='insideTopLeft' fill='white' opacity={0.8}>SV Bank collapse</Label>
+                    </ReferenceLine> */}
 
                 </AreaChart>
             </ResponsiveContainer>

@@ -24,13 +24,13 @@ export function calculateUniswapLiquidityTableData(
         {
             symbol: coin0.symbol,
             poolBalance: Number(coin0.poolBalance),
-            weight: coin0.weight * 100,
+            weight: coin0.weight,
             usdPrice: Number(coin0.usdPrice),
         },
         {
             symbol: coin1.symbol,
             poolBalance: Number(coin1.poolBalance),
-            weight: coin1.weight * 100,
+            weight: coin1.weight,
             usdPrice: Number(coin1.usdPrice),
         },
     ];
@@ -55,14 +55,12 @@ const LiquidityCompositionTable = ({ lp }: { lp: LiquidityPoolHistory }) => {
         })[0];
     }
 
-    let totalBalance = latestBalance.coins.reduce((acc, coin) => acc + Math.floor(parseFloat(coin.poolBalance) / (10 ** parseInt(coin.decimals))), 0);
-
     let tableCoins: TableCompositionData[] = lp.pricingType === LiquidityPoolPricingType.USD ? latestBalance.coins.map(coin => {
         let shiftedBalance = Number(coin.poolBalance) * Math.pow(10, -Number(coin.decimals));
         return {
             symbol: coin.symbol,
             poolBalance: shiftedBalance,
-            weight: Number(shiftedBalance) / totalBalance * 100,
+            weight: coin.weight,
             usdPrice: Number(coin.usdPrice),
         }
     }) : calculateUniswapLiquidityTableData(lp, latestBalance);
@@ -86,9 +84,8 @@ const LiquidityCompositionTable = ({ lp }: { lp: LiquidityPoolHistory }) => {
                             <TableCell component="th" scope="row">
                                 {coin.symbol}
                             </TableCell>
-                            <TableCell align="right">{percentageFormat(coin.weight)}</TableCell>
+                            <TableCell align="right">{percentageFormat(coin.weight * 100)}</TableCell>
                             <TableCell align="right">{numberFormat(coin.poolBalance, 2)}</TableCell>
-
                             <TableCell align="right">{currencyFormat(coin.usdPrice, 2)}</TableCell>
                             <TableCell align="right">{currencyFormat(coin.usdPrice * coin.poolBalance)}</TableCell>
                         </TableRow>
