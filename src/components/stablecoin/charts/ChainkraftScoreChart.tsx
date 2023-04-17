@@ -27,10 +27,11 @@ const calculateScore = (token: Token, priceHistory: PriceHistory, score: Score) 
         return Math.round(index * 100 / arr.length);
     };
 
-    const getStandardDeviation = (arr: number[]) => {
-        const mean = 1; //arr.reduce((acc, val) => acc + val, 0) / arr.length;
+    const getStandardDeviationBelowPeg = (arr: number[]) => {
+        const mean = 1
+        const filteredArr = arr.map(val => val > mean ? mean : val);
         const usePopulation = false;
-        const deviation = Math.sqrt(arr.reduce((acc, val) => acc.concat((val - mean) ** 2), [] as number[]).reduce((acc, val) => acc + val, 0) / (arr.length - (usePopulation ? 0 : 1)));
+        const deviation = Math.sqrt(filteredArr.reduce((acc, val) => acc.concat((val - mean) ** 2), [] as number[]).reduce((acc, val) => acc + val, 0) / (filteredArr.length - (usePopulation ? 0 : 1)));
         return deviation;
     };
 
@@ -41,10 +42,9 @@ const calculateScore = (token: Token, priceHistory: PriceHistory, score: Score) 
     const sortedPrices = priceHistory.prices
         .sort((objA, objB) => new Date(objB.date).getTime() - new Date(objA.date).getTime())
         .map(value => value.price)
-        .slice(0, 30);
+        .slice(0, 60);
 
-    const tokenPriceDeviation = getStandardDeviation(sortedPrices);
-
+    const tokenPriceDeviation = getStandardDeviationBelowPeg(sortedPrices);
     const stabilityScore = 100 - Math.round(getScore(priceDeviations, tokenPriceDeviation));
 
     const scores = [

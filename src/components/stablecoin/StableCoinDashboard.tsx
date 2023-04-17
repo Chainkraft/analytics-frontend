@@ -291,21 +291,9 @@ const StableCoinDashboard = () => {
                 </Box>
             </Box>
 
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    bgcolor: 'background.paper',
-                    borderRadius: '12px',
-                    boxShadow: 1,
-                    mt: 2,
-                    p: 2
-                }}
-            >
-                <Typography variant="h6">Price</Typography>
+            {priceHistory &&
                 <PriceChart token={token} priceHistory={priceHistory} />
-            </Box>
+            }
 
             {
                 marketCapHistory &&
