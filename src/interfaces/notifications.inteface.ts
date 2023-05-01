@@ -1,5 +1,5 @@
 import { Token } from "./tokens.inteface";
-import { Contract } from "./contracts.interface";
+import {Contract, ContractNetwork} from "./contracts.interface";
 import { LiquidityPoolHistory } from "./liquidity-pools.interface";
 
 export interface Notification {
@@ -38,6 +38,7 @@ export interface NotificationStablecoinDepegDataSchema {
 }
 
 export interface NotificationContractChangeDataSchema {
+  network: ContractNetwork;
   oldAddress: string;
   newAddress: string;
 }
