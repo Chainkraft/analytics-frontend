@@ -1,12 +1,14 @@
-import { Skeleton, Container, Link, Tooltip, ListSubheader, Switch, ListItemButton } from '@mui/material';
+import { Container } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 import useSWR from 'swr';
 import { fetcherAxios } from '../../../../helpers/fetcher-axios';
-import { LiquidityPoolHistory } from '../../../../interfaces/liquidity-pools.interface';
 import { currencyFormat, dexLogos, dexLpNames, shortCurrencyFormat } from '../../../../helpers/helpers';
-import { useParams } from 'react-router';
+import { LiquidityPoolHistory } from '../../../../interfaces/liquidity-pools.interface';
 import LiquidityCompositionChart from './LiquidityCompositionChart';
+import LiquidityCompositionHourlyChart from './LiquidityCompositionHourlyChart';
 import LiquidityCompositionTable from './LiquidityCompositionTable';
 import LiquidityPoolOverview from './LiquidityPoolOverview';
 import LiquidityVolumeBarChart from './LiquidityPoolVolumeBarChart';
@@ -14,6 +16,7 @@ import LiquidityVolumeBarChart from './LiquidityPoolVolumeBarChart';
 const LiquidityPoolsDashboard = () => {
     let { network, address } = useParams();
 
+    const [search, setSearch] = useSearchParams();
     const { data, error } = useSWR<LiquidityPoolHistory>(`pools/${network}/address/${address}`, fetcherAxios)
 
     if (!data) {
@@ -159,7 +162,12 @@ const LiquidityPoolsDashboard = () => {
                 }}>
                 <Typography variant="h6" sx={{ p: 2 }}>Liquidity composition</Typography>
 
-                <LiquidityCompositionChart lp={data} />
+                {search?.get('chart') === 'hour' ? (
+                    <LiquidityCompositionHourlyChart lp={data} />
+                ) : (
+                    <LiquidityCompositionChart lp={data} />
+                )
+                }
 
                 <Box sx={{
                     width: '1',

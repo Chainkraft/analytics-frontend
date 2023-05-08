@@ -1,14 +1,13 @@
 import { Box, useTheme } from '@mui/material';
 import moment from 'moment';
 import {
-    Area,
     AreaChart,
-    Brush,
-    CartesianGrid,
-    ResponsiveContainer,
-    Tooltip,
+    Area,
     XAxis,
-    YAxis
+    YAxis,
+    Tooltip,
+    ResponsiveContainer,
+    CartesianGrid
 } from "recharts";
 import { currencyFormat } from '../../../../helpers/helpers';
 import { ICoinFromPoolDataApi, LiquidityPoolHistory, LiquidityPoolPricingType } from '../../../../interfaces/liquidity-pools.interface';
@@ -18,32 +17,10 @@ interface ChartData {
     [symbol: string]: number | string;
 }
 
-export function getDailyData(chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]) {
-    const sortedValues = chartBalances.sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf());
-
-    // Create a new array to hold the latest value for each day
-    const dailyData = [];
-
-    // Iterate over the sorted chartValues array and get the latest value for each day
-    for (let i = 0; i < sortedValues.length; i++) {
-        const value = sortedValues[i];
-        const nextValue = sortedValues[i + 1];
-
-        // Check if this is the latest value for the day
-        const isLatestDayValue = !nextValue || !moment(value.date).isSame(moment(nextValue.date), 'day');
-
-        if (isLatestDayValue) {
-            dailyData.push(value);
-        }
-    }
-
-    return dailyData;
-}
-
 
 export function getHourlyData(chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]) {
     const sortedValues = chartBalances
-        .filter(value => moment().diff(moment(value.date), 'hours') < 24)
+        .filter(value => moment().diff(moment(value.date), 'hours') < 48)
         .sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf());
 
     // Create a new array to hold the first value for each hour
@@ -89,7 +66,7 @@ function processData(
     dateFormat: string
 ): ChartData {
     const dataPoint: ChartData = {
-        date: moment(date).format(dateFormat),
+        date: moment(date).format(dateFormat)
     };
     coins.forEach(({ symbol, decimals, poolBalance, usdPrice }) => {
         const decimalMultiplier = 10 ** parseInt(decimals);
@@ -98,7 +75,7 @@ function processData(
     return dataPoint;
 }
 
-const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
+const LiquidityCompositionHourlyChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
 
     var balances = lp.balances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
     var underlyingBalances = lp.underlyingBalances as { coins: ICoinFromPoolDataApi[]; date: Date }[];
@@ -106,18 +83,12 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
     let chartBalances = (underlyingBalances.length > 0 && underlyingBalances[0].coins.length > 0)
         ? underlyingBalances : balances;
 
-
-    const dailyData = getDailyData(chartBalances).map(data =>
-        lp.pricingType === LiquidityPoolPricingType.USD
-            ? processData(data, "DD/MM")
-            : processUniswapData(data, "DD/MM", lp));
-
     const hourlyData = getHourlyData(chartBalances).map(data =>
         lp.pricingType === LiquidityPoolPricingType.USD
-            ? processData(data, "HH:mm")
-            : processUniswapData(data, "HH:mm", lp));
+            ? processData(data, "DD/MM HH:mm")
+            : processUniswapData(data, "DD/MM HH:mm", lp));
 
-    let chartData = dailyData;
+    let chartData = hourlyData;
 
     let coins: string[] = Array.from(new Set(chartBalances.map((balance) => balance.coins.map((coin: any) => coin.symbol)).reduce((acc, val) => acc.concat(val), [])));
 
@@ -134,13 +105,13 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
     ]
     let coinToColorMap = new Map(coins.map((coin, index) => [coin, availableColors[index]]));
 
-    if (chartData.length < 7) {
+    if (chartData.length < 4) {
         return <Box />
     }
 
     return (
         <Box
-            sx={(theme) => ({
+            sx={() => ({
                 width: '1',
                 mt: 2,
                 p: 1
@@ -152,6 +123,9 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
 
                     <XAxis dataKey="date"
                         height={55}
+                        tickFormatter={(value) => {
+                            return moment(value).format('HH:00')
+                        }}
                         tick={{ fill: theme.palette.text.primary }}
                         tickMargin={16}
                         angle={-35}
@@ -170,6 +144,9 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
                         formatter={(value: any) => {
                             return currencyFormat(value);
                         }}
+                        labelFormatter={(value: any) => {
+                            return moment(value).format('DD/MM HH:00');
+                        }}
                     />
 
                     {coins.map((coin) => {
@@ -183,16 +160,6 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
                             />
                         );
                     })}
-                    <Brush alwaysShowText={false} dataKey="date"
-                        fill={theme.palette.background.paper}
-                    />
-                    {/* <ReferenceLine x="13/02" opacity={0.8} stroke="white" strokeDasharray="3 3"  >
-                        <Label position='insideTopLeft' fill='white' opacity={0.8}>SEC lawsuit</Label>
-                    </ReferenceLine>
-                    <ReferenceLine x="10/03" opacity={0.8} stroke="white" strokeDasharray="3 3"  >
-                        <Label position='insideTopLeft' fill='white' opacity={0.8}>SV Bank collapse</Label>
-                    </ReferenceLine> */}
-
                 </AreaChart>
             </ResponsiveContainer>
         </Box>
@@ -200,4 +167,4 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
 }
 
 
-export default LiquidityCompositionChart; 
+export default LiquidityCompositionHourlyChart; 

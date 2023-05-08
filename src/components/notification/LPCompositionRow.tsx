@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Link} from '@mui/material';
+import { Link } from '@mui/material';
 import Box from '@mui/material/Box';
-import {Notification, NotificationLiquidityPoolCompositionChange} from "../../interfaces/notifications.inteface";
+import { Notification, NotificationLiquidityPoolCompositionChange } from "../../interfaces/notifications.inteface";
 import Collapse from '@mui/material/Collapse';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -10,13 +10,13 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import moment from "moment";
-import {Link as RouterLink} from "react-router-dom";
-import {dexLogos, dexLpNames, numberFormat, percentageFormat} from "../../helpers/helpers";
-import {PieChart} from '@mui/icons-material';
-import {LiquidityPoolHistory} from '../../interfaces/liquidity-pools.interface';
+import { Link as RouterLink } from "react-router-dom";
+import { dexLogos, dexLpNames, numberFormat, percentageFormat } from "../../helpers/helpers";
+import { PieChart } from '@mui/icons-material';
+import { LiquidityPoolHistory } from '../../interfaces/liquidity-pools.interface';
 
 const LPCompositionRow = (props: { row: Notification }) => {
-    const {row} = props;
+    const { row } = props;
     const [open, setOpen] = React.useState(false);
 
     const notificationBalance = row.liquidityPool?.balances.find(balance => {
@@ -37,11 +37,11 @@ const LPCompositionRow = (props: { row: Notification }) => {
 
     return (
         <React.Fragment>
-            <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
+            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell>
                     <Link
                         component={RouterLink}
-                        to={`/pools/${row.liquidityPool?.network}/${row.liquidityPool?.address}`}
+                        to={`/pools/${row.liquidityPool?.network}/${row.liquidityPool?.address}?chart=hour`}
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
@@ -60,7 +60,7 @@ const LPCompositionRow = (props: { row: Notification }) => {
                     </Link>
                 </TableCell>
                 <TableCell>
-                    <PieChart titleAccess={'Liquidity pool composition change'}/>
+                    <PieChart titleAccess={'Liquidity pool composition change'} />
                 </TableCell>
                 <TableCell>{row.severity}</TableCell>
                 <TableCell>{moment(row.createdAt).fromNow()}</TableCell>
@@ -71,29 +71,34 @@ const LPCompositionRow = (props: { row: Notification }) => {
                         size="small"
                         onClick={() => setOpen(!open)}
                     >
-                        {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{margin: 1}}>
+                        <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
                                 Notes
                             </Typography>
+                            <Typography variant="body2">
+                                {`Pool: ${row.liquidityPool?.address}`}
+                            </Typography>
+                            <br />
                             <Typography variant="body2">
                                 {`The weight of ${row.data.token} ${weightChange(row.data) < 0 ? 'decreased' : 'increased'} by ${percentageFormat(weightChange(row.data))}.`}
                             </Typography>
                             <Typography variant="body2">
                                 {`The current balance of the ${row.data.token} in a pool is ${numberFormat(row.data?.balance, 2)},
-                                    which is a ${percentageFormat(currentWeight(row.data))} of the ${row.liquidityPool ? poolName(row.liquidityPool) : ''} pool.`}
+                                    which is a ${percentageFormat(currentWeight(row.data))} of the pool.`}
                             </Typography>
+
                         </Box>
                     </Collapse>
                 </TableCell>
             </TableRow>
-        </React.Fragment>
+        </React.Fragment >
     );
 }
 
