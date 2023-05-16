@@ -4,6 +4,7 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import { PriorityHigh } from "@mui/icons-material";
 import { currencyFormat } from "../../helpers/helpers";
 import Box from "@mui/material/Box";
+import theme from "../../theme";
 
 const StableCoinCard = (props: any) => {
     const peg =
@@ -15,10 +16,11 @@ const StableCoinCard = (props: any) => {
             sx={{
                 minWidth: 200,
                 borderRadius: 2,
-                transition: '0.3s',
+                transition: '0.1s',
+                borderColor: 'transparent',
                 '&:hover': {
-                    boxShadow: '0 4px 20px 0 rgba(0,0,0,0.12)',
-                    transform: 'scale(1.03)',
+                    borderColor: theme.palette.primary.dark,
+                    backgroundColor: 'action.hover'
                 },
             }}
         >
