@@ -1,6 +1,6 @@
 {
   "name": "analytics-frontend",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.3",

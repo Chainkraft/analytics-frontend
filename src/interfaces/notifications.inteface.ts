@@ -16,6 +16,10 @@ export interface Notification {
   createdAt: Date;
 }
 
+export interface NotificationSubscriptions {
+  tokens: string[]
+}
+
 export enum NotificationType {
   CONTRACT_PROXY_ADMIN_CHANGE = 'CONTRACT_PROXY_ADMIN_CHANGE',
   CONTRACT_PROXY_IMPL_CHANGE = 'CONTRACT_PROXY_IMPL_CHANGE',

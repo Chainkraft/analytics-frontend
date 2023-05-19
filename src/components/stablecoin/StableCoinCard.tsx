@@ -5,10 +5,11 @@ import { PriorityHigh } from "@mui/icons-material";
 import { currencyFormat } from "../../helpers/helpers";
 import Box from "@mui/material/Box";
 import theme from "../../theme";
+import {Token} from "../../interfaces/tokens.inteface";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 
-const StableCoinCard = (props: any) => {
-    const peg =
-        props.coin.current_price > 0.95 && props.coin.current_price < 1.05;
+const StableCoinCard = (props: {coin: Token, subscribed: boolean}) => {
+    const peg = props.coin.current_price > 0.95 && props.coin.current_price < 1.05;
 
     return (
         <Paper
@@ -61,16 +62,26 @@ const StableCoinCard = (props: any) => {
                             {props.coin.symbol.toUpperCase()}
                         </Typography>
                     </Box>
-                    {!peg && (
+                    {!peg &&
                         <Tooltip
                             sx={{
                                 marginLeft: 'auto',
                             }}
                             title="This token is OFF PEG."
                         >
-                            <Box component={PriorityHigh} sx={{ marginLeft: 'auto' }} />
+                            <PriorityHigh color="error"></PriorityHigh>
                         </Tooltip>
-                    )}
+                    }
+                    {props.subscribed &&
+                        <Tooltip
+                            sx={{
+                                marginLeft: 'auto',
+                            }}
+                            title="Subscribed"
+                        >
+                            <VerifiedUserIcon color="secondary"></VerifiedUserIcon>
+                        </Tooltip>
+                    }
                 </Box>
 
                 <Typography variant="h5" sx={{ mt: 1 }}>
