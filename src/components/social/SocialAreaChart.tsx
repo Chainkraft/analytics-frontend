@@ -10,8 +10,8 @@ import {
     ReferenceLine,
     Label
 } from "recharts";
-import { currencyFormat } from '../../../helpers/helpers';
-import CustomizedAxisTick from './CustomizedAxisTick';
+import { currencyFormat } from '../../helpers/helpers';
+import CustomizedAxisTick from '../stablecoin/charts/CustomizedAxisTick';
 
 const tetherMcapHistory = {
     "_id": "63908b88bf84f859cd1181ec",

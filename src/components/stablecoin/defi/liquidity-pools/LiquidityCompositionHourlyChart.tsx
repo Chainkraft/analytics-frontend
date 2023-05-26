@@ -44,7 +44,6 @@ export function getHourlyData(chartBalances: { coins: ICoinFromPoolDataApi[]; da
 
 export function processUniswapData(
     { coins, date }: { coins: ICoinFromPoolDataApi[]; date: Date },
-    dateFormat: string,
     lp: LiquidityPoolHistory,
 ): ChartData {
     const [coin0, coin1] = coins;
@@ -53,7 +52,7 @@ export function processUniswapData(
     const token0UsdPrice = lp.tvlUSD * token0Weight / Number(coin0.poolBalance);
     const token1UsdPrice = lp.tvlUSD * token1Weight / Number(coin1.poolBalance);
 
-    const dataPoint: ChartData = { date: moment(date).format(dateFormat) };
+    const dataPoint: ChartData = { date: moment(date).toISOString() };
 
     dataPoint[coin0.symbol] = token0UsdPrice * Number(coin0.poolBalance);
     dataPoint[coin1.symbol] = token1UsdPrice * Number(coin1.poolBalance);
@@ -62,11 +61,10 @@ export function processUniswapData(
 }
 
 function processData(
-    { coins, date }: { coins: ICoinFromPoolDataApi[]; date: Date },
-    dateFormat: string
+    { coins, date }: { coins: ICoinFromPoolDataApi[]; date: Date }
 ): ChartData {
     const dataPoint: ChartData = {
-        date: moment(date).format(dateFormat)
+        date: moment(date).toISOString()
     };
     coins.forEach(({ symbol, decimals, poolBalance, usdPrice }) => {
         const decimalMultiplier = 10 ** parseInt(decimals);
@@ -85,8 +83,8 @@ const LiquidityCompositionHourlyChart = ({ lp }: { lp: LiquidityPoolHistory }) =
 
     const hourlyData = getHourlyData(chartBalances).map(data =>
         lp.pricingType === LiquidityPoolPricingType.USD
-            ? processData(data, "DD/MM HH:mm")
-            : processUniswapData(data, "DD/MM HH:mm", lp));
+            ? processData(data)
+            : processUniswapData(data, lp));
 
     let chartData = hourlyData;
 
