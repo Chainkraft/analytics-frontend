@@ -23,7 +23,7 @@ import Divider from "@mui/material/Divider";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { ContractNetwork, ContractSummary, ContractSummaryStatus } from "../../interfaces/contracts.interface";
-import { shortAddress } from "../../helpers/contract.helpers";
+import { shortAddress } from "../../helpers/address.helpers";
 import { timeElapsed } from "../../helpers/helpers";
 import Button from "@mui/material/Button";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -70,7 +70,7 @@ const SectionDivider = ({ id, label, status }: { id: string, label: string, stat
         </Typography>
     </React.Fragment>;
 
-const ComponentLoader = (props: any) =>
+const ComponentLoader = () =>
     <Container
         maxWidth="lg"
         disableGutters
@@ -81,19 +81,6 @@ const ComponentLoader = (props: any) =>
         <Box sx={{ mt: 2 }}>
             <Skeleton variant="rectangular" width="100%" height={300} />
         </Box>
-    </Container>;
-
-const ComponentError = () =>
-    <Container
-        maxWidth="lg"
-        sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '50vh',
-            p: 2
-        }}>
-        An error has occurred.
     </Container>;
 
 const calculateBlockDiff = (block: number, blockchain: any) => {

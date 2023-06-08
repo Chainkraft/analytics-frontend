@@ -36,7 +36,10 @@ export enum ContractSummaryStatus {
 
 export enum ContractNetwork {
     ETH_MAINNET = 'eth-mainnet',
-    ETH_GOERLI = 'eth-goerli'
+    ETH_GOERLI = 'eth-goerli',
+    OPT_MAINNET = 'opt-mainnet',
+    ARB_MAINNET = 'arb-mainnet',
+    MATIC_MAINNET = 'polygon-mainnet'
 }
 
 export enum ContractProxyType {

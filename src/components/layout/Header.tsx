@@ -72,6 +72,15 @@ export default function Header() {
                 onClick: () => handleCloseNavMenu
             }
         },
+        // {
+        //     label: "Protocols",
+        //     active: pathname.startsWith("/protocols"),
+        //     props: {
+        //         href: "/protocols",
+        //         disabled: false,
+        //         onClick: () => handleCloseNavMenu
+        //     }
+        // },
         {
             label: "DeFi",
             active: pathname.startsWith("/pools"),
