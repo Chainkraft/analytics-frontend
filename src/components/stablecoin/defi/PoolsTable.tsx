@@ -8,6 +8,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
 
 import { styled } from "@mui/material/styles";
 import { Container } from '@mui/system';
@@ -16,13 +17,25 @@ import useSWR from 'swr';
 import { fetcherAxios } from '../../../helpers/fetcher-axios';
 import { currencyFormat, dexLogos, dexLpNames } from '../../../helpers/helpers';
 import { ShortLiquidityPool } from '../../../interfaces/liquidity-pools.interface';
+import { useState } from 'react';
+
 
 const StyledLink = styled(RouterLink)`
     text-decoration: none;
 `;
 
 const PoolsTable = () => {
-    const { data } = useSWR<ShortLiquidityPool[]>(`pools/overview`, fetcherAxios)
+    const { data: fetchedData } = useSWR<ShortLiquidityPool[]>(`pools/overview`, fetcherAxios)
+    const data = fetchedData?.map(pool => ({
+        ...pool,
+        displayName: pool.name ? pool.name : `${dexLpNames[pool.dex]} ${pool.tokens?.join('/')}`,
+    }));
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleChange = (value: any) => {
+        setSearchTerm(value);
+    };
 
     if (Array.isArray(data) && data.length === 0) {
         return (<Box />);
@@ -34,10 +47,12 @@ const PoolsTable = () => {
                 <Box
                     sx={{
                         display: 'flex',
-                        flexDirection: 'row',
+                        flexDirection: 'column',
                         boxShadow: 1,
-                        alignItems: 'center',
-                        justifyContent: 'start'
+                        alignItems: 'start',
+                        justifyContent: 'center',
+                        marginTop: 3,
+                        marginBottom: 3
                     }}
                 >
                     <Typography
@@ -45,12 +60,21 @@ const PoolsTable = () => {
                         sx={{
                             fontWeight: 'normal',
                             marginBottom: 2,
-                            marginTop: 2,
                             flexShrink: 0,
                         }}
                     >
                         Top liquidity pools
                     </Typography>
+
+
+                    <TextField
+                        placeholder="Search for an asset or pool..."
+                        variant="outlined"
+                        onChange={(e) => handleChange(e.target.value)}
+                        size='small'
+                        sx={{
+                            width: '30%'
+                        }} />
                 </Box>
 
                 <Box
@@ -76,6 +100,7 @@ const PoolsTable = () => {
                             </TableHead>
                             <TableBody>
                                 {data
+                                    .filter(pool => pool.displayName?.toLowerCase().includes(searchTerm.toLowerCase()))
                                     .sort((a, b) => (b.tvl ?? 0) - (a.tvl ?? 0))
                                     .map((row, index) => (
                                         <TableRow
@@ -94,7 +119,7 @@ const PoolsTable = () => {
                                                     sx={{ width: 28, height: 28 }} />
                                             </TableCell>
                                             <TableCell>
-                                                {row.name ? row.name : `${dexLpNames[row.dex]} ${row.tokens?.join('/')}`}
+                                                {row.displayName}
                                             </TableCell>
                                             <TableCell align="right">{row.tvl ? currencyFormat(row.tvl, 0) : ''}</TableCell>
                                             <TableCell align="center">
@@ -110,6 +135,7 @@ const PoolsTable = () => {
         ) : (
             <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column', padding: 2 }}>
                 <Skeleton variant="text" width={300} sx={{ fontSize: '2rem', mb: 2 }} />
+                <Skeleton variant="rectangular" width={300} sx={{ fontSize: '2rem', mb: 2 }} />
                 <Skeleton variant="rectangular" sx={{ flexGrow: 1, width: '100%' }} height={1000} />
             </Container>
         )

@@ -12,6 +12,7 @@ export interface ShortLiquidityPool {
     network?: string;
     tvl?: number;
     tokens?: string[];
+    displayName?: string;
 }
 
 export interface LiquidityPoolHistory {

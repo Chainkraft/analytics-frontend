@@ -12,11 +12,7 @@ import {
 } from "recharts";
 import { currencyFormat } from '../../../../helpers/helpers';
 import { ICoinFromPoolDataApi, LiquidityPoolHistory, LiquidityPoolPricingType } from '../../../../interfaces/liquidity-pools.interface';
-
-interface ChartData {
-    date: string;
-    [symbol: string]: number | string;
-}
+import { ChartData, processUniswapData } from './helpers';
 
 export function getDailyData(chartBalances: { coins: ICoinFromPoolDataApi[]; date: Date }[]) {
     const sortedValues = chartBalances.sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf());
@@ -63,24 +59,6 @@ export function getHourlyData(chartBalances: { coins: ICoinFromPoolDataApi[]; da
     }
 
     return hourlyData;
-}
-
-export function processUniswapData(
-    { coins, date }: { coins: ICoinFromPoolDataApi[]; date: Date },
-    lp: LiquidityPoolHistory,
-): ChartData {
-    const [coin0, coin1] = coins;
-    const token0Weight = Number(coin0.poolBalance) / lp.tvlUSD;
-    const token1Weight = Number(coin1.poolBalance) * Number(coin0.price) / lp.tvlUSD;
-    const token0UsdPrice = lp.tvlUSD * token0Weight / Number(coin0.poolBalance);
-    const token1UsdPrice = lp.tvlUSD * token1Weight / Number(coin1.poolBalance);
-
-    const dataPoint: ChartData = { date: moment(date).toISOString() };
-
-    dataPoint[coin0.symbol] = token0UsdPrice * Number(coin0.poolBalance);
-    dataPoint[coin1.symbol] = token1UsdPrice * Number(coin1.poolBalance);
-
-    return dataPoint;
 }
 
 function processData(
@@ -193,7 +171,6 @@ const LiquidityCompositionChart = ({ lp }: { lp: LiquidityPoolHistory }) => {
                         }}
                         fill={theme.palette.background.paper}
                     />
-
                 </AreaChart>
             </ResponsiveContainer>
         </Box>
