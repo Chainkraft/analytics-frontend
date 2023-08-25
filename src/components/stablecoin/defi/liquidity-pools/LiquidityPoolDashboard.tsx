@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router';
@@ -19,12 +19,84 @@ const LiquidityPoolsDashboard = () => {
     const [search, setSearch] = useSearchParams();
     const { data, error } = useSWR<LiquidityPoolHistory>(`pools/${network}/address/${address}`, fetcherAxios)
 
+    function renderError() {
+        return (
+            <Container
+                maxWidth="lg"
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '50vh',
+                    p: 2
+                }}>
+                An error has occurred.
+            </Container>
+        );
+    }
+
+    function renderLoading() {
+        return (
+            <Container
+                maxWidth="lg"
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    p: 2
+                }}>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'top',
+                    gap: '10px'
+                }}>
+                    <Skeleton variant="circular" width={100} height={100} />
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        p: 2
+                    }}>
+                        <Skeleton variant="text" width={200} />
+                        <Skeleton variant="text" width={200} />
+                    </Box>
+                </Box>
+                <Box
+                    sx={{
+                        mt: 2
+                    }}
+                >
+                    <Skeleton variant="rectangular" width="100%" height={300} />
+                </Box>
+                <Box
+                    sx={{
+                        mt: 2
+                    }}
+                >
+                    <Skeleton variant="rectangular" width="100%" height={100} />
+                </Box>
+                <Box
+                    sx={{
+                        mt: 2
+                    }}
+                >
+                    <Skeleton variant="rectangular" width="100%" height={300} />
+                </Box>
+                <Box
+                    sx={{
+                        mt: 2
+                    }}
+                >
+                    <Skeleton variant="rectangular" width="100%" height={300} />
+                </Box>
+            </Container>
+        );
+    }
+
     if (!data) {
-        return (<Box />);
+        return renderLoading();
     }
 
     if (error) {
-        return (<Box />);
+        return renderError();
     }
 
     let poolName = data.name ? data.name : `${dexLpNames[data.dex]} ${data.balances[0].coins.map((coin) => coin.symbol).join('/')}`;
