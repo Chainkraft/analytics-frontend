@@ -9,13 +9,11 @@ import React, { useMemo } from "react";
 import { fetcherAxios } from "../../helpers/fetcher-axios";
 import LiquidityPoolsSummary from "./defi/LiquidityPoolsSummary";
 import PriceChart from "./charts/PriceChart";
-import ContractSummary from "../contract/ContractSummary";
 import ChainkraftScoreChart from "./charts/ChainkraftScoreChart";
-import NotificationSubscription from "../notification/NotificationSubscription";
 
 const R = require("ramda");
 
-const StableCoinDashboard = () => {
+const StableCoinCharts = () => {
   let { tokenId } = useParams() as {
     tokenId: string;
   };
@@ -46,7 +44,6 @@ const StableCoinDashboard = () => {
   );
 
   const name: any = useMemo(() => R.propOr("", "name", token), [token]);
-  const image: any = useMemo(() => R.prop("image", token), [token]);
   const symbol: any = useMemo(() => R.propOr("", "symbol", token), [token]);
 
   function renderError() {
@@ -148,24 +145,13 @@ const StableCoinDashboard = () => {
             gap: "10px",
           }}
         >
-          {image && (
-            <Box
-              component="img"
-              alt="Coin symbol"
-              src={image}
-              sx={{
-                maxHeight: "50px",
-              }}
-            />
-          )}
           <Typography variant="h5">
             {name} ({symbol})
           </Typography>
         </Box>
-        <NotificationSubscription tokenId={token._id} />
       </Box>
 
-      <ContractSummary tokenId={tokenId}></ContractSummary>
+      {/* <ContractSummary tokenId={tokenId}></ContractSummary> */}
 
       <Box
         sx={(theme) => ({
@@ -315,11 +301,17 @@ const StableCoinDashboard = () => {
       </Box>
 
       {priceHistory && (
-        <PriceChart token={token} priceHistory={priceHistory} days={180} />
+        <PriceChart
+          token={token}
+          priceHistory={priceHistory}
+          days={14}
+          showSymbol={true}
+        />
       )}
 
       {marketCapHistory && (
         <Box
+          id="mcap-chart-with-header"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -331,18 +323,23 @@ const StableCoinDashboard = () => {
             p: 2,
           }}
         >
-          <Typography variant="h6">Market cap</Typography>
-          <MarketCapChart token={token} marketCapHistory={marketCapHistory} />
+          <Typography variant="h6">{token.symbol} market cap</Typography>
+          <MarketCapChart
+            token={token}
+            marketCapHistory={marketCapHistory}
+            days={30}
+            showSymbol={true}
+          />
         </Box>
       )}
 
-      <Box
+      {/* <Box
         sx={{
           mt: 2,
         }}
       >
         <LiquidityPoolsSummary token={tokenId} />
-      </Box>
+      </Box> */}
 
       {/* <Box
                 sx={{
@@ -379,4 +376,4 @@ const StableCoinDashboard = () => {
   );
 };
 
-export default StableCoinDashboard;
+export default StableCoinCharts;
