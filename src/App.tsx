@@ -16,6 +16,7 @@ import StableCoinDashboard from "./components/stablecoin/StableCoinDashboard";
 import StableCoinList from "./components/stablecoin/StableCoinList";
 import theme from "./theme";
 import StableCoinCharts from "./components/stablecoin/StableCoinCharts";
+import StatsCharts from "./components/charts/StatsCharts";
 
 function App() {
   const showFooter = useLocation().pathname !== "/login";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/tokens/:tokenId" element={<StableCoinDashboard />} />
           <Route path="/charts/token/:tokenId" element={<StableCoinCharts />} />
+          <Route path="/charts/stats" element={<StatsCharts />} />
           <Route
             path="/pools/:network/:address"
             element={<LiquidityPoolsDashboard />}
